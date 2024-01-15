@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: authorization-server
+  datasource:
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5433/oauth_nowhere}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:nowhere}
+  jpa:
+    show-sql: true
+    properties.hibernate:
+      properties.hibernate.dialect: org.hibernate.dialect.PostgresSQLDialect
+    database: postgresql
+  main:
+    allow-bean-definition-overriding: true
+rsa-key:
+  private-key: ${PRIVATE_KEY:classpath:private-pkcs8.pem}
+  public-key: ${PUBLIC_KEY:classpath:public.pem}
+
+server:
+  port: 9000
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
+  show-actuator: true
+  show-oauth2-endpoints: true

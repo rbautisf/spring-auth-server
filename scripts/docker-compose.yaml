@@ -1,0 +1,47 @@
+services:
+  #  Uncomment once you have the local image built
+  #  authorization-server:
+  #    container_name: authorization-server
+  #    image: authorization-server:latest
+  #    environment:
+  #        - DATASOURCE_URL=jdbc:postgresql://postgres:5432/oauth_nowhere
+  #        - DB_USERNAME=postgres
+  #        - DB_PASSWORD=nowhere
+  #    ports:
+  #      - "9000:9000"
+  #    restart: always
+  #    depends_on:
+  #      - postgres
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PW}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "5433:5432"
+    user: ${POSTGRES_USER}
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres-data:/var/lib/postgresql/data
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PW}
+    ports:
+      - "5050:80"
+    restart: always
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+volumes:
+  postgres-data:
+  pgadmin-data:
