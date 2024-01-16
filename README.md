@@ -1,62 +1,78 @@
 # Getting Started
 
-This is a sample project to demonstrate how to use Spring Boot with Spring Oauth2 Authorization Server.
+This is a sample project demonstrating the use of Spring Boot with Spring Oauth2 Authorization Server.
 
 ## Prerequisites
-
+Make sure to have these tools installed
 * Java 17
 * Docker
 * Docker Compose
 * Gradle
 * OpenSSL
 
-## Build
-
+## Build & Run
+Before running the application, make sure to build it. Execute the command below:
 ```shell
 ./gradlew build
 ```
 
-## Run
-
 Execute the docker-compose file to start the database.
-
 ```shell
 scripts/docker-compose up
 ```
 
-Start the application with the following command:
+Finally, start the application with the command:
 ```shell
 ./gradlew bootRun
 ```
+Once the application starts, Swagger documents can be accessed via [Swagger UI](http://localhost:9000/swagger-ui/index.html), and PGAdmin via [PGAdmin Login Portal](http://localhost:5050/login).
 
 
-## Environment Variables
-Required env variables for the application to run.
-
+## Environment Setup
+The run time environment can be setup using the following environment variables:
 ```shell
-DATASOURCE_URL=jdbc:postgresql://localhost:5433/oauth_nowhere
-DB_USERNAME=postgres
-DB_PASSWORD=nowhere
+DATASOURCE_URL=
+DB_USERNAME=
+DB_PASSWORD=
+PRIVATE_KEY=
+PUBLIC_KEY=
 ```
-
-## Private Key Files
-
-Create your own private key files and place them in the root directory of the project. This is for testing purposes, in production you should use a secure key store like ansible vault.
-
-Create private key
+## Key Generation
+#### Creating Private Key
+The following command generates a DES3 encrypted RSA private key:
 ```shell
 openssl genrsa -des3 -out private.pem 2048
 ```
-Create public key
+#### Creating Public Key
+The next step is to create a public key from the private key we just generated. Use the command below:
 ```shell
 openssl rsa -in private.pem -outform PEM -pubout -out public.pem
 ```
-Create pkcs8 format
+#### Creating PKCS8 Format
+Finally, you need to convert the private key to pkcs8 format. This is the format the application can read. Use the following command:
 ```shell
 openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in private.pem -out private-pkcs8.pem
 ```
 
-Place the private--pkcs8.pem and the public.pem in the resources folder.
+After executing the commands, two files should be generated: `private-pkcs8.pem` and `public.pem`. Please place them in the resources folder.
+
+## Additional Notes
+#### Postman collection
+The postman collection included in the root folder.
+#### User Login For Testing
+```shell
+username: user@user.com
+password: user
+```
+#### Registered Client for Testing
+```shell
+client_id: nowhere-client
+client_secret: nowhere-secret
+```
+#### Callback URLs
+```shell
+client_id: nowhere-client
+client_secret: nowhere-secret
 
 ### Reference Documentation
 

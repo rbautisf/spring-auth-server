@@ -1,0 +1,302 @@
+{
+	"info": {
+		"_postman_id": "43349d27-ec1b-4c71-8ac9-23c32845763e",
+		"name": "DEMO Authorization server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20648817"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "scope",
+									"value": "message.read",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://oauthdebugger.com/debug",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code_with_pkce",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "Nowhere",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "accessToken",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiYXVkIjoibm93aGVyZS1jbGllbnQiLCJuYmYiOjE3MDU0NjE1NjEsInNjb3BlIjpbIm9wZW5pZCIsIm1lc3NhZ2UucmVhZCIsIm1lc3NhZ2Uud3JpdGUiXSwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTAwMCIsImV4cCI6MTcwNTU0Nzk2MSwidG9rZW5fdHlwZSI6ImFjY2VzcyB0b2tlbiIsImlhdCI6MTcwNTQ2MTU2MSwianRpIjoiMTllZGQ3MjAtZGVhMS00NzU5LThjMzEtYzMxZjMzZjQ0ODY3In0.W466_OBSznRrBXRlMuu_p-jfaTf2rOuxYd8fa6PX3Kz4MDSIjZmnbmgXW4g8NSqXL1budYU6BDvcFvMhpRbZefr4gwU9xZaHq6Iop8oetHcvvphw2_iQ8VXQ-l17lY6RX8hkJRnk-aNacg5qxhR2cUQi67W5_W7q8Paedcs2vrJNvcrQsLYVd3B1tEq-BfuEcUEGbppDBqsYi1_JeZ6_kPtzmS7IptSI6VbIZZynP1PIZ_CWKOxNIxMiDrlUZRLfnIQsrK43FPoboctjrJjxIcKACmKTqKRS0bwJdr09QJ_By2g1JKJT-Jgwn_XEc73Q7lkXV-X4bRm4Vg2xDsagmw",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "nowhere-client",
+									"type": "string"
+								},
+								{
+									"key": "client_authentication",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "state",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "nowhere-secret",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9000/oauth2/token",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "http://localhost:9000/oauth2/authorize",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"test@user.com\",\r\n  \"password\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/user?username=user@user.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"disabled": true
+								},
+								{
+									"key": "code_verifier",
+									"value": "mZv3H2NfNvFanDrHS1ogGQOmeZ3qFTKa1zZ9VQGettd",
+									"disabled": true
+								},
+								{
+									"key": "code",
+									"value": "rXUnYfQ-3cqaewRTaqPZxivnuERDstsNqTL4kAuS2Xa3byeCZLP0OiGUO7fNmmv4FgyVPNoK1FX6PtXTotU3zZ4MNkivXWKUPlMjgP1nQ6Shuja8yOCB0yIZRsZDCDtU",
+									"disabled": true
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https%3A%2F%oidcdebugger.com%2Fdebug",
+									"disabled": true
+								},
+								{
+									"key": "code",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "username",
+									"value": "user@user.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "scope",
+									"value": "message.write",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://oauthdebugger.com/debug",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code_with_pkce",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "Nowhere",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "accessToken",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiYXVkIjoibm93aGVyZS1jbGllbnQiLCJuYmYiOjE3MDU0NjE1NjEsInNjb3BlIjpbIm9wZW5pZCIsIm1lc3NhZ2UucmVhZCIsIm1lc3NhZ2Uud3JpdGUiXSwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTAwMCIsImV4cCI6MTcwNTU0Nzk2MSwidG9rZW5fdHlwZSI6ImFjY2VzcyB0b2tlbiIsImlhdCI6MTcwNTQ2MTU2MSwianRpIjoiMTllZGQ3MjAtZGVhMS00NzU5LThjMzEtYzMxZjMzZjQ0ODY3In0.W466_OBSznRrBXRlMuu_p-jfaTf2rOuxYd8fa6PX3Kz4MDSIjZmnbmgXW4g8NSqXL1budYU6BDvcFvMhpRbZefr4gwU9xZaHq6Iop8oetHcvvphw2_iQ8VXQ-l17lY6RX8hkJRnk-aNacg5qxhR2cUQi67W5_W7q8Paedcs2vrJNvcrQsLYVd3B1tEq-BfuEcUEGbppDBqsYi1_JeZ6_kPtzmS7IptSI6VbIZZynP1PIZ_CWKOxNIxMiDrlUZRLfnIQsrK43FPoboctjrJjxIcKACmKTqKRS0bwJdr09QJ_By2g1JKJT-Jgwn_XEc73Q7lkXV-X4bRm4Vg2xDsagmw",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "nowhere-client",
+									"type": "string"
+								},
+								{
+									"key": "client_authentication",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "state",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "nowhere-secret",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9000/oauth2/token",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "http://localhost:9000/oauth2/authorize",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"test@user.com\",\r\n  \"password\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9000/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"disabled": true
+								},
+								{
+									"key": "code_verifier",
+									"value": "mZv3H2NfNvFanDrHS1ogGQOmeZ3qFTKa1zZ9VQGettd",
+									"disabled": true
+								},
+								{
+									"key": "code",
+									"value": "rXUnYfQ-3cqaewRTaqPZxivnuERDstsNqTL4kAuS2Xa3byeCZLP0OiGUO7fNmmv4FgyVPNoK1FX6PtXTotU3zZ4MNkivXWKUPlMjgP1nQ6Shuja8yOCB0yIZRsZDCDtU",
+									"disabled": true
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https%3A%2F%oidcdebugger.com%2Fdebug",
+									"disabled": true
+								},
+								{
+									"key": "code",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

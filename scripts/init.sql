@@ -20,23 +20,6 @@ CREATE TABLE public.auth_user (
 
 ALTER TABLE public.auth_user OWNER TO postgres;
 
-
-CREATE TABLE public.auth_user_role (
-                                       id uuid NOT NULL,
-                                       role character varying(255)
-);
-
-
-ALTER TABLE public.auth_user_role OWNER TO postgres;
-
-CREATE TABLE public.auth_user_roles (
-                                        role_id uuid NOT NULL,
-                                        user_id uuid NOT NULL
-);
-
-
-ALTER TABLE public.auth_user_roles OWNER TO postgres;
-
 CREATE TABLE public.oauth2_registered_client (
                                                  id varchar(100) NOT NULL,
                                                  client_id varchar(100) NOT NULL,
@@ -103,12 +86,6 @@ ALTER TABLE public.oauth2_authorization OWNER TO postgres;
 
 INSERT INTO public.auth_user VALUES ('0c7313d3-58ed-4039-bffa-7282c965db3f', 'user@user.com', '{bcrypt}$2a$12$6fUbK5fCxakRgLy1E5.vqOQk93J3oH8Vc3v2nLN7t9jmnKub0JrdS', true, true, true, true);
 
-INSERT INTO public.auth_user_role VALUES ('7dd5390c-f30b-4d44-9e40-2c09703da158', 'ADMIN');
-INSERT INTO public.auth_user_role VALUES ('9d3026f6-a03e-11ee-a0b3-e76d78012385', 'USER');
-
-INSERT INTO public.auth_user_roles VALUES ('7dd5390c-f30b-4d44-9e40-2c09703da158', '0c7313d3-58ed-4039-bffa-7282c965db3f');
-INSERT INTO public.auth_user_roles VALUES ('9d3026f6-a03e-11ee-a0b3-e76d78012385', '0c7313d3-58ed-4039-bffa-7282c965db3f');
-
 INSERT INTO public.oauth2_registered_client VALUES ('0deba273-eca6-4793-91f9-f24ffffe634d', 'nowhere-client', '2023-08-13 16:26:33.788646+01', '{bcrypt}$2a$12$FpUwRzVr.eYFYGg5k1/YAO5G.DJMeRyiy4Yb22lD2rcWg1cS5D/3y', NULL, 'nowhere-client', 'client_secret_basic', 'refresh_token,client_credentials,authorization_code', 'https://oidcdebugger.com/debug,https://oauthdebugger.com/debug', 'http://127.0.0.1:9000/', 'openid,profile,message.read,message.write,client.create,client.read', '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":true,"settings.client.require-authorization-consent":true}', '{"@class":"java.util.Collections$UnmodifiableMap","settings.token.reuse-refresh-tokens":true,"settings.token.id-token-signature-algorithm":["org.springframework.security.oauth2.jose.jws.SignatureAlgorithm","RS256"],"settings.token.access-token-time-to-live":["java.time.Duration",86400.000000000],"settings.token.access-token-format":{"@class":"org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat","value":"self-contained"},"settings.token.refresh-token-time-to-live":["java.time.Duration",2592000.000000000],"settings.token.authorization-code-time-to-live":["java.time.Duration",86400.000000000],"settings.token.device-code-time-to-live":["java.time.Duration",86400.000000000]}');
 
 ALTER TABLE ONLY public.auth_user
@@ -116,22 +93,6 @@ ALTER TABLE ONLY public.auth_user
 
 ALTER TABLE ONLY public.auth_user
     ADD CONSTRAINT auth_user_unique_username UNIQUE (username);
-
-
---
--- Name: auth_user_role auth_user_role_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.auth_user_role
-    ADD CONSTRAINT auth_user_role_pkey PRIMARY KEY (id);
-
-
---
--- Name: auth_user_roles auth_user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.auth_user_roles
-    ADD CONSTRAINT auth_user_roles_pkey PRIMARY KEY (role_id, user_id);
 
 
 --
@@ -157,19 +118,4 @@ ALTER TABLE ONLY public.oauth2_authorization
 ALTER TABLE ONLY public.oauth2_registered_client
     ADD CONSTRAINT oauth2_registered_client_pkey PRIMARY KEY (id);
 
-
---
--- Name: auth_user_roles fkdqg6kvdl78t6ugm3c3ir107sl; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.auth_user_roles
-    ADD CONSTRAINT fkdqg6kvdl78t6ugm3c3ir107sl FOREIGN KEY (user_id) REFERENCES public.auth_user(id);
-
-
---
--- Name: auth_user_roles fksdt0xhqemwmnqflw5q4bypryh; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.auth_user_roles
-    ADD CONSTRAINT fksdt0xhqemwmnqflw5q4bypryh FOREIGN KEY (role_id) REFERENCES public.auth_user_role(id);
 
