@@ -20,6 +20,10 @@ Execute the docker-compose file to start the database.
 ```shell
 scripts/docker-compose up
 ```
+Optional: Build the docker image and use the image from the docker-compose file to start the application.
+```shell
+docker build -t auth-nowhere .
+```
 
 Finally, start the application with the command:
 ```shell
@@ -60,20 +64,17 @@ After executing the commands, two files should be generated: `private-pkcs8.pem`
 #### Postman collection
 The postman collection included in the root folder.
 #### User Login For Testing
-```shell
-username: user@user.com
-password: user
-```
+- **Username:** `user@user.com`
+- **Password:** `user`
+
 #### Registered Client for Testing
-```shell
-client_id: nowhere-client
-client_secret: nowhere-secret
-```
+- **client_id:** `nowhere-client`
+- **client_secret:** `nowhere-client`
+
 #### Callback URLs
-```shell
-client_id: nowhere-client
-client_secret: nowhere-secret
-```
+- https://oidcdebugger.com/debug
+- https://oauthdebugger.com/debug
+
 ### Reference Documentation
 
 For further reference, please consider the following sections:
