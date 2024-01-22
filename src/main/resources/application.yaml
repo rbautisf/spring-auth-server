@@ -26,3 +26,4 @@ springdoc:
     path: /swagger-ui
   show-actuator: true
   show-oauth2-endpoints: true
+  enable-spring-security: true

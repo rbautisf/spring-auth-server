@@ -1,17 +1,19 @@
 services:
   #  Uncomment once you have the local image built
-  #  authorization-server:
-  #    container_name: authorization-server
-  #    image: authorization-server:latest
-  #    environment:
-  #        - DATASOURCE_URL=jdbc:postgresql://postgres:5432/oauth_nowhere
-  #        - DB_USERNAME=postgres
-  #        - DB_PASSWORD=nowhere
-  #    ports:
-  #      - "9000:9000"
-  #    restart: always
-  #    depends_on:
-  #      - postgres
+  authorization-server:
+    container_name: authorization-server
+    image: authorization-server:latest
+    environment:
+      - DATASOURCE_URL=jdbc:postgresql://postgres:5432/oauth_nowhere
+      - DB_USERNAME=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PW}
+      - PRIVATE_KEY=${PRIVATE_KEY}
+      - PUBLIC_KEY=${PUBLIC_KEY}
+    ports:
+      - "9000:9000"
+    restart: always
+    depends_on:
+      - postgres
   postgres:
     container_name: postgres
     image: postgres:latest

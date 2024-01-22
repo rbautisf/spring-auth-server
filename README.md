@@ -20,6 +20,10 @@ Execute the docker-compose file to start the database.
 ```shell
 scripts/docker-compose up
 ```
+Optional: Build the docker image and use the image from the docker-compose file to start the application.
+```shell
+docker build -t auth-nowhere .
+```
 
 Finally, start the application with the command:
 ```shell

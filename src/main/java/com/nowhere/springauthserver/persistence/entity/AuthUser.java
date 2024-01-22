@@ -2,6 +2,8 @@ package com.nowhere.springauthserver.persistence.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -16,6 +18,22 @@ public class AuthUser {
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     public UUID getId() {
         return id;
@@ -73,4 +91,33 @@ public class AuthUser {
         this.credentialsNonExpired = credentialsNonExpired;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AuthUser authUser = (AuthUser) o;
+
+        if (enabled != authUser.enabled) return false;
+        if (accountNonExpired != authUser.accountNonExpired) return false;
+        if (accountNonLocked != authUser.accountNonLocked) return false;
+        if (credentialsNonExpired != authUser.credentialsNonExpired) return false;
+        if (!id.equals(authUser.id)) return false;
+        if (!username.equals(authUser.username)) return false;
+        if (!password.equals(authUser.password)) return false;
+        return Objects.equals(roles, authUser.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + username.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + (enabled ? 1 : 0);
+        result = 31 * result + (accountNonExpired ? 1 : 0);
+        result = 31 * result + (accountNonLocked ? 1 : 0);
+        result = 31 * result + (credentialsNonExpired ? 1 : 0);
+        result = 31 * result + (roles != null ? roles.hashCode() : 0);
+        return result;
+    }
 }
