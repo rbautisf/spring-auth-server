@@ -59,20 +59,18 @@ After executing the commands, two files should be generated: `private-pkcs8.pem`
 ## Additional Notes
 #### Postman collection
 The postman collection included in the root folder.
+
 #### User Login For Testing
-```shell
-username: user@user.com
-password: user
-```
+- **Username:** `user@user.com`
+- **Password:** `user`
+
 #### Registered Client for Testing
-```shell
-client_id: nowhere-client
-client_secret: nowhere-secret
-```
+- **client_id:** `nowhere-client`
+- **client_secret:** `nowhere-client`
+
 #### Callback URLs
-```shell
-client_id: nowhere-client
-client_secret: nowhere-secret
+- https://oidcdebugger.com/debug
+- https://oauthdebugger.com/debug
 
 ### Reference Documentation
 
