@@ -11,9 +11,10 @@ public final class SecurityConstants {
 
     public static final String ACCESS_TOKEN_VALUE = "access token";
 
-    public static final String RSA_KEY_PROPERTY = "rsa-key";
+    public static final String RSA_KEY_PROPERTIES_PREFIX = "rsa-key";
 
-    public static final String BCRYPT_PASSWORD_ENCODER = "bcrypt";
+    public static final String BCRYPT_ENCODER_STRATEGY_NAME = "bcrypt";
+    public static final int BCRYPT_STRENGTH = 10;
 
     private SecurityConstants() {
     }

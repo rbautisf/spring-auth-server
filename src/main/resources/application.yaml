@@ -17,6 +17,7 @@ rsa-key:
   public-key: ${PUBLIC_KEY:classpath:public.pem}
 
 server:
+  forward-headers-strategy: native
   port: 9000
 
 springdoc:
@@ -27,3 +28,12 @@ springdoc:
   show-actuator: true
   show-oauth2-endpoints: true
   enable-spring-security: true
+
+## log in debug all oauth2
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+    org.springframework.boot.autoconfigure: INFO

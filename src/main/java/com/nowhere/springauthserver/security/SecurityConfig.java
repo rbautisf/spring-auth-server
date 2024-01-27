@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
@@ -22,12 +23,10 @@ import java.util.Map;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private static final String[] UNSECURED_ENDPOINTS = {
+    private static final String[] AUTH_WHITELIST = {
             "/api-docs/**",
             "/swagger-ui/**"
     };
-    public static final String BCRYPT_ENCODER_STRATEGY_NAME = "bcrypt";
-    private static final int BCRYPT_STRENGTH = 10;
 
     @Bean
     @Order(2)
@@ -35,29 +34,34 @@ public class SecurityConfig {
         Converter<Jwt, AbstractAuthenticationToken> jwtAuthenticationConverter =
                 new JwtAuthenticationConverterCustom();
         // set the jwtAuthenticationConverter to the default jwtAuthenticationConverter
-        http.csrf(Customizer.withDefaults())
-                .authorizeHttpRequests(
-                        (authorizeRequests) ->
-                                authorizeRequests
-                                        .requestMatchers(UNSECURED_ENDPOINTS)
-                                        .permitAll()
-                                        .anyRequest()
-                                        .authenticated()
-                )
-                .formLogin(Customizer.withDefaults());
-        // Set the Converter to get the roles from the token
-        http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt ->{
-            jwt.jwtAuthenticationConverter(jwtAuthenticationConverter);
-        }));
-
+        http
+                .authorizeHttpRequests(authorizeHttpRequestsCustomizer)
+                .formLogin(Customizer.withDefaults())
+                .cors(Customizer.withDefaults())
+                .oauth2ResourceServer(oauth2ResourceServerCustomizer);
         return http.build();
     }
+
+    private final Customizer<OAuth2ResourceServerConfigurer<HttpSecurity>> oauth2ResourceServerCustomizer = oauth2ResourceServer -> {
+        oauth2ResourceServer.jwt(jwt -> {
+            jwt.jwtAuthenticationConverter(new JwtAuthenticationConverterCustom());
+        });
+    };
+    private final Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> authorizeHttpRequestsCustomizer = authorizeRequests -> {
+        authorizeRequests
+                .requestMatchers(AUTH_WHITELIST)
+                .permitAll()
+                .anyRequest()
+                .authenticated();
+    };
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         Map<String, PasswordEncoder> encoders = new HashMap<>();
-        encoders.put(BCRYPT_ENCODER_STRATEGY_NAME, new BCryptPasswordEncoder(BCRYPT_STRENGTH));
-        return new DelegatingPasswordEncoder(BCRYPT_ENCODER_STRATEGY_NAME, encoders);
+        encoders.put(
+                SecurityConstants.BCRYPT_ENCODER_STRATEGY_NAME,
+                new BCryptPasswordEncoder(SecurityConstants.BCRYPT_STRENGTH));
+        return new DelegatingPasswordEncoder(SecurityConstants.BCRYPT_ENCODER_STRATEGY_NAME, encoders);
     }
 
 

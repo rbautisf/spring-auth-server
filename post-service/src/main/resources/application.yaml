@@ -1,0 +1,56 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: post-service
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+#          public-key-location: classpath:public.pem /or the value
+#          jws-algorithms: RS256
+          jwk-set-uri: http://localhost:9000/oauth2/jwks
+  datasource:
+    url: jdbc:h2:mem:postdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+# Add token for springdoc
+springdoc:
+  info:
+    title: Post-Service API
+    description: Post-Service API for nowhere client using springdoc-openapi and OpenAPI 3.
+    version: 0.0.0
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
+    oauth:
+      client-id: ${CLIENT_ID:nowhere-client}
+      client-secret: ${CLIENT_SECRET:nowhere-secret}
+      use-pkce-with-authorization-code-grant: true
+      use-basic-authentication-with-access-code-grant: true
+  oAuthFlow:
+    authorizationUrl: ${AUTHORIZATION_URL:http://localhost:9000/oauth2/authorize}
+    tokenUrl: ${TOKEN_URL:http://localhost:9000/oauth2/token}
+    scopes:
+      message.read: message read scope
+      message.write: message write scope
+  show-actuator: true
+  show-oauth2-endpoints: true
+  enable-spring-security: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+    org.springframework.boot.autoconfigure: INFO

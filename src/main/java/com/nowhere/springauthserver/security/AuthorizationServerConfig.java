@@ -26,14 +26,42 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class AuthorizationServerConfig {
+    private static final List<String> ALLOWED_HEADERS = List.of(
+            "Access-Control-Allow-Origin",
+            "x-requested-with",
+            "Authorization"
+
+    );
+    private static final List<String> ALLOWED_METHODS = List.of("POST");
+    private static final List<String> ALLOWED_ALL = List.of("http://localhost:9001","http:localhost:9000");
+    /**
+     * CORS configuration for the Authorization Server.
+     *
+     * @return the {@link CorsConfigurationSource}
+     */
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(ALLOWED_ALL);
+        configuration.setAllowedMethods(ALLOWED_METHODS);
+        configuration.setAllowedHeaders(ALLOWED_HEADERS);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -42,6 +70,8 @@ public class AuthorizationServerConfig {
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 // OpenID Connect 1.0
                 .oidc(Customizer.withDefaults());
+
+        http.cors(Customizer.withDefaults());
 
         http.exceptionHandling(exceptions -> exceptions.defaultAuthenticationEntryPointFor(
                 new LoginUrlAuthenticationEntryPoint(SecurityConstants.LOGIN_PATH),
