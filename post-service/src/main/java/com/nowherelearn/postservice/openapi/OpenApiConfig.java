@@ -10,8 +10,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 public class OpenApiConfig {
-    private static final String SECURITY_SCHEME_NAME = "security_auth";
-    private static final String SECURITY_REQUIREMENT_NAME = "security_auth";
+    private static final String SECURITY_NAME = "NowhereOAuth2";
 
     @Bean
     public OpenAPI customOpenAPI(
@@ -22,10 +21,10 @@ public class OpenApiConfig {
         oAuthFlowDetails.scopes().forEach(scopesModel::addString);
 
         return new OpenAPI()
-                .addSecurityItem(new SecurityRequirement().addList(SECURITY_REQUIREMENT_NAME))
+                .addSecurityItem(new SecurityRequirement().addList(SECURITY_NAME))
                 .components(new Components()
                         .addSecuritySchemes(
-                                SECURITY_SCHEME_NAME,
+                                SECURITY_NAME,
                                 createSecurityScheme(
                                         oAuthFlowDetails.authorizationUrl(),
                                         oAuthFlowDetails.tokenUrl(),
