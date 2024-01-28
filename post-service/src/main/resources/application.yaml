@@ -37,12 +37,12 @@ springdoc:
       client-secret: ${CLIENT_SECRET:nowhere-secret}
       use-pkce-with-authorization-code-grant: true
       use-basic-authentication-with-access-code-grant: true
-  oAuthFlow:
+  oauth-flow:
     authorizationUrl: ${AUTHORIZATION_URL:http://localhost:9000/oauth2/authorize}
     tokenUrl: ${TOKEN_URL:http://localhost:9000/oauth2/token}
     scopes:
-      message.read: message read scope
-      message.write: message write scope
+        message.read: scope for read message
+        message.write: scope for write message
   show-actuator: true
   show-oauth2-endpoints: true
   enable-spring-security: true

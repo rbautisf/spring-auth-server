@@ -14,11 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
-    public static String[] AUTH_WHITELIST = {
-            "/actuator",
-            "/swagger-ui/**",
-            "/api-docs/**"
-    };
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -35,7 +31,7 @@ public class SecurityConfig {
     };
     private final Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> authorizeHttpRequestsCustomizer = authorizeRequests -> {
         authorizeRequests
-                .requestMatchers(AUTH_WHITELIST).permitAll()
+                .requestMatchers(SecurityConstants.AUTH_WHITELIST).permitAll()
                 .requestMatchers(HttpMethod.GET, "/posts")
                 .hasAnyAuthority("ROLE_USER")
                 .anyRequest().authenticated();
