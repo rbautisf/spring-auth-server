@@ -3,16 +3,17 @@ package com.nowhere.springauthserver.service;
 import com.nowhere.springauthserver.persistence.entity.Role;
 import com.nowhere.springauthserver.persistence.entity.Role.RoleType;
 import com.nowhere.springauthserver.persistence.repository.RoleRepository;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
+
     public RoleServiceImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
+
     @Override
     public Role getByType(String type) {
         return roleRepository.findByType(RoleType.valueOf(type)).orElseThrow(

@@ -5,6 +5,10 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -30,11 +34,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 
 @Configuration(proxyBeanMethods = false)
 public class AuthorizationServerConfig {
@@ -45,7 +44,8 @@ public class AuthorizationServerConfig {
 
     );
     private static final List<String> ALLOWED_METHODS = List.of("POST");
-    private static final List<String> ALLOWED_ALL = List.of("http://localhost:9001","http:localhost:9000");
+    private static final List<String> ALLOWED_ALL = List.of("http://localhost:9001", "http:localhost:9000");
+
     /**
      * CORS configuration for the Authorization Server.
      *
@@ -62,6 +62,7 @@ public class AuthorizationServerConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -72,6 +73,8 @@ public class AuthorizationServerConfig {
                 .oidc(Customizer.withDefaults());
 
         http.cors(Customizer.withDefaults());
+
+        http.csrf(Customizer.withDefaults());
 
         http.exceptionHandling(exceptions -> exceptions.defaultAuthenticationEntryPointFor(
                 new LoginUrlAuthenticationEntryPoint(SecurityConstants.LOGIN_PATH),
@@ -97,6 +100,7 @@ public class AuthorizationServerConfig {
     public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
         return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
     }
+
     @Bean
     public OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
         return (JwtEncodingContext context) -> {

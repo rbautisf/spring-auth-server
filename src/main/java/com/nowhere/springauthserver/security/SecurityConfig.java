@@ -1,6 +1,8 @@
 package com.nowhere.springauthserver.security;
 
 import com.nowhere.springauthserver.security.converter.JwtAuthenticationConverterCustom;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -16,9 +18,6 @@ import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.web.SecurityFilterChain;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @EnableWebSecurity

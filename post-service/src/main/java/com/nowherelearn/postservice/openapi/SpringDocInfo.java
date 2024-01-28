@@ -15,5 +15,6 @@ public record SpringDocInfo(
             throw new IllegalArgumentException("title, description and version are required");
         }
     }
+
     public static final String PREFIX = "springdoc.info";
 }
