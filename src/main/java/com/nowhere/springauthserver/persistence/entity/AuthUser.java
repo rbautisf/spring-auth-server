@@ -128,4 +128,68 @@ public class AuthUser {
         result = 31 * result + (roles != null ? roles.hashCode() : 0);
         return result;
     }
+    // Create Builder methods for AuthUser to set the fields
+    public static class Builder {
+        private UUID id;
+        private String username;
+        private String password;
+        private boolean enabled;
+        private boolean accountNonExpired;
+        private boolean accountNonLocked;
+        private boolean credentialsNonExpired;
+        private Set<Role> roles;
+
+        public Builder id(UUID id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder enabled(boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public Builder accountNonExpired(boolean accountNonExpired) {
+            this.accountNonExpired = accountNonExpired;
+            return this;
+        }
+
+        public Builder accountNonLocked(boolean accountNonLocked) {
+            this.accountNonLocked = accountNonLocked;
+            return this;
+        }
+
+        public Builder credentialsNonExpired(boolean credentialsNonExpired) {
+            this.credentialsNonExpired = credentialsNonExpired;
+            return this;
+        }
+
+        public Builder roles(Set<Role> roles) {
+            this.roles = roles;
+            return this;
+        }
+
+        public AuthUser build() {
+            AuthUser authUser = new AuthUser();
+            authUser.setId(id);
+            authUser.setUsername(username);
+            authUser.setPassword(password);
+            authUser.setEnabled(enabled);
+            authUser.setAccountNonExpired(accountNonExpired);
+            authUser.setAccountNonLocked(accountNonLocked);
+            authUser.setCredentialsNonExpired(credentialsNonExpired);
+            authUser.setRoles(roles);
+            return authUser;
+        }
+    }
 }
