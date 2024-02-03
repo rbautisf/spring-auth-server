@@ -5,7 +5,7 @@ import com.nowhere.springauthserver.persistence.entity.Role;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
+@SuppressWarnings("all")
 public final class AuthUserFixture {
     public static AuthUser authUserNoRoles() {
         return new AuthUser.Builder()

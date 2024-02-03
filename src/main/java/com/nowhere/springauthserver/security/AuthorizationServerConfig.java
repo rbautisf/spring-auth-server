@@ -34,6 +34,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import static com.nowhere.springauthserver.security.converter.ClientMetadataConfigCustom.configureCustomClientMetadataConverters;
+
 
 @Configuration(proxyBeanMethods = false)
 public class AuthorizationServerConfig {
@@ -70,7 +72,11 @@ public class AuthorizationServerConfig {
 
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 // OpenID Connect 1.0
-                .oidc(Customizer.withDefaults());
+                .oidc(oidc->{
+                    oidc.clientRegistrationEndpoint(clientRegistrationEndpoint -> {
+                        clientRegistrationEndpoint.authenticationProviders(configureCustomClientMetadataConverters());
+                    });
+                });
 
         http.cors(Customizer.withDefaults());
 

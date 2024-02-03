@@ -10,7 +10,7 @@ group = 'com.nowhere'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '17'
+    sourceCompatibility = '21'
 }
 
 repositories {
@@ -60,6 +60,7 @@ dependencies {
     intTestImplementation 'org.springframework.boot:spring-boot-starter-test'
     intTestImplementation 'org.springframework.security:spring-security-test'
     intTestImplementation 'com.h2database:h2'
+
 }
 
 tasks.named('test') {

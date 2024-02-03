@@ -4,7 +4,7 @@ This is a sample project demonstrating the use of Spring Boot with Spring Oauth2
 
 ## Prerequisites
 Make sure to have these tools installed
-* Java 17
+* Java 21
 * Docker
 * Docker Compose
 * Gradle
