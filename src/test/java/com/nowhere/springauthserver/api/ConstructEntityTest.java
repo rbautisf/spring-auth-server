@@ -19,25 +19,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 
-public class UserControllerTest {
-    // stub the AuthUserService
+public class ConstructEntityTest {
     private final AuthUserService mockService = Mockito.mock(AuthUserService.class);
-    private final Principal mockPrincipal = Mockito.mock(Principal.class);
     private final UserController controller = new UserController(mockService);
-
-    @BeforeEach
-    public void setUp() {
-        Mockito.reset(mockService, mockPrincipal);
-    }
-
-    // write a test that receives parameters and returns a response entity
 
     @Test
     public void testConstructEntity() {
         List<AuthUser> authUsers = authUsers();
         authUsers.forEach(user -> {
-            when(mockService.getByUsername(user.getUsername())).thenReturn(user);
-
             var result = controller.constructResponseEntity(user);
             assertEquals(HttpStatus.OK, result.getStatusCode(), "Response status should be OK");
             assertNotNull(result.getBody(), "Response body should not be null");

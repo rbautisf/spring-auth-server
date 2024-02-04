@@ -16,8 +16,9 @@ import org.springframework.util.CollectionUtils;
  * ClientRegistrationConverterCustom is a custom converter for RegisteredClient to OidcClientRegistration.
  * It extends the RegisteredClientOidcClientRegistrationConverter and adds custom client metadata to the claims.
  *
+ *
  */
-public class ClientRegistrationConverterCustom implements Converter<RegisteredClient, OidcClientRegistration> {
+public class ClientRegistrationConverterCustom implements Converter<RegisteredClient, OidcClientRegistration>{
 
     private final List<String> customClientMetadata;
     private final RegisteredClientOidcClientRegistrationConverter delegate;
@@ -30,12 +31,21 @@ public class ClientRegistrationConverterCustom implements Converter<RegisteredCl
     @Override
     public OidcClientRegistration convert(RegisteredClient registeredClient) {
         OidcClientRegistration clientRegistration = this.delegate.convert(registeredClient);
+        assert clientRegistration != null;
         Map<String, Object> claims = new HashMap<>(clientRegistration.getClaims());
         if (!CollectionUtils.isEmpty(this.customClientMetadata)) {
+            // Create a new client settings object with the custom client metadata
             ClientSettings clientSettings = registeredClient.getClientSettings();
+
+
             claims.putAll(this.customClientMetadata.stream()
                     .filter(metadata -> clientSettings.getSetting(metadata) != null)
-                    .collect(Collectors.toMap(Function.identity(), clientSettings::getSetting)));
+                    .collect(
+                            Collectors.toMap(
+                                    Function.identity(), clientSettings::getSetting
+                            )
+                    )
+            );
         }
 
         return OidcClientRegistration.withClaims(claims).build();

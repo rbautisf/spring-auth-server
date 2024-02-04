@@ -5,7 +5,6 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,9 +29,6 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static com.nowhere.springauthserver.security.converter.ClientMetadataConfigCustom.configureCustomClientMetadataConverters;
 
@@ -60,15 +56,15 @@ public class AuthorizationServerConfig {
 
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 // OpenID Connect 1.0
-                .oidc(oidc->{
-                    oidc.clientRegistrationEndpoint(Customizer.withDefaults());
-                });
 //                .oidc(oidc->{
-//                    // By design OIDC only supports client registration https://openid.net/specs/openid-connect-registration-1_0.html
-//                    oidc.clientRegistrationEndpoint(clientRegistrationEndpoint -> {
-//                        clientRegistrationEndpoint.authenticationProviders(configureCustomClientMetadataConverters());
-//                    });
+//                    oidc.clientRegistrationEndpoint(Customizer.withDefaults());
 //                });
+                .oidc(oidc->{
+                    // By design OIDC only supports client registration https://openid.net/specs/openid-connect-registration-1_0.html
+                    oidc.clientRegistrationEndpoint(clientRegistrationEndpoint -> {
+                        clientRegistrationEndpoint.authenticationProviders(configureCustomClientMetadataConverters());
+                    });
+                });
 
         http.cors(Customizer.withDefaults());
 

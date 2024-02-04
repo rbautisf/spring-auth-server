@@ -1,5 +1,7 @@
 spring:
-  threads.virtual.enabled: true
+  threads:
+    virtual:
+      enabled: true
   application:
     name: authorization-server
   datasource:
@@ -13,6 +15,7 @@ spring:
     database: postgresql
   main:
     allow-bean-definition-overriding: true
+    keep-alive: true
 rsa-key:
   private-key: ${PRIVATE_KEY:classpath:private-pkcs8.pem}
   public-key: ${PUBLIC_KEY:classpath:public.pem}
@@ -34,7 +37,7 @@ springdoc:
 logging:
   level:
     root: INFO
-    org.springframework.web: INFO
+    org.springframework.web: DEBUG
     org.springframework.security: INFO
     org.springframework.security.oauth2: INFO
     org.springframework.boot.autoconfigure: INFO

@@ -1,4 +1,4 @@
-package com.nowhere.springauthserver.api;
+package com.nowhere.springauthserver.service;
 
 import com.nowhere.springauthserver.persistence.AuthUserFixture;
 import com.nowhere.springauthserver.persistence.RoleFixture;

@@ -16,10 +16,12 @@ public class ClientMetadataConfigCustom {
      * @return Consumer<List < AuthenticationProvider>>
      */
     public static Consumer<List<AuthenticationProvider>> configureCustomClientMetadataConverters() {
-        List<String> customClientMetadata = List.of("logo_uri", "contacts","application_type");
+        List<String> customClientMetadata = List.of("logo_uri", "contacts","application_type","environment");
 
-        RegisteredClientConverterCustom registeredClientConverter = new RegisteredClientConverterCustom(customClientMetadata);
-        ClientRegistrationConverterCustom clientRegistrationConverter = new ClientRegistrationConverterCustom(customClientMetadata);
+        RegisteredClientConverterCustom registeredClientConverter =
+                new RegisteredClientConverterCustom(customClientMetadata);
+        ClientRegistrationConverterCustom clientRegistrationConverter =
+                new ClientRegistrationConverterCustom(customClientMetadata);
 
         return (authenticationProviders) -> {
             authenticationProviders.forEach(authProvider -> {
@@ -30,7 +32,7 @@ public class ClientMetadataConfigCustom {
                         provider.setClientRegistrationConverter(clientRegistrationConverter);
                     }
                     case OidcClientConfigurationAuthenticationProvider provider ->
-                        provider.setClientRegistrationConverter(clientRegistrationConverter);
+                            provider.setClientRegistrationConverter(clientRegistrationConverter);
                     default -> {}
                 }
             });

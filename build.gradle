@@ -41,7 +41,6 @@ idea {
 // intTest config ends here
 
 dependencies {
-    // fic below
     implementation ('org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'){
         //remove warn  issue Provides transitive vulnerable dependency maven:org.springframework:spring-core:6.1.2
         exclude group: 'org.springframework', module: 'spring-core'
