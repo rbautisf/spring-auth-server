@@ -16,9 +16,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role getByType(String type) {
-        return roleRepository.findByType(RoleType.valueOf(type)).orElseThrow(
-                () -> new RuntimeException("Role not found")
-        );
+        return roleRepository.findByType(RoleType.valueOf(type))
+                .orElseThrow(() -> new RuntimeException("Role not found"));
     }
 
     @Override

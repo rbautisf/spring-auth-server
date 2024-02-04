@@ -12,6 +12,11 @@ import org.springframework.security.oauth2.server.authorization.oidc.converter.R
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.util.CollectionUtils;
 
+/**
+ * ClientRegistrationConverterCustom is a custom converter for RegisteredClient to OidcClientRegistration.
+ * It extends the RegisteredClientOidcClientRegistrationConverter and adds custom client metadata to the claims.
+ *
+ */
 public class ClientRegistrationConverterCustom implements Converter<RegisteredClient, OidcClientRegistration> {
 
     private final List<String> customClientMetadata;

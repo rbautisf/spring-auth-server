@@ -58,7 +58,7 @@ public class UserController {
         return constructResponseEntity(user);
     }
 
-    private ResponseEntity<ApiResponse<UserResponse>> constructResponseEntity(AuthUser user) {
+    public ResponseEntity<ApiResponse<UserResponse>> constructResponseEntity(AuthUser user) {
         List<String> roles = user.getRoles().stream().map(Role::getType).map(Role.RoleType::name).toList();
         UserResponse result = new UserResponse(user.getId().toString(), user.getUsername(), user.isEnabled(), roles);
         return ResponseEntity.ok().body(new ApiResponse<>(200, result));

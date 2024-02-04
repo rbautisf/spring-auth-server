@@ -36,35 +36,23 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static com.nowhere.springauthserver.security.converter.ClientMetadataConfigCustom.configureCustomClientMetadataConverters;
 
-
+/**
+ * The Authorization Server Configuration.
+ * Is responsible for issuing access tokens to the client after successfully authenticating the resource owner and obtaining authorization.
+ * The Authorization Server is a role defined in the OAuth 2.0 Authorization Framework.
+ *
+ */
 @Configuration(proxyBeanMethods = false)
 public class AuthorizationServerConfig {
-    private static final List<String> ALLOWED_HEADERS = List.of(
-            "Access-Control-Allow-Origin",
-            "x-requested-with",
-            "Authorization"
-
-    );
-    private static final List<String> ALLOWED_METHODS = List.of("POST");
-    private static final List<String> ALLOWED_ALL = List.of("http://localhost:9001", "http:localhost:9000");
 
     /**
-     * CORS configuration for the Authorization Server.
+     * The Authorization Server Security Filter Chain is responsible for processing
+     * all incoming requests to the Authorization Server.
      *
-     * @return the {@link CorsConfigurationSource}
+     * @param http the {@link HttpSecurity} to use
+     * @return the {@link SecurityFilterChain}
+     * @throws Exception if an error occurs
      */
-    @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(ALLOWED_ALL);
-        configuration.setAllowedMethods(ALLOWED_METHODS);
-        configuration.setAllowedHeaders(ALLOWED_HEADERS);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
-
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -73,10 +61,14 @@ public class AuthorizationServerConfig {
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 // OpenID Connect 1.0
                 .oidc(oidc->{
-                    oidc.clientRegistrationEndpoint(clientRegistrationEndpoint -> {
-                        clientRegistrationEndpoint.authenticationProviders(configureCustomClientMetadataConverters());
-                    });
+                    oidc.clientRegistrationEndpoint(Customizer.withDefaults());
                 });
+//                .oidc(oidc->{
+//                    // By design OIDC only supports client registration https://openid.net/specs/openid-connect-registration-1_0.html
+//                    oidc.clientRegistrationEndpoint(clientRegistrationEndpoint -> {
+//                        clientRegistrationEndpoint.authenticationProviders(configureCustomClientMetadataConverters());
+//                    });
+//                });
 
         http.cors(Customizer.withDefaults());
 
@@ -91,22 +83,47 @@ public class AuthorizationServerConfig {
         return http.build();
     }
 
+    /**
+     * The Authorization Server Settings for endpoints.
+     *
+     * @return the {@link AuthorizationServerSettings}
+     */
     @Bean
     public AuthorizationServerSettings authorizationServerSettings() {
         return AuthorizationServerSettings.builder().build();
     }
 
+    /**
+     * The JWK Source for the Authorization Server using the configured RSA key pair.
+     *
+     * @param keyPair the {@link RsaKeyProperties}
+     * @return the {@link JWKSource}
+     */
     @Bean
     public JWKSource<SecurityContext> jwkSource(RsaKeyProperties keyPair) {
         var rsaKey = new RSAKey.Builder(keyPair.publicKey()).privateKey(keyPair.privateKey()).build();
         return new ImmutableJWKSet<>(new JWKSet(rsaKey));
     }
 
+    /**
+     * The JWT Decoder for the Authorization Server using the JWK Source.
+     *
+     * @param jwkSource the {@link JWKSource}
+     * @return the {@link JwtDecoder}
+     */
     @Bean
     public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
         return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
     }
 
+    /**
+     * Customizes the JWT for the Authorization Server.
+     * This customizer adds the token type claim to the JWT.
+     * The token type claim is used to indicate the type of token.
+     * The token type claim is set to "access_token" for access tokens and "id_token" for ID tokens.
+     * Additionally, the customizer adds the roles claim to the access token.
+     * @return the {@link OAuth2TokenCustomizer}
+     */
     @Bean
     public OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
         return (JwtEncodingContext context) -> {

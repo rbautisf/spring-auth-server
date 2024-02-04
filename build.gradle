@@ -61,12 +61,13 @@ dependencies {
     intTestImplementation 'org.springframework.security:spring-security-test'
     intTestImplementation 'com.h2database:h2'
 
-}
+    // add jakarta.persistence.EnumType to testFixtures
+    testFixturesImplementation 'jakarta.persistence:jakarta.persistence-api:3.0.0'
 
+}
 tasks.named('test') {
     useJUnitPlatform()
 }
-
 tasks.register('intTest', Test) {
     description = 'Runs integration tests.'
     group = 'verification'
@@ -81,4 +82,7 @@ tasks.register('intTest', Test) {
         events "passed"
     }
 }
+
+check.dependsOn intTest
+
 

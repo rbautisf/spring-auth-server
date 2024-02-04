@@ -4,41 +4,53 @@ import com.nowhere.springauthserver.persistence.entity.AuthUser;
 import com.nowhere.springauthserver.persistence.entity.Role;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
-@SuppressWarnings("all")
+
+
 public final class AuthUserFixture {
-    public static AuthUser authUserNoRoles() {
+    /**
+     * Fixture for AuthUser, optional fields are set to default values
+     *
+     * @param id default value is random UUID
+     * @param username default value is "test"
+     * @param password default value is "test"
+     * @param roles default value is empty set
+     * @param enabled required field
+     * @param accountNonExpired required field
+     * @param accountNonLocked required field
+     * @param credentialsNonExpired required field
+     * @return AuthUser
+     */
+    public static AuthUser authUserFixture(
+            UUID id,
+            String username,
+            String password,
+            Set<Role> roles,
+            boolean enabled,
+            boolean accountNonExpired,
+            boolean accountNonLocked,
+            boolean credentialsNonExpired) {
+        return new AuthUser.Builder()
+                .id(id)
+                .username(username)
+                .password(password)
+                .enabled(enabled)
+                .accountNonExpired(accountNonExpired)
+                .accountNonLocked(accountNonLocked)
+                .credentialsNonExpired(credentialsNonExpired)
+                .roles(roles)
+                .build();
+    }
+
+    public static AuthUser defaultAuthUserWithRolesFixture(Set<Role> roles) {
         return new AuthUser.Builder()
                 .id(UUID.randomUUID())
                 .username("test")
-                .password("test")
-                .roles(Set.of())
+                .password("pass")
                 .enabled(true)
                 .accountNonExpired(true)
                 .accountNonLocked(true)
                 .credentialsNonExpired(true)
-                .roles(Set.of())
+                .roles(roles)
                 .build();
     }
-
-    public static AuthUser createAuthUserWithRoles(Set<String> roles) {
-        Set<Role> roleSet = roles.stream().map(role -> {
-            Role r = new Role();
-            r.setId(UUID.randomUUID());
-            r.setType(Role.RoleType.valueOf(role));
-            return r;
-        }).collect(Collectors.toSet());
-        return new AuthUser.Builder()
-                .id(UUID.randomUUID())
-                .username("test")
-                .password("test")
-                .roles(Set.of())
-                .enabled(true)
-                .accountNonExpired(true)
-                .accountNonLocked(true)
-                .credentialsNonExpired(true)
-                .roles(roleSet)
-                .build();
-    }
-
 }

@@ -57,4 +57,27 @@ public class Role {
         ADMIN,
         USER;
     }
+
+    public static class Builder {
+        private UUID id;
+        private RoleType type;
+
+        public Builder id(UUID id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder type(RoleType type) {
+            this.type = type;
+            return this;
+        }
+
+        public Role build() {
+            Role role = new Role();
+            role.setId(id);
+            role.setType(type);
+            return role;
+        }
+
+    }
 }

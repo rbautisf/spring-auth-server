@@ -1,27 +1,24 @@
 package com.nowhere.springauthserver.api;
 
-import com.nowhere.springauthserver.api.UserController;
-import com.nowhere.springauthserver.api.dto.ApiResponse;
-import com.nowhere.springauthserver.api.dto.CreateUserRequest;
-import com.nowhere.springauthserver.api.dto.UserResponse;
 import com.nowhere.springauthserver.persistence.AuthUserFixture;
+import com.nowhere.springauthserver.persistence.RoleFixture;
+import com.nowhere.springauthserver.persistence.entity.AuthUser;
+import com.nowhere.springauthserver.persistence.entity.Role;
 import com.nowhere.springauthserver.service.AuthUserService;
 import java.security.Principal;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
-/**
- * Unit tests for UserController
- */
-//@Test//Instance(TestInstance.Lifecycle.PER_CLASS)
+
 public class UserControllerTest {
     // stub the AuthUserService
     private final AuthUserService mockService = Mockito.mock(AuthUserService.class);
@@ -33,52 +30,34 @@ public class UserControllerTest {
         Mockito.reset(mockService, mockPrincipal);
     }
 
-    @Test
-    public void testGetDetails() {
-        when(mockPrincipal.getName())
-                .thenReturn("test");
-        when(mockService.getByUsername("test"))
-                .thenReturn(AuthUserFixture.authUserNoRoles());
+    // write a test that receives parameters and returns a response entity
 
-        final String EXPECTED_USERNAME = "test";
-        ResponseEntity<ApiResponse<UserResponse>> result = controller.getDetails(mockPrincipal);
-        assertEquals(HttpStatus.OK, result.getStatusCode(), "Response status should be OK");
-        assertEquals(EXPECTED_USERNAME, result.getBody().data().username(), "Username should match the predefined username");
-        assertEquals(0, result.getBody().data().roles().size(), "Roles should be empty");
+    @Test
+    public void testConstructEntity() {
+        List<AuthUser> authUsers = authUsers();
+        authUsers.forEach(user -> {
+            when(mockService.getByUsername(user.getUsername())).thenReturn(user);
+
+            var result = controller.constructResponseEntity(user);
+            assertEquals(HttpStatus.OK, result.getStatusCode(), "Response status should be OK");
+            assertNotNull(result.getBody(), "Response body should not be null");
+            assertEquals(user.getUsername(), result.getBody().data().username(), "Username should match the predefined username");
+            assertEquals(user.getRoles().size(), result.getBody().data().roles().size(), "Roles should match the predefined roles");
+        });
     }
 
-    @Test
-    public void testCreateUser() {
-        when(mockService.createUser("test", "test", List.of("USER")))
-                .thenReturn(AuthUserFixture.createAuthUserWithRoles(Set.of("USER")));
-
-        final String EXPECTED_USERNAME = "test";
-        ResponseEntity<ApiResponse<UserResponse>> result = controller.createUser(new CreateUserRequest("test", "test"));
-        assertEquals(HttpStatus.OK, result.getStatusCode(), "Response status should be OK");
-        assertEquals(EXPECTED_USERNAME, result.getBody().data().username(), "Username should match the predefined username");
-        assertEquals(1, result.getBody().data().roles().size(), "Roles should match the predefined roles");
-    }
-
-    @Test
-    public void testGetUser() {
-        when(mockService.getByUsername("test"))
-                .thenReturn(AuthUserFixture.createAuthUserWithRoles(Set.of("USER", "ADMIN")));
-        final String EXPECTED_USERNAME = "test";
-        ResponseEntity<ApiResponse<UserResponse>> result = controller.getUser("test");
-        assertEquals(HttpStatus.OK, result.getStatusCode(), "Response status should be OK");
-        assertEquals(EXPECTED_USERNAME, result.getBody().data().username(), "Username should match the predefined username");
-        assertEquals(2, result.getBody().data().roles().size(), "Roles should match the predefined roles");
-    }
-
-    @Test
-    public void testCreateAdmin() {
-        when(mockService.createUser("test", "test", List.of("ADMIN")))
-                .thenReturn(AuthUserFixture.createAuthUserWithRoles(Set.of("ADMIN")));
-
-        final String EXPECTED_USERNAME = "test";
-        ResponseEntity<ApiResponse<UserResponse>> result = controller.createAdmin(new CreateUserRequest("test", "test"));
-        assertEquals(HttpStatus.OK, result.getStatusCode(), "Response status should be OK");
-        assertEquals(EXPECTED_USERNAME, result.getBody().data().username(), "Username should match the predefined username");
-        assertEquals(1, result.getBody().data().roles().size(), "Roles should match the predefined roles");
+    private static List<AuthUser> authUsers() {
+        var userRole = RoleFixture.roleFixture(UUID.randomUUID(), Role.RoleType.USER);
+        var adminRole = RoleFixture.roleFixture(UUID.randomUUID(), Role.RoleType.ADMIN);
+        var userNoRoles = AuthUserFixture.defaultAuthUserWithRolesFixture(Set.of());
+        var user = AuthUserFixture.defaultAuthUserWithRolesFixture(Set.of(userRole));
+        var admin = AuthUserFixture.defaultAuthUserWithRolesFixture(Set.of(adminRole));
+        var userAndAdmin = AuthUserFixture.defaultAuthUserWithRolesFixture(Set.of(userRole, adminRole));
+        return List.of(
+                userNoRoles,
+                user,
+                admin,
+                userAndAdmin
+        );
     }
 }

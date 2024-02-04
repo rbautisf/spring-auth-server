@@ -23,15 +23,23 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
     private static final String[] AUTH_WHITELIST = {
+            "/actuator/**",
             "/api-docs/**",
             "/swagger-ui/**"
     };
 
+    /**
+     * The default Security Filter Chain is responsible for processing all incoming requests to the application.
+     * Configure the jwtAuthenticationConverter to use the custom JwtAuthenticationConverterCustom.
+     *
+     *
+     * @param http the {@link HttpSecurity} to use
+     * @return the {@link SecurityFilterChain}
+     * @throws Exception if an error occurs
+     */
     @Bean
     @Order(2)
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        Converter<Jwt, AbstractAuthenticationToken> jwtAuthenticationConverter =
-                new JwtAuthenticationConverterCustom();
         // set the jwtAuthenticationConverter to the default jwtAuthenticationConverter
         http
                 .authorizeHttpRequests(authorizeHttpRequestsCustomizer)
@@ -46,7 +54,7 @@ public class SecurityConfig {
             jwt.jwtAuthenticationConverter(new JwtAuthenticationConverterCustom());
         });
     };
-    private final Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> authorizeHttpRequestsCustomizer = authorizeRequests -> {
+    private final Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> authorizeHttpRequestsCustomizer = (authorizeRequests) -> {
         authorizeRequests
                 .requestMatchers(AUTH_WHITELIST)
                 .permitAll()
