@@ -12,12 +12,12 @@ public class RoleServiceTest {
     private final RoleService roleService = new RoleServiceImpl(roleRepository);
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         Mockito.reset(roleRepository);
     }
 
     @Test
-    public void testGetByType() {
+    void testGetByType() {
         roles().forEach(role -> {
             Mockito.when(roleRepository.findByType(role.getType())).thenReturn(java.util.Optional.of(role));
             var result = roleService.getByType(role.getType().name());
@@ -26,13 +26,13 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void testGetAllRoles() {
+    void testGetAllRoles() {
         var roles = roles();
         Mockito.when(roleRepository.findAll()).thenReturn(roles);
         var result = roleService.getAllRoles();
         org.junit.jupiter.api.Assertions.assertEquals(roles, result, "Roles should match the predefined roles");
     }
-    private static List<Role> roles() {
+    private List<Role> roles() {
         return List.of(
                 new Role.Builder()
                         .id(java.util.UUID.randomUUID())

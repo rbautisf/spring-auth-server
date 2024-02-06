@@ -59,7 +59,7 @@ dependencies {
     intTestImplementation 'org.springframework.boot:spring-boot-starter-test'
     intTestImplementation 'org.springframework.security:spring-security-test'
     intTestImplementation 'com.h2database:h2'
-
+    intTestImplementation 'net.sourceforge.htmlunit:htmlunit'
     // add jakarta.persistence.EnumType to testFixtures
     testFixturesImplementation 'jakarta.persistence:jakarta.persistence-api:3.0.0'
 
