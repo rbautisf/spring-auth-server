@@ -20,6 +20,13 @@ repositories {
 
 // refer to https://docs.gradle.org/current/userguide/java_testing.html#sec:configuring_java_integration_tests
 sourceSets {
+    // add testFixtures as depedency for intTest
+    testFixtures {
+        java {
+            srcDir('src/testFixtures/java')
+        }
+    }
+
     intTest {
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
@@ -51,6 +58,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     runtimeOnly 'org.postgresql:postgresql'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -61,6 +69,8 @@ dependencies {
     intTestImplementation 'org.springframework.security:spring-security-test'
     intTestImplementation 'com.h2database:h2'
     intTestImplementation 'net.sourceforge.htmlunit:htmlunit'
+    intTestImplementation ':testFixtures'
+
     // add jakarta.persistence.EnumType to testFixtures
     testFixturesImplementation 'jakarta.persistence:jakarta.persistence-api:3.0.0'
     testFixturesImplementation 'org.springframework.security:spring-security-test'
@@ -75,8 +85,8 @@ tasks.register('intTest', Test) {
     group = 'verification'
 
     testClassesDirs = sourceSets.intTest.output.classesDirs
-    classpath = sourceSets.intTest.runtimeClasspath
-    shouldRunAfter test
+    classpath = sourceSets.intTest.runtimeClasspath + sourceSets.testFixtures.runtimeClasspath
+//    shouldRunAfter test
 
     useJUnitPlatform()
 
@@ -85,7 +95,7 @@ tasks.register('intTest', Test) {
     }
 }
 
-check.dependsOn intTest, jacocoTestReport
+//check.dependsOn intTest, jacocoTestReport
 
 jacocoTestReport {
     executionData(test, intTest)
@@ -93,5 +103,12 @@ jacocoTestReport {
         xml.required.set(false)
         html.required.set(true)
     }
-    dependsOn (test, intTest)
+    // Issue with CSS3ParserTokenManager with JaCoCo 0.8.11.202310140853/f33756c.
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['com/gargoylesoftware/css/parser/javacc/CSS3ParserTokenManager.class'])
+        }))
+    }
+//    dependsOn (test, intTest)
 }

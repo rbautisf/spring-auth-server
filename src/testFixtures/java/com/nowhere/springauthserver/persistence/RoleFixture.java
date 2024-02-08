@@ -14,7 +14,8 @@ public final class RoleFixture {
      * @return Role
      */
     public static Role roleFixture(UUID id, Role.RoleType type) {
-        return new Role.Builder()
+        return Role
+                .builder()
                 .id(id)
                 .type(type)
                 .build();

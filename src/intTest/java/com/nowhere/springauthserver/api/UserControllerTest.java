@@ -31,7 +31,7 @@ public class UserControllerTest extends BaseIntegrationTest {
     @Test
     @WithMockUser(username = DEFAULT_USERNAME, password = DEFAULT_PASSWORD, authorities = {"ROLE_USER", "SCOPE_message.read"})
     void whenUserHasRightCredentialsAccessWhoami() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/whoami")
+        mockMvc.perform(MockMvcRequestBuilders.get("/users/whoami")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(result -> {
                     assertEquals(200, result.getResponse().getStatus());
@@ -53,7 +53,7 @@ public class UserControllerTest extends BaseIntegrationTest {
         // new username to avoid collision
         var newUser = new CreateUserRequest("another@user.com", "some");
         var jsonReq = objectMapper.writeValueAsString(newUser);
-        mockMvc.perform(MockMvcRequestBuilders.post("/user")
+        mockMvc.perform(MockMvcRequestBuilders.post("/users")
                         .with(csrf()) // for csrf token in post request
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonReq))
@@ -75,7 +75,7 @@ public class UserControllerTest extends BaseIntegrationTest {
     void whenUserHasNoRightToCreateAdminUserAccessShouldBeDenied() throws Exception {
         var newUser = new CreateUserRequest("some@user.com", "some");
         var jsonReq = objectMapper.writeValueAsString(newUser);
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/admin")
+        mockMvc.perform(MockMvcRequestBuilders.post("/users/admin")
                         .with(csrf()) // for csrf token in post request
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonReq))
@@ -87,7 +87,7 @@ public class UserControllerTest extends BaseIntegrationTest {
     void whenUserHasRightToCreateAdminUserAccessShouldGranted() throws Exception {
         var newUser = new CreateUserRequest("some@user.com", "some");
         var jsonReq = objectMapper.writeValueAsString(newUser);
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/admin")
+        mockMvc.perform(MockMvcRequestBuilders.post("/users/admin")
                         .with(csrf()) // for csrf token in post request
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonReq))
@@ -107,7 +107,7 @@ public class UserControllerTest extends BaseIntegrationTest {
     @Test
     @WithMockUser(username = DEFAULT_USERNAME, password = DEFAULT_PASSWORD, authorities = {"ROLE_USER", "SCOPE_message.read"})
     void whenUserHasNoRightToGetUserAccessShouldBeDenied() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/user")
+        mockMvc.perform(MockMvcRequestBuilders.get("/users")
                         .param("username", "user@user.com")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(result -> assertEquals(403, result.getResponse().getStatus()));
@@ -116,7 +116,7 @@ public class UserControllerTest extends BaseIntegrationTest {
     @Test
     @WithMockUser(username = DEFAULT_USERNAME, password = DEFAULT_PASSWORD, authorities = {"ROLE_ADMIN", "SCOPE_message.read"})
     void whenUserHasRightToGetUserAccessShouldBeGranted() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/user")
+        mockMvc.perform(MockMvcRequestBuilders.get("/users")
                         .param("username", "user@user.com")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(result -> {

@@ -1,4 +1,7 @@
 spring:
+  threads:
+    virtual:
+      enabled: true
   datasource:
     driver-class-name: org.h2.Driver
 
@@ -7,23 +10,24 @@ spring:
       ddl-auto: none
     show-sql: true
     database-platform: org.hibernate.dialect.H2Dialect
-  threads:
-    virtual:
-      enabled: true
-
 
 rsa-key:
-  public-key:
-  private-key:
+  public-key: ${PUBLIC_KEY:}
+  private-key: ${PRIVATE_KEY:}
 
 server:
   forward-headers-strategy: native
   port: 9000
 
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
 
 logging:
   level:
     root: INFO
     org.springframework.web: DEBUG
-    org.springframework.security: DEBUG
+    org.springframework.security: INFO
     org.springframework.security.oauth2: DEBUG

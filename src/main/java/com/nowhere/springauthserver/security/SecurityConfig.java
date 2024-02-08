@@ -2,11 +2,12 @@ package com.nowhere.springauthserver.security;
 
 import com.nowhere.springauthserver.security.converter.JwtAuthenticationConverterCustom;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,14 +18,22 @@ import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
+import static com.nowhere.springauthserver.security.SecurityConstants.ACTUATOR_PATH;
+import static com.nowhere.springauthserver.security.SecurityConstants.ANY_PATH;
+import static com.nowhere.springauthserver.security.SecurityConstants.ASSETS_PATH;
+import static com.nowhere.springauthserver.security.SecurityConstants.BCRYPT_ENCODER_STRATEGY_NAME;
+import static com.nowhere.springauthserver.security.SecurityConstants.BCRYPT_STRENGTH;
+import static com.nowhere.springauthserver.security.SecurityConstants.LOGIN_PATH;
+import static com.nowhere.springauthserver.security.SecurityConstants.SIGN_UP_PATH;
+
+@Configuration(proxyBeanMethods = false)
 @EnableWebSecurity
 public class SecurityConfig {
-    private static final String[] AUTH_WHITELIST = {
-            "/actuator/**",
-            "/api-docs/**",
-            "/swagger-ui/**"
-    };
+    //value swagger path
+    @Value("${springdoc.swagger-ui.path}")
+    private String SWAGGER_PATH;
+    @Value("${springdoc.api-docs.path}")
+    private String API_DOCS_PATH;
 
     /**
      * The default Security Filter Chain is responsible for processing all incoming requests to the application.
@@ -38,10 +47,14 @@ public class SecurityConfig {
     @Bean
     @Order(2)
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        // set the jwtAuthenticationConverter to the default jwtAuthenticationConverter
         http
                 .authorizeHttpRequests(authorizeHttpRequestsCustomizer)
-                .formLogin(Customizer.withDefaults())
+                .formLogin( formLogin -> {
+                    formLogin.loginPage(LOGIN_PATH);
+                })
+//                .logout(logout->{
+//                    logout.logoutSuccessUrl(LOGIN_PATH);
+//                })
                 .cors(Customizer.withDefaults())
                 .oauth2ResourceServer(oauth2ResourceServerCustomizer);
         return http.build();
@@ -54,7 +67,14 @@ public class SecurityConfig {
     };
     private final Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> authorizeHttpRequestsCustomizer = (authorizeRequests) -> {
         authorizeRequests
-                .requestMatchers(AUTH_WHITELIST)
+                .requestMatchers(
+                        LOGIN_PATH,
+                        SIGN_UP_PATH,
+                        SWAGGER_PATH+ANY_PATH,
+                        API_DOCS_PATH+ANY_PATH,
+                        ASSETS_PATH,
+                        ACTUATOR_PATH
+                )
                 .permitAll()
                 .anyRequest()
                 .authenticated();
@@ -64,9 +84,9 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         Map<String, PasswordEncoder> encoders = new HashMap<>();
         encoders.put(
-                SecurityConstants.BCRYPT_ENCODER_STRATEGY_NAME,
-                new BCryptPasswordEncoder(SecurityConstants.BCRYPT_STRENGTH));
-        return new DelegatingPasswordEncoder(SecurityConstants.BCRYPT_ENCODER_STRATEGY_NAME, encoders);
+                BCRYPT_ENCODER_STRATEGY_NAME,
+                new BCryptPasswordEncoder(BCRYPT_STRENGTH));
+        return new DelegatingPasswordEncoder(BCRYPT_ENCODER_STRATEGY_NAME, encoders);
     }
 
 

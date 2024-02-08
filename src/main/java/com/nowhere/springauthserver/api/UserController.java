@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @EnableMethodSecurity(prePostEnabled = true)
 public class UserController {
     public static final String SCOPE_READ = "hasAuthority('SCOPE_message.read')";

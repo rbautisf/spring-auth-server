@@ -30,6 +30,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 
+import static com.nowhere.springauthserver.security.SecurityConstants.ACCESS_TOKEN_VALUE;
+import static com.nowhere.springauthserver.security.SecurityConstants.CONSENT_PAGE_URI_CUSTOM;
+import static com.nowhere.springauthserver.security.SecurityConstants.ID_TOKEN_VALUE;
+import static com.nowhere.springauthserver.security.SecurityConstants.LOGIN_PATH;
+import static com.nowhere.springauthserver.security.SecurityConstants.ROLES_CLAIM;
 import static com.nowhere.springauthserver.security.converter.ClientMetadataConfigCustom.configureCustomClientMetadataConverters;
 
 /**
@@ -55,10 +60,8 @@ public class AuthorizationServerConfig {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+                .authorizationEndpoint(authEndpoint -> authEndpoint.consentPage(CONSENT_PAGE_URI_CUSTOM))
                 // OpenID Connect 1.0
-//                .oidc(oidc->{
-//                    oidc.clientRegistrationEndpoint(Customizer.withDefaults());
-//                });
                 .oidc(oidc->{
                     // By design OIDC only supports client registration https://openid.net/specs/openid-connect-registration-1_0.html
                     oidc.clientRegistrationEndpoint(clientRegistrationEndpoint -> {
@@ -71,7 +74,7 @@ public class AuthorizationServerConfig {
         http.csrf(Customizer.withDefaults());
 
         http.exceptionHandling(exceptions -> exceptions.defaultAuthenticationEntryPointFor(
-                new LoginUrlAuthenticationEntryPoint(SecurityConstants.LOGIN_PATH),
+                new LoginUrlAuthenticationEntryPoint(LOGIN_PATH),
                 new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
         ));
 
@@ -125,12 +128,12 @@ public class AuthorizationServerConfig {
         return (JwtEncodingContext context) -> {
             Authentication principal = context.getPrincipal();
             if (Objects.equals(context.getTokenType().getValue(), OidcParameterNames.ID_TOKEN)) {
-                context.getClaims().claim(OAuth2TokenIntrospectionClaimNames.TOKEN_TYPE, SecurityConstants.ID_TOKEN_VALUE);
+                context.getClaims().claim(OAuth2TokenIntrospectionClaimNames.TOKEN_TYPE, ID_TOKEN_VALUE);
             } else if (context.getTokenType() == OAuth2TokenType.ACCESS_TOKEN) {
                 context.getClaims().claims((claims) -> {
-                    claims.put(OAuth2TokenIntrospectionClaimNames.TOKEN_TYPE, SecurityConstants.ACCESS_TOKEN_VALUE);
+                    claims.put(OAuth2TokenIntrospectionClaimNames.TOKEN_TYPE, ACCESS_TOKEN_VALUE);
                     Set<String> roles = principal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
-                    claims.put(SecurityConstants.ROLES_CLAIM, roles);
+                    claims.put(ROLES_CLAIM, roles);
                 });
             }
         };

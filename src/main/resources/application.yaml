@@ -36,8 +36,8 @@ springdoc:
 ## log in debug all oauth2
 logging:
   level:
-    root: DEBUG
-    org.springframework.web: DEBUG
-    org.springframework.security: INFO
-    org.springframework.security.oauth2: INFO
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
     org.springframework.boot.autoconfigure: INFO

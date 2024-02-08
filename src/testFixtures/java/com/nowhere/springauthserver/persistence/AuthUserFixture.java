@@ -30,7 +30,8 @@ public final class AuthUserFixture {
             boolean accountNonLocked,
             boolean credentialsNonExpired) {
 
-        return new AuthUser.Builder()
+        return AuthUser
+                .builder()
                 .id(id)
                 .username(username)
                 .password(password)
@@ -43,7 +44,8 @@ public final class AuthUserFixture {
     }
 
     public static AuthUser defaultAuthUserWithRolesFixture(Set<Role> roles) {
-        return new AuthUser.Builder()
+        return AuthUser
+                .builder()
                 .id(UUID.randomUUID())
                 .username("test")
                 .password("pass")

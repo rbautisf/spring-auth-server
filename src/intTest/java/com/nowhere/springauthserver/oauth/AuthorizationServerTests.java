@@ -2,6 +2,7 @@ package com.nowhere.springauthserver.oauth;
 
 import com.gargoylesoftware.htmlunit.HttpMethod;
 import com.gargoylesoftware.htmlunit.Page;
+import com.gargoylesoftware.htmlunit.TextPage;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebRequest;
 import com.gargoylesoftware.htmlunit.WebResponse;
@@ -11,7 +12,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.nowhere.springauthserver.config.BaseIntegrationTest;
-import com.nowhere.springauthserver.security.SecurityConstants;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,7 +20,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +30,6 @@ import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
-import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -102,11 +100,13 @@ public class AuthorizationServerTests extends BaseIntegrationTest {
         signIn(this.webClient.getPage(LOGIN_PATH), DEFAULT_USERNAME, DEFAULT_PASSWORD);
         String verifier = generateCodeVerifier();
         String challenge = generateCodeChallenge(verifier);
+        // allow redirects to go to the custom consent endpoint and then to the custom consent page
+        this.webClient.getOptions().setRedirectEnabled(true);
         HtmlPage page = webClient.getPage(generateAuthorizationRequest(challenge));
+        this.webClient.getOptions().setRedirectEnabled(false);
         assertConsentPage(page);
         WebResponse consentPage = consent(page).getWebResponse();
         assertConsentResponsePage(consentPage);
-        logout();
     }
 
     @Test
@@ -117,8 +117,10 @@ public class AuthorizationServerTests extends BaseIntegrationTest {
         signIn(this.webClient.getPage(LOGIN_PATH), DEFAULT_USERNAME, DEFAULT_PASSWORD);
         String verifier = generateCodeVerifier();
         String challenge = generateCodeChallenge(verifier);
+        this.webClient.getOptions().setRedirectEnabled(true);
         HtmlPage page = webClient.getPage(generateAuthorizationRequest(challenge));
         assertConsentPage(page);
+        this.webClient.getOptions().setRedirectEnabled(false);
         WebResponse consentPage = consent(page).getWebResponse();
 
         // get the access code from the consent response
@@ -130,7 +132,6 @@ public class AuthorizationServerTests extends BaseIntegrationTest {
         assertThat(responseToken.getStatusCode()).isEqualTo(HttpStatus.OK.value());
         var content = responseToken.getContentAsString();
         assertThat(content).contains(OAuth2TokenType.ACCESS_TOKEN.getValue());
-        logout();
     }
 
     private WebRequest buildTokenRequest(String access_code, String verifier) throws MalformedURLException {
@@ -141,12 +142,12 @@ public class AuthorizationServerTests extends BaseIntegrationTest {
         // using string format generate the request body
         var requestBody = "grant_type=%s&code=%s&redirect_uri=%s&client_id=%s&code_verifier=%s";
         request.setRequestBody(String.format(
-                requestBody,
-                AuthorizationGrantType.AUTHORIZATION_CODE.getValue(),
-                access_code,
-                REDIRECT_URI,
-                CLIENT_ID,
-                verifier
+                        requestBody,
+                        AuthorizationGrantType.AUTHORIZATION_CODE.getValue(),
+                        access_code,
+                        REDIRECT_URI,
+                        CLIENT_ID,
+                        verifier
                 )
         );
         request.setAdditionalHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE);
@@ -163,14 +164,6 @@ public class AuthorizationServerTests extends BaseIntegrationTest {
         usernameInput.type(username);
         passwordInput.type(password);
         return signInButton.click();
-    }
-
-    private void logout() throws IOException {
-        Page page = this.webClient.getPage(LOGOUT_PATH);
-        if (page instanceof HtmlPage logoutPage) {
-            HtmlButton logoutButton = logoutPage.querySelector("button");
-            if (Objects.equals(logoutButton.getId(), "Log Out")) logoutButton.click();
-        }
     }
 
     private <P extends Page> P consent(HtmlPage consentPage) throws IOException {

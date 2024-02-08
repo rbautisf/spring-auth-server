@@ -112,7 +112,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9000/user?username=test@user.com",
+							"raw": "http://localhost:9000/users?username=test@user.com",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -259,7 +259,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9000/user/whoami",
+							"raw": "http://localhost:9000/users/whoami",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -400,7 +400,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9000/user/admin",
+							"raw": "http://localhost:9000/users/admin",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -541,7 +541,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9000/user",
+							"raw": "http://localhost:9000/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
