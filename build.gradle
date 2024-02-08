@@ -4,6 +4,7 @@ plugins {
     id 'idea'
     id 'java-library' //includes 'java'
     id 'java-test-fixtures'
+    id 'jacoco'
 }
 
 group = 'com.nowhere'
@@ -54,7 +55,7 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-
+    testImplementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
 
     intTestImplementation 'org.springframework.boot:spring-boot-starter-test'
     intTestImplementation 'org.springframework.security:spring-security-test'
@@ -62,9 +63,11 @@ dependencies {
     intTestImplementation 'net.sourceforge.htmlunit:htmlunit'
     // add jakarta.persistence.EnumType to testFixtures
     testFixturesImplementation 'jakarta.persistence:jakarta.persistence-api:3.0.0'
+    testFixturesImplementation 'org.springframework.security:spring-security-test'
+    testFixturesImplementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
 
 }
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }
 tasks.register('intTest', Test) {
@@ -82,6 +85,13 @@ tasks.register('intTest', Test) {
     }
 }
 
-check.dependsOn intTest
+check.dependsOn intTest, jacocoTestReport
 
-
+jacocoTestReport {
+    executionData(test, intTest)
+    reports {
+        xml.required.set(false)
+        html.required.set(true)
+    }
+    dependsOn (test, intTest)
+}

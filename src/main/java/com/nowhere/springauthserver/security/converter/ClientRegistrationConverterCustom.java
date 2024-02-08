@@ -1,5 +1,6 @@
 package com.nowhere.springauthserver.security.converter;
 
+import com.nowhere.springauthserver.persistence.entity.AuthUser;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,11 @@ public class ClientRegistrationConverterCustom implements Converter<RegisteredCl
     ClientRegistrationConverterCustom(List<String> customClientMetadata) {
         this.customClientMetadata = customClientMetadata;
         this.delegate = new RegisteredClientOidcClientRegistrationConverter();
+    }
+
+    ClientRegistrationConverterCustom(List<String> customClientMetadata, RegisteredClientOidcClientRegistrationConverter delegate) {
+        this.customClientMetadata = customClientMetadata;
+        this.delegate = delegate;
     }
 
     @Override

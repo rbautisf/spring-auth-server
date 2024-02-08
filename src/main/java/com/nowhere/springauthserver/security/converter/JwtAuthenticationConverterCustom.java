@@ -20,8 +20,13 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
  *
  */
 public class JwtAuthenticationConverterCustom implements Converter<Jwt, AbstractAuthenticationToken> {
-
-    private final Converter<Jwt, Collection<GrantedAuthority>> jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+    private final Converter<Jwt, Collection<GrantedAuthority>> jwtGrantedAuthoritiesConverter;
+    public JwtAuthenticationConverterCustom(Converter<Jwt, Collection<GrantedAuthority>> jwtGrantedAuthoritiesConverter) {
+        this.jwtGrantedAuthoritiesConverter = jwtGrantedAuthoritiesConverter;
+    }
+    public JwtAuthenticationConverterCustom() {
+        this.jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+    }
 
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt) {

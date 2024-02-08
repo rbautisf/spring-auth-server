@@ -29,6 +29,7 @@ public final class AuthUserFixture {
             boolean accountNonExpired,
             boolean accountNonLocked,
             boolean credentialsNonExpired) {
+
         return new AuthUser.Builder()
                 .id(id)
                 .username(username)

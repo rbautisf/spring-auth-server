@@ -179,6 +179,10 @@ public class AuthUser {
             return this;
         }
 
+        public static Builder builder() {
+            return new Builder();
+        }
+
         public AuthUser build() {
             AuthUser authUser = new AuthUser();
             authUser.setId(id);

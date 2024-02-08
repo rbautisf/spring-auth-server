@@ -11,6 +11,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.nowhere.springauthserver.config.BaseIntegrationTest;
+import com.nowhere.springauthserver.security.SecurityConstants;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -24,25 +25,31 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.OAuth2Token;
+import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import static com.nowhere.springauthserver.security.SecurityConstants.LOGIN_PATH;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AuthorizationServerTests extends BaseIntegrationTest {
-    private final String AUTHORIZATION_URI = "http://localhost:9000/oauth2/token";
+    private final String TOKEN_URI = "http://localhost:9000/oauth2/token";
+    private final String AUTHORIZE_PATH = "/oauth2/authorize";
     private final String REDIRECT_URI = "https://oidcdebugger.com/debug";
+    private final String CLIENT_ID = "nowhere-client";
     private final String SHA_256 = "SHA-256";
-    private final String AUTH_CLIENT = "nowhere-client:nowhere-secret";
-    private final String BASIC_AUTH = "Basic " + Base64.getEncoder().encodeToString(AUTH_CLIENT.getBytes());
-    private final String CONTENT_TYPE = "application/x-www-form-urlencoded";
+    private final String BASIC_AUTH = "Basic " + Base64.getEncoder().encodeToString("nowhere-client:nowhere-secret".getBytes());
     private final String DEFAULT_USERNAME = "user@user.com";
     private final String DEFAULT_PASSWORD = "user";
     private final String ROOT_PATH = "/";
-    private final String LOGIN_PATH = "/login";
     private final String LOGOUT_PATH = "/logout";
+
     @Autowired
     private WebClient webClient;
     @Autowired
@@ -115,25 +122,35 @@ public class AuthorizationServerTests extends BaseIntegrationTest {
         WebResponse consentPage = consent(page).getWebResponse();
 
         // get the access code from the consent response
-        String location = consentPage.getResponseHeaderValue("location");
+        String location = consentPage.getResponseHeaderValue(HttpHeaders.LOCATION);
         String accessCode = location.substring(location.indexOf("code=") + 5);
         // get the token
         WebRequest request = buildTokenRequest(accessCode, verifier);
         WebResponse responseToken = this.webClient.loadWebResponse(request);
         assertThat(responseToken.getStatusCode()).isEqualTo(HttpStatus.OK.value());
         var content = responseToken.getContentAsString();
-        assertThat(content).contains("access_token");
+        assertThat(content).contains(OAuth2TokenType.ACCESS_TOKEN.getValue());
         logout();
     }
 
     private WebRequest buildTokenRequest(String access_code, String verifier) throws MalformedURLException {
         WebRequest request = new WebRequest(
-                new URL(AUTHORIZATION_URI),
+                new URL(TOKEN_URI),
                 HttpMethod.POST
         );
-        request.setRequestBody("grant_type=authorization_code&code=" + access_code + "&redirect_uri=" + REDIRECT_URI + "&client_id=nowhere-client&code_verifier=" + verifier);
-        request.setAdditionalHeader("Content-Type", CONTENT_TYPE);
-        request.setAdditionalHeader("Authorization", BASIC_AUTH);
+        // using string format generate the request body
+        var requestBody = "grant_type=%s&code=%s&redirect_uri=%s&client_id=%s&code_verifier=%s";
+        request.setRequestBody(String.format(
+                requestBody,
+                AuthorizationGrantType.AUTHORIZATION_CODE.getValue(),
+                access_code,
+                REDIRECT_URI,
+                CLIENT_ID,
+                verifier
+                )
+        );
+        request.setAdditionalHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE);
+        request.setAdditionalHeader(HttpHeaders.AUTHORIZATION, BASIC_AUTH);
         return request;
     }
 
@@ -213,11 +230,10 @@ public class AuthorizationServerTests extends BaseIntegrationTest {
     }
 
     private String generateAuthorizationRequest(String challenge) {
-
         return UriComponentsBuilder
-                .fromPath("/oauth2/authorize")
+                .fromPath(AUTHORIZE_PATH)
                 .queryParam("response_type", "code")
-                .queryParam("client_id", "nowhere-client")
+                .queryParam("client_id", CLIENT_ID)
                 .queryParam("scope", "message.read message.write")
                 .queryParam("code_challenge", challenge)
                 .queryParam("code_challenge_method", "S256")

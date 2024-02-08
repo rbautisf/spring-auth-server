@@ -62,6 +62,11 @@ public class Role {
         private UUID id;
         private RoleType type;
 
+        public static  Builder builder() {
+            return new Builder();
+        }
+
+
         public Builder id(UUID id) {
             this.id = id;
             return this;

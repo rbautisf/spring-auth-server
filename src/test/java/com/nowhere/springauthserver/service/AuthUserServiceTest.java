@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 public class AuthUserServiceTest {
     private final AuthUserRepository authUserRepository = Mockito.mock(AuthUserRepository.class);
     private final RoleService roleService = Mockito.mock(RoleService.class);
-    private final PasswordEncoder passwordEncoder= Mockito.mock(PasswordEncoder.class);
+    private final PasswordEncoder passwordEncoder = Mockito.mock(PasswordEncoder.class);
     private final AuthUserServiceImpl authUserService = new AuthUserServiceImpl(roleService, authUserRepository, passwordEncoder);
 
     @BeforeEach
@@ -41,18 +41,18 @@ public class AuthUserServiceTest {
         when(authUserRepository.findByUsername(authUserE.getUsername())).thenReturn(Optional.empty());
         when(passwordEncoder.encode(authUserE.getPassword())).thenReturn("testEncoded");
         when(roleService.getByType(roleE.getType().name())).thenReturn(roleE);
-        // return the argument, means the user entity was created and saved
+
         when(authUserRepository.save(any())).then(invocation -> invocation.getArgument(0));
 
         var result = authUserService.createUser(authUserE.getUsername(), authUserE.getPassword(), List.of("USER"));
 
         assertEquals(authUserE.getUsername(), result.getUsername(), "Username should match the predefined username");
-        assertEquals("testEncoded", result.getPassword() , "Password should match the predefined password");
+        assertEquals("testEncoded", result.getPassword(), "Password should match the predefined password");
         assertEquals(1, result.getRoles().size(), "Roles should match the predefined roles");
         var roleResult = result.getRoles().stream().findFirst();
         assertTrue(roleResult.isPresent(), "Role should not be null");
         assertNotNull(result.getRoles().stream().findFirst(), "Role id should not be null");
-        assertEquals(roleE.getType(), roleResult.get().getType(),  "Role should match the predefined role");
+        assertEquals(roleE.getType(), roleResult.get().getType(), "Role should match the predefined role");
     }
 
     @Test
