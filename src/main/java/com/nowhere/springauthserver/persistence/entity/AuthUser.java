@@ -128,6 +128,10 @@ public class AuthUser {
         result = 31 * result + (roles != null ? roles.hashCode() : 0);
         return result;
     }
+
+    public static Builder builder() {
+        return new Builder();
+    }
     // Create Builder methods for AuthUser to set the fields
     public static class Builder {
         private UUID id;
