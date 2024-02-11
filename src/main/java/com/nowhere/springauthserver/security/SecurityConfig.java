@@ -4,6 +4,8 @@ import com.nowhere.springauthserver.security.converter.JwtAuthenticationConverte
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.nowhere.springauthserver.security.federation.FederatedIdentityAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import static com.nowhere.springauthserver.security.SecurityConstants.ACTUATOR_PATH;
 import static com.nowhere.springauthserver.security.SecurityConstants.ANY_PATH;
@@ -49,15 +52,24 @@ public class SecurityConfig {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorizeHttpRequestsCustomizer)
-                .formLogin( formLogin -> {
-                    formLogin.loginPage(LOGIN_PATH);
-                })
+                .formLogin(formLogin ->
+                        formLogin
+                                .loginPage(LOGIN_PATH)
+                )
+                .oauth2Login(oauth2Login ->
+                        oauth2Login
+                                .loginPage(LOGIN_PATH)
+                                .successHandler(authenticationSuccessHandler())
+                )
 //                .logout(logout->{
 //                    logout.logoutSuccessUrl(LOGIN_PATH);
 //                })
                 .cors(Customizer.withDefaults())
                 .oauth2ResourceServer(oauth2ResourceServerCustomizer);
         return http.build();
+    }
+    private AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new FederatedIdentityAuthenticationSuccessHandler();
     }
 
     private final Customizer<OAuth2ResourceServerConfigurer<HttpSecurity>> oauth2ResourceServerCustomizer = oauth2ResourceServer -> {

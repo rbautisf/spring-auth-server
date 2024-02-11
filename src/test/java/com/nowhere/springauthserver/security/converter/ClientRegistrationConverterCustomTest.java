@@ -33,5 +33,6 @@ public class ClientRegistrationConverterCustomTest {
         assertEquals("testCustomMetadata", oidcClientRegistration.getClaims().get("customMetadata"));
     }
 
+
 }
 

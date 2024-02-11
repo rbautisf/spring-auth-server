@@ -62,6 +62,7 @@ public class AuthorizationServerConfig {
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 .authorizationEndpoint(authEndpoint -> authEndpoint.consentPage(CONSENT_PAGE_URI_CUSTOM))
                 // OpenID Connect 1.0
+
                 .oidc(oidc->{
                     // By design OIDC only supports client registration https://openid.net/specs/openid-connect-registration-1_0.html
                     oidc.clientRegistrationEndpoint(clientRegistrationEndpoint -> {

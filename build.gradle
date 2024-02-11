@@ -56,6 +56,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -69,7 +71,8 @@ dependencies {
     intTestImplementation 'org.springframework.security:spring-security-test'
     intTestImplementation 'com.h2database:h2'
     intTestImplementation 'net.sourceforge.htmlunit:htmlunit'
-    intTestImplementation ':testFixtures'
+    intTestImplementation project.getDependencies().testFixtures(project)
+
 
     // add jakarta.persistence.EnumType to testFixtures
     testFixturesImplementation 'jakarta.persistence:jakarta.persistence-api:3.0.0'
@@ -85,8 +88,7 @@ tasks.register('intTest', Test) {
     group = 'verification'
 
     testClassesDirs = sourceSets.intTest.output.classesDirs
-    classpath = sourceSets.intTest.runtimeClasspath + sourceSets.testFixtures.runtimeClasspath
-//    shouldRunAfter test
+    classpath = sourceSets.intTest.runtimeClasspath
 
     useJUnitPlatform()
 
@@ -95,7 +97,7 @@ tasks.register('intTest', Test) {
     }
 }
 
-//check.dependsOn intTest, jacocoTestReport
+check.dependsOn intTest, jacocoTestReport
 
 jacocoTestReport {
     executionData(test, intTest)
