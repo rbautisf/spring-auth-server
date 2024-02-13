@@ -4,7 +4,6 @@ import com.nowhere.springauthserver.persistence.entity.AuthUser;
 import com.nowhere.springauthserver.persistence.entity.Role;
 import com.nowhere.springauthserver.persistence.repository.AuthUserRepository;
 import jakarta.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,7 +31,7 @@ public class AuthUserServiceImpl implements AuthUserService, UserDetailsService 
 
     @Transactional
     @Override
-    public AuthUser createUser(String username, String password, List<String> roles) {
+    public AuthUser createUser(String username, String password, Set<String> roles) {
         if (username == null || password == null)
             throw new IllegalArgumentException("Username and password are required");
         Optional<AuthUser> user = authUserRepository.findByUsername((username));
@@ -59,6 +58,14 @@ public class AuthUserServiceImpl implements AuthUserService, UserDetailsService 
     }
 
     @Transactional
+    @Override
+    public void createUserIfNotExists(String username) {
+        if (authUserRepository.findByUsername(username).isEmpty()) {
+            // Todo create random password and trigger mechanism to send it to the user
+            createUser(username, "password", Set.of("USER"));
+        }
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AuthUser user = getByUsername(username);

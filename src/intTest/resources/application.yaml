@@ -1,4 +1,22 @@
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github-idp:
+            provider: github
+            client-id: ${GITHUB_CLIENT_ID:github-client-id}
+            client-secret: ${GITHUB_CLIENT_SECRET:github-client-secret}
+            scope:
+              - user:email
+              - read:user
+            client-name: Sign in with GitHub
+        provider:
+          github:
+            authorization-uri: https://github.com/login/oauth/authorize
+            token-uri: https://github.com/login/oauth/access_token
+            user-info-uri: https://api.github.com/user
+            user-name-attribute: email
   threads:
     virtual:
       enabled: true

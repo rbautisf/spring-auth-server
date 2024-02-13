@@ -27,7 +27,7 @@ public class AuthUser {
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

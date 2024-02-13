@@ -9,9 +9,11 @@ import com.nowhere.springauthserver.service.AuthUserService;
 import jakarta.websocket.server.PathParam;
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,13 +36,14 @@ public class UserController {
     @PreAuthorize(SCOPE_READ)
     @GetMapping("/whoami")
     public ResponseEntity<ApiResponse<UserResponse>> getDetails(Principal principal) {
+
         AuthUser user = authUserService.getByUsername(principal.getName());
         return constructResponseEntity(user);
     }
 
     @PostMapping
     public ResponseEntity<ApiResponse<UserResponse>> createUser(@RequestBody CreateUserRequest createUserRequest) {
-        AuthUser user = authUserService.createUser(createUserRequest.username(), createUserRequest.password(), List.of("USER"));
+        AuthUser user = authUserService.createUser(createUserRequest.username(), createUserRequest.password(), Set.of("USER"));
         return constructResponseEntity(user);
     }
 
@@ -54,7 +57,7 @@ public class UserController {
     @PreAuthorize(WRITE_AND_ADMIN)
     @PostMapping("/admin")
     public ResponseEntity<ApiResponse<UserResponse>> createAdmin(@RequestBody CreateUserRequest createUserRequest) {
-        AuthUser user = authUserService.createUser(createUserRequest.username(), createUserRequest.password(), List.of("ADMIN"));
+        AuthUser user = authUserService.createUser(createUserRequest.username(), createUserRequest.password(), Set.of("ADMIN"));
         return constructResponseEntity(user);
     }
 

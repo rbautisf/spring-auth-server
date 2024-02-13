@@ -44,7 +44,7 @@ public class AuthUserServiceTest {
 
         when(authUserRepository.save(any())).then(invocation -> invocation.getArgument(0));
 
-        var result = authUserService.createUser(authUserE.getUsername(), authUserE.getPassword(), List.of("USER"));
+        var result = authUserService.createUser(authUserE.getUsername(), authUserE.getPassword(), Set.of("USER"));
 
         assertEquals(authUserE.getUsername(), result.getUsername(), "Username should match the predefined username");
         assertEquals("testEncoded", result.getPassword(), "Password should match the predefined password");

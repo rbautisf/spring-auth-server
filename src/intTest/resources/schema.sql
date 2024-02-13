@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS oauth2_authorization (
                                              principal_name varchar(200) NOT NULL,
                                              authorization_grant_type varchar(100) NOT NULL,
                                              authorized_scopes varchar(1000) DEFAULT NULL,
-                                             attributes character varying(4000) DEFAULT NULL,
+                                             attributes varchar DEFAULT NULL,
                                              state varchar(500) DEFAULT NULL,
                                              authorization_code_value character varying(4000) DEFAULT NULL,
                                              authorization_code_issued_at timestamp DEFAULT NULL,

@@ -1,19 +1,21 @@
 services:
   #  Uncomment once you have the local image built
-  authorization-server:
-    container_name: authorization-server
-    image: authorization-server:latest
-    environment:
-      - DATASOURCE_URL=jdbc:postgresql://postgres:5432/oauth_nowhere
-      - DB_USERNAME=${POSTGRES_USER}
-      - DB_PASSWORD=${POSTGRES_PW}
-      - PRIVATE_KEY=${PRIVATE_KEY}
-      - PUBLIC_KEY=${PUBLIC_KEY}
-    ports:
-      - "9000:9000"
-    restart: always
-    depends_on:
-      - postgres
+#  authorization-server:
+#    container_name: authorization-server
+#    image: authorization-server:latest
+#    environment:
+#      - DATASOURCE_URL=jdbc:postgresql://postgres:5432/oauth_nowhere
+#      - DB_USERNAME=${POSTGRES_USER}
+#      - DB_PASSWORD=${POSTGRES_PW}
+#      - PRIVATE_KEY=${PRIVATE_KEY}
+#      - PUBLIC_KEY=${PUBLIC_KEY}
+#      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+#      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
+#    ports:
+#      - "9000:9000"
+#    restart: always
+#    depends_on:
+#      - postgres
   postgres:
     container_name: postgres
     image: postgres:latest
@@ -33,17 +35,17 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - postgres-data:/var/lib/postgresql/data
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4:latest
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PW}
-    ports:
-      - "5050:80"
-    restart: always
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
+#  pgadmin:
+#    container_name: pgadmin
+#    image: dpage/pgadmin4:latest
+#    environment:
+#      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+#      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PW}
+#    ports:
+#      - "5050:80"
+#    restart: always
+#    volumes:
+#      - pgadmin-data:/var/lib/pgadmin
 volumes:
   postgres-data:
   pgadmin-data:

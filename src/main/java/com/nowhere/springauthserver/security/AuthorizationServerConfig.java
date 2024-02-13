@@ -5,9 +5,6 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -15,26 +12,16 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.oauth2.core.OAuth2TokenIntrospectionClaimNames;
-import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
-import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
-import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 
-import static com.nowhere.springauthserver.security.SecurityConstants.ACCESS_TOKEN_VALUE;
 import static com.nowhere.springauthserver.security.SecurityConstants.CONSENT_PAGE_URI_CUSTOM;
-import static com.nowhere.springauthserver.security.SecurityConstants.ID_TOKEN_VALUE;
 import static com.nowhere.springauthserver.security.SecurityConstants.LOGIN_PATH;
-import static com.nowhere.springauthserver.security.SecurityConstants.ROLES_CLAIM;
 import static com.nowhere.springauthserver.security.converter.ClientMetadataConfigCustom.configureCustomClientMetadataConverters;
 
 /**
@@ -62,8 +49,8 @@ public class AuthorizationServerConfig {
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 .authorizationEndpoint(authEndpoint -> authEndpoint.consentPage(CONSENT_PAGE_URI_CUSTOM))
                 // OpenID Connect 1.0
-
                 .oidc(oidc->{
+                    // activate endpoint to get oidc id token
                     // By design OIDC only supports client registration https://openid.net/specs/openid-connect-registration-1_0.html
                     oidc.clientRegistrationEndpoint(clientRegistrationEndpoint -> {
                         clientRegistrationEndpoint.authenticationProviders(configureCustomClientMetadataConverters());
@@ -116,27 +103,4 @@ public class AuthorizationServerConfig {
         return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
     }
 
-    /**
-     * Customizes the JWT for the Authorization Server.
-     * This customizer adds the token type claim to the JWT.
-     * The token type claim is used to indicate the type of token.
-     * The token type claim is set to "access_token" for access tokens and "id_token" for ID tokens.
-     * Additionally, the customizer adds the roles claim to the access token.
-     * @return the {@link OAuth2TokenCustomizer}
-     */
-    @Bean
-    public OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
-        return (JwtEncodingContext context) -> {
-            Authentication principal = context.getPrincipal();
-            if (Objects.equals(context.getTokenType().getValue(), OidcParameterNames.ID_TOKEN)) {
-                context.getClaims().claim(OAuth2TokenIntrospectionClaimNames.TOKEN_TYPE, ID_TOKEN_VALUE);
-            } else if (context.getTokenType() == OAuth2TokenType.ACCESS_TOKEN) {
-                context.getClaims().claims((claims) -> {
-                    claims.put(OAuth2TokenIntrospectionClaimNames.TOKEN_TYPE, ACCESS_TOKEN_VALUE);
-                    Set<String> roles = principal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
-                    claims.put(ROLES_CLAIM, roles);
-                });
-            }
-        };
-    }
 }

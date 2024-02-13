@@ -1,5 +1,5 @@
 ## Docker image for Springboot application gradle
-FROM  amazoncorretto:17-alpine-jdk
+FROM  amazoncorretto:21-alpine-jdk
 ARG JAR_FILE=build/libs/*-SNAPSHOT.jar
 COPY ${JAR_FILE} app.jar
 #Expose the authorization server port and the db port

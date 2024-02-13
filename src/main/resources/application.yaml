@@ -3,26 +3,20 @@ spring:
     oauth2:
       client:
         registration:
-#          google-idp:
-#            provider: google
-#            client-id: ${GOOGLE_CLIENT_ID:google-client-id}
-#            client-secret: ${GOOGLE_CLIENT_SECRET:google-client-secret}
-#            scope: openid, https://www.googleapis.com/auth/userinfo.profile, https://www.googleapis.com/auth/userinfo.email
-#            client-name: Sign in with Google
           github-idp:
             provider: github
             client-id: ${GITHUB_CLIENT_ID:github-client-id}
             client-secret: ${GITHUB_CLIENT_SECRET:github-client-secret}
-            scope: user
+            scope:
+              - user:email
+              - read:user
             client-name: Sign in with GitHub
         provider:
-#          google:
-#            user-name-attribute: email
           github:
             authorization-uri: https://github.com/login/oauth/authorize
             token-uri: https://github.com/login/oauth/access_token
             user-info-uri: https://api.github.com/user
-            user-name-attribute: login
+            user-name-attribute: email
   threads:
     virtual:
       enabled: true
@@ -62,6 +56,7 @@ logging:
   level:
     root: INFO
     org.springframework.web: INFO
-    org.springframework.security: DEBUG
-    org.springframework.security.oauth2: DEBUG
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+    org.springframework.security.oauth2.client: INFO
     org.springframework.boot.autoconfigure: INFO
