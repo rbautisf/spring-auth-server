@@ -20,13 +20,6 @@ repositories {
 
 // refer to https://docs.gradle.org/current/userguide/java_testing.html#sec:configuring_java_integration_tests
 sourceSets {
-    // add testFixtures as depedency for intTest
-    testFixtures {
-        java {
-            srcDir('src/testFixtures/java')
-        }
-    }
-
     intTest {
         compileClasspath += sourceSets.main.output
         runtimeClasspath += sourceSets.main.output
@@ -97,8 +90,6 @@ tasks.register('intTest', Test) {
     }
 }
 
-check.dependsOn intTest, jacocoTestReport
-
 jacocoTestReport {
     executionData(test, intTest)
     reports {
@@ -112,5 +103,7 @@ jacocoTestReport {
                     exclude: ['com/gargoylesoftware/css/parser/javacc/CSS3ParserTokenManager.class'])
         }))
     }
-//    dependsOn (test, intTest)
+    dependsOn (test, intTest)
 }
+
+check.dependsOn intTest, jacocoTestReport
