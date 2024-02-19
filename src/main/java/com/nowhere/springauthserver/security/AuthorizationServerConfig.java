@@ -5,6 +5,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -12,6 +13,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.ExceptionHandlingConfigurer;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
@@ -22,16 +24,16 @@ import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 
 import static com.nowhere.springauthserver.security.SecurityConstants.CONSENT_PAGE_URI_CUSTOM;
 import static com.nowhere.springauthserver.security.SecurityConstants.LOGIN_PATH;
-import static com.nowhere.springauthserver.security.converter.ClientMetadataConfigCustom.configureCustomClientMetadataConverters;
 
 /**
  * The Authorization Server Configuration.
  * Is responsible for issuing access tokens to the client after successfully authenticating the resource owner and obtaining authorization.
  * The Authorization Server is a role defined in the OAuth 2.0 Authorization Framework.
- *
  */
 @Configuration(proxyBeanMethods = false)
 public class AuthorizationServerConfig {
+
+    private final List<String> registeredClientMetadataCustomClaims = List.of("logo_uri", "contacts", "application_type", "environment");
 
     /**
      * The Authorization Server Security Filter Chain is responsible for processing
@@ -46,28 +48,44 @@ public class AuthorizationServerConfig {
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 
-        http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
-                .authorizationEndpoint(authEndpoint -> authEndpoint.consentPage(CONSENT_PAGE_URI_CUSTOM))
-                // OpenID Connect 1.0
-                .oidc(oidc->{
-                    // activate endpoint to get oidc id token
-                    // By design OIDC only supports client registration https://openid.net/specs/openid-connect-registration-1_0.html
-                    oidc.clientRegistrationEndpoint(clientRegistrationEndpoint -> {
-                        clientRegistrationEndpoint.authenticationProviders(configureCustomClientMetadataConverters());
-                    });
-                });
+        OAuth2AuthorizationServerConfigurer configurer = http.getConfigurer(OAuth2AuthorizationServerConfigurer.class);
+        configurer.authorizationEndpoint(authEndpoint -> authEndpoint.consentPage(CONSENT_PAGE_URI_CUSTOM));
+        applyOidcConfiguration(configurer);
 
-        http.cors(Customizer.withDefaults());
-
+        http.cors(Customizer.withDefaults()); // require  CorsConfigurationSource bean
         http.csrf(Customizer.withDefaults());
+        http.exceptionHandling(exceptionHandlingCustomizer());
+        http.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 
-        http.exceptionHandling(exceptions -> exceptions.defaultAuthenticationEntryPointFor(
+        return http.build();
+    }
+
+    /**
+     * Applies the OIDC (OpenID Connect) configuration to the provided OAuth2AuthorizationServerConfigurer.
+     *
+     * @param configurer the OAuth2AuthorizationServerConfigurer to apply the OIDC configuration to
+     */
+    private void applyOidcConfiguration(OAuth2AuthorizationServerConfigurer configurer) {
+        configurer.oidc(oidc -> {
+            // By design OIDC only supports client registration https://openid.net/specs/openid-connect-registration-1_0.html
+            oidc.clientRegistrationEndpoint(clientRegistrationEndpoint -> {
+                clientRegistrationEndpoint.authenticationProviders(
+                        new OidcClientMetadataConfigurer(registeredClientMetadataCustomClaims)
+                );
+            });
+        });
+    }
+
+    /**
+     * Returns a customizer for exception handling configuration in the HttpSecurity.
+     *
+     * @return a Customizer object for exception handling configuration
+     */
+    private Customizer<ExceptionHandlingConfigurer<HttpSecurity>> exceptionHandlingCustomizer() {
+        return exceptions -> exceptions.defaultAuthenticationEntryPointFor(
                 new LoginUrlAuthenticationEntryPoint(LOGIN_PATH),
                 new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
-        ));
-
-        http.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
-        return http.build();
+        );
     }
 
     /**

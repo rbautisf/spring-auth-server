@@ -9,7 +9,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class CorsConfig {
     private static final List<String> ALLOWED_HEADERS = List.of(
             "Access-Control-Allow-Origin",

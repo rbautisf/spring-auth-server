@@ -21,12 +21,11 @@ public class RegisteredClientConverterCustom implements Converter<OidcClientRegi
     private final List<String> customClientMetadata;
     private final OidcClientRegistrationRegisteredClientConverter delegate;
 
-    RegisteredClientConverterCustom(List<String> customClientMetadata) {
-        this.customClientMetadata = customClientMetadata;
-        this.delegate = new OidcClientRegistrationRegisteredClientConverter();
+    public RegisteredClientConverterCustom(List<String> customClientMetadata) {
+        this(customClientMetadata, new OidcClientRegistrationRegisteredClientConverter());
     }
 
-    RegisteredClientConverterCustom(List<String> customClientMetadata, OidcClientRegistrationRegisteredClientConverter delegate) {
+    public RegisteredClientConverterCustom(List<String> customClientMetadata, OidcClientRegistrationRegisteredClientConverter delegate) {
         this.customClientMetadata = customClientMetadata;
         this.delegate = delegate;
     }

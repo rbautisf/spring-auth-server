@@ -71,7 +71,7 @@ public class AuthorizationServerTests extends BaseIntegrationTest {
         assertLoginPage(page);
         this.webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
         WebResponse signInResponse = signIn(page, DEFAULT_USERNAME, DEFAULT_PASSWORD).getWebResponse();
-        assertThat(signInResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND.value());    // there is no "default" index page
+        assertThat(signInResponse.getStatusCode()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED.value());    // Error page
     }
 
     @Test

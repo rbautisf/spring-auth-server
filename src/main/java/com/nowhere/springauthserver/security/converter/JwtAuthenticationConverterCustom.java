@@ -25,7 +25,7 @@ public class JwtAuthenticationConverterCustom implements Converter<Jwt, Abstract
         this.jwtGrantedAuthoritiesConverter = jwtGrantedAuthoritiesConverter;
     }
     public JwtAuthenticationConverterCustom() {
-        this.jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        this(new JwtGrantedAuthoritiesConverter());
     }
 
     @Override

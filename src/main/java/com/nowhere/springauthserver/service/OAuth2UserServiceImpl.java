@@ -1,8 +1,11 @@
 package com.nowhere.springauthserver.service;
 
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -14,13 +17,14 @@ import org.springframework.util.StringUtils;
 @Service
 public class OAuth2UserServiceImpl extends DefaultOAuth2UserService {
     private final AuthUserService authUserService;
+    private final Logger log = LoggerFactory.getLogger(OAuth2UserServiceImpl.class);
 
     public OAuth2UserServiceImpl(AuthUserService authUserService) {
         this.authUserService = authUserService;
     }
 
     @Override
-    public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) {
+    public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         // delegate to the default implementation
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
         persistIfNotExist(oAuth2UserRequest, oAuth2User);
@@ -36,6 +40,9 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService {
             usernameAttributeName = "sub";
         }
         String username = userAttributes.get(usernameAttributeName).toString();
+        if(StringUtils.isEmpty(username)) {
+            log.error("Username is empty on OAuth2User. Cannot persist user details.");
+        }
         authUserService.createUserIfNotExists(username);
     }
 }

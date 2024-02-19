@@ -57,7 +57,6 @@ public class AuthUserServiceImpl implements AuthUserService, UserDetailsService 
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    @Transactional
     @Override
     public void createUserIfNotExists(String username) {
         if (authUserRepository.findByUsername(username).isEmpty()) {
