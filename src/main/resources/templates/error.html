@@ -9,7 +9,7 @@
 <body>
 <div class="container">
     <div class="error-header">
-        <img src="/assets/img/nwhead.png" alt="Header Image">
+        <img th:src="@{/assets/img/nwhead.png}" alt="Header Image">
     </div>
     <h1 th:text="${errorTitle}"></h1>
     <p th:text="${errorMessage}"></p>

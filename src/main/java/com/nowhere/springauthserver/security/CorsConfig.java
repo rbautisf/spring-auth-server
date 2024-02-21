@@ -17,7 +17,7 @@ public class CorsConfig {
             "Authorization"
     );
     private static final List<String> ALLOWED_METHODS = List.of("POST");
-    private static final List<String> ALLOWED_ALL = List.of("http://localhost:9001", "http:localhost:9000");
+    private static final List<String> ALLOWED_ALL = List.of("http://localhost:9001", "http:localhost:9000", "http://localhost:80", "http://localhost");
 
     /**
      * CORS configuration for the Authorization Server.

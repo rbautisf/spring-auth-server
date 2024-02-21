@@ -1,4 +1,10 @@
 services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
   #  Uncomment once you have the local image built
 #  authorization-server:
 #    container_name: authorization-server

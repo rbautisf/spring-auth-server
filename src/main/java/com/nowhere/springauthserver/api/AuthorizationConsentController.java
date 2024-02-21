@@ -53,7 +53,7 @@ public class AuthorizationConsentController {
         model.addAttribute("scopes", withDescription(scopeMap.get("scopesToApprove")));
         model.addAttribute("previouslyApprovedScopes", withDescription(scopeMap.get("previouslyApprovedScopes")));
         model.addAttribute("principalName", principal.getName());
-        model.addAttribute("requestURI", "/oauth2/authorize");
+        model.addAttribute("requestURI", "/auth-server/oauth2/authorize");
         model.addAttribute("userCode", userCode);
         return "consent";
     }

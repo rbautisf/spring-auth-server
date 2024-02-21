@@ -1,3 +1,9 @@
+server:
+  port: 9000
+  servlet:
+    context-path: /auth-server
+  forward-headers-strategy: native
+
 spring:
   security:
     oauth2:
@@ -45,10 +51,6 @@ spring:
 rsa-key:
   private-key: ${PRIVATE_KEY:classpath:private-pkcs8.pem}
   public-key: ${PUBLIC_KEY:classpath:public.pem}
-
-server:
-  forward-headers-strategy: native
-  port: 9000
 
 springdoc:
   api-docs:

@@ -57,7 +57,7 @@ public class UserController {
     @PreAuthorize(WRITE_AND_ADMIN)
     @PostMapping("/admin")
     public ResponseEntity<ApiResponse<UserResponse>> createAdmin(@RequestBody CreateUserRequest createUserRequest) {
-        AuthUser user = authUserService.createUser(createUserRequest.username(), createUserRequest.password(), Set.of("ADMIN"));
+        AuthUser user = authUserService.createUser(createUserRequest.username(), createUserRequest.password(), Set.of("USER","ADMIN"));
         return constructResponseEntity(user);
     }
 
