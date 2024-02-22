@@ -5,6 +5,9 @@ server:
   forward-headers-strategy: native
 
 spring:
+  data:
+    redis:
+      port: ${REDIS_PORT:6379}
   security:
     oauth2:
       client:

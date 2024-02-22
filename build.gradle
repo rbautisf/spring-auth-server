@@ -72,7 +72,7 @@ dependencies {
     intTestImplementation "org.springframework.boot:spring-boot-starter-data-redis"
     intTestImplementation 'org.springframework.session:spring-session-data-redis'
     intTestImplementation project.getDependencies().testFixtures(project)
-
+    intTestImplementation 'it.ozimov:embedded-redis:0.7.3' exclude(group: 'org.slf4j', module: 'slf4j-simple')
 
     // add jakarta.persistence.EnumType to testFixtures
     testFixturesImplementation 'jakarta.persistence:jakarta.persistence-api:3.0.0'
