@@ -45,7 +45,7 @@
 								},
 								{
 									"key": "accessToken",
-									"value": "",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiYXVkIjoibm93aGVyZS1jbGllbnQiLCJuYmYiOjE3MDU0NjE1NjEsInNjb3BlIjpbIm9wZW5pZCIsIm1lc3NhZ2UucmVhZCIsIm1lc3NhZ2Uud3JpdGUiXSwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTAwMCIsImV4cCI6MTcwNTU0Nzk2MSwidG9rZW5fdHlwZSI6ImFjY2VzcyB0b2tlbiIsImlhdCI6MTcwNTQ2MTU2MSwianRpIjoiMTllZGQ3MjAtZGVhMS00NzU5LThjMzEtYzMxZjMzZjQ0ODY3In0.W466_OBSznRrBXRlMuu_p-jfaTf2rOuxYd8fa6PX3Kz4MDSIjZmnbmgXW4g8NSqXL1budYU6BDvcFvMhpRbZefr4gwU9xZaHq6Iop8oetHcvvphw2_iQ8VXQ-l17lY6RX8hkJRnk-aNacg5qxhR2cUQi67W5_W7q8Paedcs2vrJNvcrQsLYVd3B1tEq-BfuEcUEGbppDBqsYi1_JeZ6_kPtzmS7IptSI6VbIZZynP1PIZ_CWKOxNIxMiDrlUZRLfnIQsrK43FPoboctjrJjxIcKACmKTqKRS0bwJdr09QJ_By2g1JKJT-Jgwn_XEc73Q7lkXV-X4bRm4Vg2xDsagmw",
 									"type": "string"
 								},
 								{
@@ -112,14 +112,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9000/users?username=test@user.com",
+							"raw": "http://localhost:9000/users?username=rodrigo.bau.fon@gmail.com",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "9000",
 							"path": [
-								"user"
+								"users"
 							],
 							"query": [
 								{
@@ -134,7 +134,7 @@
 								},
 								{
 									"key": "code",
-									"value": "",
+									"value": "rXUnYfQ-3cqaewRTaqPZxivnuERDstsNqTL4kAuS2Xa3byeCZLP0OiGUO7fNmmv4FgyVPNoK1FX6PtXTotU3zZ4MNkivXWKUPlMjgP1nQ6Shuja8yOCB0yIZRsZDCDtU",
 									"disabled": true
 								},
 								{
@@ -149,7 +149,7 @@
 								},
 								{
 									"key": "username",
-									"value": "test@user.com"
+									"value": "rodrigo.bau.fon@gmail.com"
 								}
 							]
 						}
@@ -167,7 +167,7 @@
 							"oauth2": [
 								{
 									"key": "scope",
-									"value": "openid message.read",
+									"value": "openid profile",
 									"type": "string"
 								},
 								{
@@ -192,7 +192,7 @@
 								},
 								{
 									"key": "accessToken",
-									"value": "",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiYXVkIjoibm93aGVyZS1jbGllbnQiLCJuYmYiOjE3MDU0NjE1NjEsInNjb3BlIjpbIm9wZW5pZCIsIm1lc3NhZ2UucmVhZCIsIm1lc3NhZ2Uud3JpdGUiXSwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTAwMCIsImV4cCI6MTcwNTU0Nzk2MSwidG9rZW5fdHlwZSI6ImFjY2VzcyB0b2tlbiIsImlhdCI6MTcwNTQ2MTU2MSwianRpIjoiMTllZGQ3MjAtZGVhMS00NzU5LThjMzEtYzMxZjMzZjQ0ODY3In0.W466_OBSznRrBXRlMuu_p-jfaTf2rOuxYd8fa6PX3Kz4MDSIjZmnbmgXW4g8NSqXL1budYU6BDvcFvMhpRbZefr4gwU9xZaHq6Iop8oetHcvvphw2_iQ8VXQ-l17lY6RX8hkJRnk-aNacg5qxhR2cUQi67W5_W7q8Paedcs2vrJNvcrQsLYVd3B1tEq-BfuEcUEGbppDBqsYi1_JeZ6_kPtzmS7IptSI6VbIZZynP1PIZ_CWKOxNIxMiDrlUZRLfnIQsrK43FPoboctjrJjxIcKACmKTqKRS0bwJdr09QJ_By2g1JKJT-Jgwn_XEc73Q7lkXV-X4bRm4Vg2xDsagmw",
 									"type": "string"
 								},
 								{
@@ -259,7 +259,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9000/users/whoami",
+							"raw": "http://localhost:9000/user/whoami",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -282,7 +282,7 @@
 								},
 								{
 									"key": "code",
-									"value": "",
+									"value": "rXUnYfQ-3cqaewRTaqPZxivnuERDstsNqTL4kAuS2Xa3byeCZLP0OiGUO7fNmmv4FgyVPNoK1FX6PtXTotU3zZ4MNkivXWKUPlMjgP1nQ6Shuja8yOCB0yIZRsZDCDtU",
 									"disabled": true
 								},
 								{
@@ -307,9 +307,31 @@
 							"type": "oauth2",
 							"oauth2": [
 								{
-									"key": "scope",
-									"value": "openid message.read message.write",
+									"key": "accessTokenUrl",
+									"value": "http://localhost/auth-server/oauth2/token",
 									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "http://localhost/auth-server/oauth2/authorize",
+									"type": "string"
+								},
+								{
+									"key": "scope",
+									"value": "openid profile message.write message.read",
+									"type": "string"
+								},
+								{
+									"key": "tokenRequestParams",
+									"value": [
+										{
+											"key": "token",
+											"value": "id_token",
+											"enabled": true,
+											"send_as": "request_header"
+										}
+									],
+									"type": "any"
 								},
 								{
 									"key": "redirect_uri",
@@ -333,7 +355,7 @@
 								},
 								{
 									"key": "accessToken",
-									"value": "",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiYXVkIjoibm93aGVyZS1jbGllbnQiLCJuYmYiOjE3MDU0NjE1NjEsInNjb3BlIjpbIm9wZW5pZCIsIm1lc3NhZ2UucmVhZCIsIm1lc3NhZ2Uud3JpdGUiXSwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTAwMCIsImV4cCI6MTcwNTU0Nzk2MSwidG9rZW5fdHlwZSI6ImFjY2VzcyB0b2tlbiIsImlhdCI6MTcwNTQ2MTU2MSwianRpIjoiMTllZGQ3MjAtZGVhMS00NzU5LThjMzEtYzMxZjMzZjQ0ODY3In0.W466_OBSznRrBXRlMuu_p-jfaTf2rOuxYd8fa6PX3Kz4MDSIjZmnbmgXW4g8NSqXL1budYU6BDvcFvMhpRbZefr4gwU9xZaHq6Iop8oetHcvvphw2_iQ8VXQ-l17lY6RX8hkJRnk-aNacg5qxhR2cUQi67W5_W7q8Paedcs2vrJNvcrQsLYVd3B1tEq-BfuEcUEGbppDBqsYi1_JeZ6_kPtzmS7IptSI6VbIZZynP1PIZ_CWKOxNIxMiDrlUZRLfnIQsrK43FPoboctjrJjxIcKACmKTqKRS0bwJdr09QJ_By2g1JKJT-Jgwn_XEc73Q7lkXV-X4bRm4Vg2xDsagmw",
 									"type": "string"
 								},
 								{
@@ -367,16 +389,6 @@
 									"type": "string"
 								},
 								{
-									"key": "accessTokenUrl",
-									"value": "http://localhost:9000/oauth2/token",
-									"type": "string"
-								},
-								{
-									"key": "authUrl",
-									"value": "http://localhost:9000/oauth2/authorize",
-									"type": "string"
-								},
-								{
 									"key": "useBrowser",
 									"value": false,
 									"type": "boolean"
@@ -392,7 +404,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"username\": \"admin@user.com\",\r\n  \"password\": \"admin\"\r\n}",
+							"raw": "{\r\n  \"username\": \"admian@user.com\",\r\n  \"password\": \"admin\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -400,14 +412,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9000/users/admin",
+							"raw": "http://localhost:9000/auth-server/users/admin",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "9000",
 							"path": [
-								"user",
+								"auth-server",
+								"users",
 								"admin"
 							],
 							"query": [
@@ -423,7 +436,7 @@
 								},
 								{
 									"key": "code",
-									"value": "",
+									"value": "rXUnYfQ-3cqaewRTaqPZxivnuERDstsNqTL4kAuS2Xa3byeCZLP0OiGUO7fNmmv4FgyVPNoK1FX6PtXTotU3zZ4MNkivXWKUPlMjgP1nQ6Shuja8yOCB0yIZRsZDCDtU",
 									"disabled": true
 								},
 								{
@@ -443,13 +456,16 @@
 				},
 				{
 					"name": "Create User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "oauth2",
 							"oauth2": [
 								{
 									"key": "scope",
-									"value": "",
+									"value": "message.read",
 									"type": "string"
 								},
 								{
@@ -474,7 +490,7 @@
 								},
 								{
 									"key": "accessToken",
-									"value": "",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiYXVkIjoibm93aGVyZS1jbGllbnQiLCJuYmYiOjE3MDU0NjE1NjEsInNjb3BlIjpbIm9wZW5pZCIsIm1lc3NhZ2UucmVhZCIsIm1lc3NhZ2Uud3JpdGUiXSwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTAwMCIsImV4cCI6MTcwNTU0Nzk2MSwidG9rZW5fdHlwZSI6ImFjY2VzcyB0b2tlbiIsImlhdCI6MTcwNTQ2MTU2MSwianRpIjoiMTllZGQ3MjAtZGVhMS00NzU5LThjMzEtYzMxZjMzZjQ0ODY3In0.W466_OBSznRrBXRlMuu_p-jfaTf2rOuxYd8fa6PX3Kz4MDSIjZmnbmgXW4g8NSqXL1budYU6BDvcFvMhpRbZefr4gwU9xZaHq6Iop8oetHcvvphw2_iQ8VXQ-l17lY6RX8hkJRnk-aNacg5qxhR2cUQi67W5_W7q8Paedcs2vrJNvcrQsLYVd3B1tEq-BfuEcUEGbppDBqsYi1_JeZ6_kPtzmS7IptSI6VbIZZynP1PIZ_CWKOxNIxMiDrlUZRLfnIQsrK43FPoboctjrJjxIcKACmKTqKRS0bwJdr09QJ_By2g1JKJT-Jgwn_XEc73Q7lkXV-X4bRm4Vg2xDsagmw",
 									"type": "string"
 								},
 								{
@@ -529,7 +545,7 @@
 								}
 							]
 						},
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -541,14 +557,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:9000/users",
+							"raw": "http://localhost:9000/logout",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "9000",
 							"path": [
-								"user"
+								"logout"
 							],
 							"query": [
 								{
@@ -563,7 +579,7 @@
 								},
 								{
 									"key": "code",
-									"value": "",
+									"value": "rXUnYfQ-3cqaewRTaqPZxivnuERDstsNqTL4kAuS2Xa3byeCZLP0OiGUO7fNmmv4FgyVPNoK1FX6PtXTotU3zZ4MNkivXWKUPlMjgP1nQ6Shuja8yOCB0yIZRsZDCDtU",
 									"disabled": true
 								},
 								{
@@ -587,487 +603,1056 @@
 			"name": "OIDC-OAuth2",
 			"item": [
 				{
-					"name": "Get Registered client",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "oauth2",
-							"oauth2": [
-								{
-									"key": "grant_type",
-									"value": "authorization_code_with_pkce",
-									"type": "string"
+					"name": "AuthenticationConsentAndTokenFlow",
+					"item": [
+						{
+							"name": "Step 4 - Token (Verifier & Access code )",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "nowhere-client",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "nowhere-secret",
+											"type": "string"
+										}
+									]
 								},
-								{
-									"key": "scope",
-									"value": "client.read",
-									"type": "string"
+								"method": "POST",
+								"header": [
+									{
+										"key": "token",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "authorization_code",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "{{authorizationCode}}",
+											"type": "text"
+										},
+										{
+											"key": "redirect_uri",
+											"value": "https://oauthdebugger.com/debug",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "nowhere-client",
+											"type": "text"
+										},
+										{
+											"key": "code_verifier",
+											"value": "{{codeVerifier}}",
+											"type": "text"
+										},
+										{
+											"key": "state",
+											"value": "2alqqoezxhk",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "response_type",
+											"value": "id_token",
+											"type": "text",
+											"disabled": true
+										}
+									]
 								},
-								{
-									"key": "tokenType",
-									"value": "Bearer",
-									"type": "string"
-								},
-								{
-									"key": "accessToken",
-									"value": "",
-									"type": "string"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "https://oidcdebugger.com/debug",
-									"type": "string"
-								},
-								{
-									"key": "client_authentication",
-									"value": "header",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "user",
-									"type": "string"
-								},
-								{
-									"key": "username",
-									"value": "user",
-									"type": "string"
-								},
-								{
-									"key": "tokenName",
-									"value": "Nowhere ",
-									"type": "string"
-								},
-								{
-									"key": "state",
-									"value": "",
-									"type": "string"
-								},
-								{
-									"key": "clientSecret",
-									"value": "nowhere-secret",
-									"type": "string"
-								},
-								{
-									"key": "clientId",
-									"value": "nowhere-client",
-									"type": "string"
-								},
-								{
-									"key": "accessTokenUrl",
-									"value": "http://localhost:9000/oauth2/token",
-									"type": "string"
-								},
-								{
-									"key": "authUrl",
-									"value": "http://localhost:9000/oauth2/authorize",
-									"type": "string"
-								},
-								{
-									"key": "useBrowser",
-									"value": false,
-									"type": "boolean"
-								},
-								{
-									"key": "addTokenTo",
-									"value": "header",
-									"type": "string"
+								"url": {
+									"raw": "http://localhost:9000/oauth2/token",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"oauth2",
+										"token"
+									]
 								}
-							]
+							},
+							"response": []
 						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
+						{
+							"name": "Step 3.0 - Authorize when All scopes are granted before hand.",
+							"event": [
 								{
-									"key": "grant_type",
-									"value": "authorization_code",
-									"type": "text"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Parse the location header from the response\r",
+											"var locationHeader = pm.response.headers.get('Location');\r",
+											"\r",
+											"// Extract the code from the location header\r",
+											"var code = locationHeader.match(/code=([^&]+)/)[1];\r",
+											"\r",
+											"if(code){\r",
+											"    console.log(\"CODE: \"+code);\r",
+											"    pm.environment.set('authorizationCode', code);\r",
+											"}else{\r",
+											"    console.log(\"NO CODE ERROR:\"+locationHeader)\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
 								},
 								{
-									"key": "code",
-									"value": "",
-									"type": "text"
-								},
-								{
-									"key": "client_id",
-									"value": "nowhere-client",
-									"type": "text"
-								},
-								{
-									"key": "client_secre",
-									"value": "nowhere-secret",
-									"type": "text"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "https://oidcdebugger.com/debug",
-									"type": "text"
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": false
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/oauth2/authorize?response_type=code&scope=message.read message.write&code_challenge={{codeChallenge}}&code_challenge_method=S256&redirect_uri=https://oauthdebugger.com/debug&client_id=nowhere-client",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"oauth2",
+										"authorize"
+									],
+									"query": [
+										{
+											"key": "response_type",
+											"value": "code"
+										},
+										{
+											"key": "scope",
+											"value": "message.read message.write"
+										},
+										{
+											"key": "code_challenge",
+											"value": "{{codeChallenge}}"
+										},
+										{
+											"key": "code_challenge_method",
+											"value": "S256"
+										},
+										{
+											"key": "redirect_uri",
+											"value": "https://oauthdebugger.com/debug"
+										},
+										{
+											"key": "client_id",
+											"value": "nowhere-client"
+										},
+										{
+											"key": "referer",
+											"value": "http://localhost:9000/oauth2/consent?scope%3Dopenid%20message.read%20message.write%26client_id%3Dnowhere-client%26state%3DoK6toTjlslLUeFLBf4uCF8qXRARQj-sICg6wiEuuNXE%3D",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "aXQlanWRz4IURZ4EYgpsgeZEJo45zsD84XNqSz8vRgA=",
+											"disabled": true
+										},
+										{
+											"key": "_csrf",
+											"value": "M96tYigNGciJONCx8hO_zmx4lLlToPde7o2h5PhryV3neRVTB7ybVhpoK_-kCLPUxj6L-1lOuYExk8Nz1-mVgs4KrDzQGCJq",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://localhost:9000/connect/register?client_id=nowhere-client",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "9000",
-							"path": [
-								"connect",
-								"register"
-							],
-							"query": [
+						{
+							"name": "Step 3 - Authorize the requested scopes. (Require Cookie from Authenticated Login)",
+							"event": [
 								{
-									"key": "grant_type",
-									"value": "authorization_code",
-									"disabled": true
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Parse the location header from the response\r",
+											"var locationHeader = pm.response.headers.get('Location');\r",
+											"\r",
+											"// Extract the code from the location header\r",
+											"var code = locationHeader.match(/code=([^&]+)/)[1];\r",
+											"\r",
+											"if(code){\r",
+											"    console.log(\"CODE: \"+code);\r",
+											"    pm.environment.set('authorizationCode', code);\r",
+											"}else{\r",
+											"    console.log(\"NO CODE ERROR:\"+locationHeader)\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
 								},
 								{
-									"key": "code_verifier",
-									"value": "mZv3H2NfNvFanDrHS1ogGQOmeZ3qFTKa1zZ9VQGettd",
-									"disabled": true
-								},
-								{
-									"key": "code",
-									"value": "",
-									"disabled": true
-								},
-								{
-									"key": "redirect_uri",
-									"value": "https%3A%2F%oidcdebugger.com%2Fdebug",
-									"disabled": true
-								},
-								{
-									"key": "code",
-									"value": "",
-									"disabled": true
-								},
-								{
-									"key": "client_id",
-									"value": "nowhere-client"
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": false
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "client_id",
+											"value": "nowhere-client",
+											"type": "text"
+										},
+										{
+											"key": "state",
+											"value": "{{state}}",
+											"type": "text"
+										},
+										{
+											"key": "_csrf",
+											"value": "{{_csrf}}",
+											"type": "text"
+										},
+										{
+											"key": "scope",
+											"value": "message.read",
+											"description": "Only scopes to approve, Error if include alrady authorized scopes",
+											"type": "text"
+										},
+										{
+											"key": "scope",
+											"value": "message.write",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:9000/oauth2/authorize",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"oauth2",
+										"authorize"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 2 - Authorize (Require Cookie from Authenticated Login)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseBodyLogin = pm.response.text();\r",
+											"\r",
+											"// Extract the value of the _csrf input field using regular expressions\r",
+											"const csrfRegex = /<input type=\"hidden\" name=\"_csrf\" value=\"([^\"]+)\"\\/>/;\r",
+											"const stateRegex = /<input type=\"hidden\" name=\"state\" value=\"([^\"]+)\"\\>/;\r",
+											"\r",
+											"const csrfMatches = responseBodyLogin.match(csrfRegex);\r",
+											"const stateMatches =  responseBodyLogin.match(stateRegex);\r",
+											"\r",
+											"if (csrfMatches && csrfMatches.length > 1) {\r",
+											"    // Extracted _csrf value\r",
+											"    const csrfValue = csrfMatches[1];\r",
+											"    // Set the extracted value as an environment variable\r",
+											"    pm.environment.set('_csrf', csrfValue);\r",
+											"    console.log(\"CSRF_VALUE: \"+csrfValue);\r",
+											"} else {\r",
+											"    // Handle the case where the _csrf input field is not found\r",
+											"    console.error('CSRF token not found in the HTML response');\r",
+											"}\r",
+											"\r",
+											"if (stateMatches && stateMatches.length > 1) {\r",
+											"    // Extracted _csrf value\r",
+											"    const stateValue = stateMatches[1];\r",
+											"    // Set the extracted value as an environment variable\r",
+											"    pm.environment.set('state', stateValue);\r",
+											"    console.log(\"STATE_VALUE: \"+stateValue);\r",
+											"} else {\r",
+											"    // Handle the case where the _csrf input field is not found\r",
+											"    console.error('STATE value not found in the HTML response');\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"followRedirects": false
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/oauth2/authorize?response_type=code&scope=message.read message.write&code_challenge=Z0cDDucGn4ILbgupmliOOm1mSwQo6m5VlNyPu_VDSjk&code_challenge_method=S256&redirect_uri=https://oauthdebugger.com/debug&client_id=nowhere-client",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"oauth2",
+										"authorize"
+									],
+									"query": [
+										{
+											"key": "response_type",
+											"value": "code"
+										},
+										{
+											"key": "scope",
+											"value": "message.read message.write",
+											"description": "Requested Scopes"
+										},
+										{
+											"key": "code_challenge",
+											"value": "Z0cDDucGn4ILbgupmliOOm1mSwQo6m5VlNyPu_VDSjk"
+										},
+										{
+											"key": "code_challenge_method",
+											"value": "S256"
+										},
+										{
+											"key": "redirect_uri",
+											"value": "https://oauthdebugger.com/debug"
+										},
+										{
+											"key": "client_id",
+											"value": "nowhere-client"
+										},
+										{
+											"key": "referer",
+											"value": "http://localhost:9000/oauth2/consent?scope%3Dopenid%20message.read%20message.write%26client_id%3Dnowhere-client%26state%3DoK6toTjlslLUeFLBf4uCF8qXRARQj-sICg6wiEuuNXE%3D",
+											"disabled": true
+										},
+										{
+											"key": "state",
+											"value": "aXQlanWRz4IURZ4EYgpsgeZEJo45zsD84XNqSz8vRgA=",
+											"disabled": true
+										},
+										{
+											"key": "_csrf",
+											"value": "M96tYigNGciJONCx8hO_zmx4lLlToPde7o2h5PhryV3neRVTB7ybVhpoK_-kCLPUxj6L-1lOuYExk8Nz1-mVgs4KrDzQGCJq",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 1 - Authenticated Login (Require First Get call to get csrf token then change to POST)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "nowhere-secret",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "nowhere-client",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "user@user.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "user",
+											"type": "text"
+										},
+										{
+											"key": "_csrf",
+											"value": "{{_csrf}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:9000/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Step 0 - Dummy Login to get Csrf",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const responseBodyLogin = pm.response.text();\r",
+											"\r",
+											"// Extract the value of the _csrf input field using regular expressions\r",
+											"const csrfRegex = /<input type=\"hidden\" name=\"_csrf\" value=\"([^\"]+)\"\\/>/;\r",
+											"\r",
+											"const csrfMatches = responseBodyLogin.match(csrfRegex);\r",
+											"\r",
+											"\r",
+											"if (csrfMatches && csrfMatches.length > 1) {\r",
+											"    // Extracted _csrf value\r",
+											"    const csrfValue = csrfMatches[1];\r",
+											"    // Set the extracted value as an environment variable\r",
+											"    pm.environment.set('_csrf', csrfValue);\r",
+											"    console.log(\"CSRF_VALUE: \"+csrfValue);\r",
+											"} else {\r",
+											"    // Handle the case where the _csrf input field is not found\r",
+											"    console.error('CSRF token not found in the HTML response');\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "nowhere-secret",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "nowhere-client",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-CSRF-TOKEN",
+										"value": "GBoJrZLGhmey91nekF-6wfjOEYLFuYIB-JRB45jezoALskdZen4xlaf1tlKfxm_v9HKOpZ76PLuh2rAsmfAl1vvv9uI6hSFt",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "user@user.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "user",
+											"type": "text"
+										},
+										{
+											"key": "_csrf",
+											"value": "{{_csrf}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:9000/login?username=user@user.com&password=user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"login"
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "user@user.com"
+										},
+										{
+											"key": "password",
+											"value": "user"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"description": "Make sure the cookie is matching for all of the request as the server is saving the session."
 				},
 				{
-					"name": "Get New Registered client",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "oauth2",
-							"oauth2": [
-								{
-									"key": "clientSecret",
-									"value": "MyExample",
-									"type": "string"
+					"name": "RegisteredClient",
+					"item": [
+						{
+							"name": "Get Registered client",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "grant_type",
+											"value": "authorization_code_with_pkce",
+											"type": "string"
+										},
+										{
+											"key": "scope",
+											"value": "client.read",
+											"type": "string"
+										},
+										{
+											"key": "tokenType",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "accessToken",
+											"value": "eyJraWQiOiIyNzc1ZjI2YS02YmMwLTQ5ZGUtODMzMS03ZWJjZmUwMTJiYWEiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiYXVkIjoibm93aGVyZS1jbGllbnQiLCJuYmYiOjE3MDI3NzYxMDYsInNjb3BlIjpbIm9wZW5pZCIsIm1lc3NhZ2UucmVhZCJdLCJyb2xlcyI6WyJNQU5BR0VSIiwiQURNSU4iLCJPV05FUiIsIlRSQVZFTEVSIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTAwMCIsImV4cCI6MTcwMjg2MjUwNiwidG9rZW5fdHlwZSI6ImFjY2VzcyB0b2tlbiIsImlhdCI6MTcwMjc3NjEwNn0.R8ni4_aC5Syz6sTySnodxMHbFiv-65fKcJefscWx4cz_zfSNrCDgGihkUD9t3JEITsDyF3dbOBn9MA3rSK0eiuyvOBO29jVURFB71jqsGt7SQX88fQUhXDGRlQL-mddUbLDAW4WgfVof_Uvy7Ak0EN6Js8sONjFbba5SxsGbJgjn8MlUOGr8CfXnUqKoJqC_f7hK0VRLzCxRFLZOvA4eYed82hpUHAHz_DtfvKZCNrtfrIl4u4u_QANX54tsYYzZMVGbhB994qx0fJrCOzBs6CWklSChTuAXclnvG7aH4a7YkiqlXmWQow0UsovWreEJBA09vrIjZbyX4ENv9dB6NA",
+											"type": "string"
+										},
+										{
+											"key": "redirect_uri",
+											"value": "https://oidcdebugger.com/debug",
+											"type": "string"
+										},
+										{
+											"key": "client_authentication",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "user",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "user",
+											"type": "string"
+										},
+										{
+											"key": "tokenName",
+											"value": "Nowhere ",
+											"type": "string"
+										},
+										{
+											"key": "state",
+											"value": "",
+											"type": "string"
+										},
+										{
+											"key": "clientSecret",
+											"value": "nowhere-secret",
+											"type": "string"
+										},
+										{
+											"key": "clientId",
+											"value": "nowhere-client",
+											"type": "string"
+										},
+										{
+											"key": "accessTokenUrl",
+											"value": "http://localhost:9000/oauth2/token",
+											"type": "string"
+										},
+										{
+											"key": "authUrl",
+											"value": "http://localhost:9000/oauth2/authorize",
+											"type": "string"
+										},
+										{
+											"key": "useBrowser",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
 								},
-								{
-									"key": "clientId",
-									"value": "your-client",
-									"type": "string"
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "authorization_code",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "VKm3LQ56Qyc_EHBqbUoD1Dzku0r0aQVXgoeGvc6Xr3lTFnSTCSPbl-LIbUQNPSNdCanj99w_GDrqnie81YJmJpKKzOokUfFdGRjfXCjdgWw_y8xpRmD3wjsmZ-cZ4Axp",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "nowhere-client",
+											"type": "text"
+										},
+										{
+											"key": "client_secre",
+											"value": "nowhere-secret",
+											"type": "text"
+										},
+										{
+											"key": "redirect_uri",
+											"value": "https://oidcdebugger.com/debug",
+											"type": "text"
+										}
+									]
 								},
-								{
-									"key": "grant_type",
-									"value": "authorization_code_with_pkce",
-									"type": "string"
-								},
-								{
-									"key": "scope",
-									"value": "client.read",
-									"type": "string"
-								},
-								{
-									"key": "tokenType",
-									"value": "Bearer",
-									"type": "string"
-								},
-								{
-									"key": "accessToken",
-									"value": "",
-									"type": "string"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "https://oidcdebugger.com/debug",
-									"type": "string"
-								},
-								{
-									"key": "client_authentication",
-									"value": "header",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "user",
-									"type": "string"
-								},
-								{
-									"key": "username",
-									"value": "user",
-									"type": "string"
-								},
-								{
-									"key": "tokenName",
-									"value": "Nowhere ",
-									"type": "string"
-								},
-								{
-									"key": "state",
-									"value": "",
-									"type": "string"
-								},
-								{
-									"key": "accessTokenUrl",
-									"value": "http://localhost:9000/oauth2/token",
-									"type": "string"
-								},
-								{
-									"key": "authUrl",
-									"value": "http://localhost:9000/oauth2/authorize",
-									"type": "string"
-								},
-								{
-									"key": "useBrowser",
-									"value": false,
-									"type": "boolean"
-								},
-								{
-									"key": "addTokenTo",
-									"value": "header",
-									"type": "string"
+								"url": {
+									"raw": "http://localhost:9000/connect/register?client_id=nowhere-client",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"connect",
+										"register"
+									],
+									"query": [
+										{
+											"key": "grant_type",
+											"value": "authorization_code",
+											"disabled": true
+										},
+										{
+											"key": "code_verifier",
+											"value": "mZv3H2NfNvFanDrHS1ogGQOmeZ3qFTKa1zZ9VQGettd",
+											"disabled": true
+										},
+										{
+											"key": "code",
+											"value": "rXUnYfQ-3cqaewRTaqPZxivnuERDstsNqTL4kAuS2Xa3byeCZLP0OiGUO7fNmmv4FgyVPNoK1FX6PtXTotU3zZ4MNkivXWKUPlMjgP1nQ6Shuja8yOCB0yIZRsZDCDtU",
+											"disabled": true
+										},
+										{
+											"key": "redirect_uri",
+											"value": "https%3A%2F%oidcdebugger.com%2Fdebug",
+											"disabled": true
+										},
+										{
+											"key": "code",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "client_id",
+											"value": "nowhere-client"
+										}
+									]
 								}
-							]
+							},
+							"response": []
 						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "grant_type",
-									"value": "authorization_code",
-									"type": "text"
+						{
+							"name": "Get New Registered client",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "clientSecret",
+											"value": "MyExample",
+											"type": "string"
+										},
+										{
+											"key": "clientId",
+											"value": "your-client",
+											"type": "string"
+										},
+										{
+											"key": "grant_type",
+											"value": "authorization_code_with_pkce",
+											"type": "string"
+										},
+										{
+											"key": "scope",
+											"value": "client.read",
+											"type": "string"
+										},
+										{
+											"key": "tokenType",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "accessToken",
+											"value": "eyJraWQiOiIyNzc1ZjI2YS02YmMwLTQ5ZGUtODMzMS03ZWJjZmUwMTJiYWEiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiYXVkIjoibm93aGVyZS1jbGllbnQiLCJuYmYiOjE3MDI3NzYxMDYsInNjb3BlIjpbIm9wZW5pZCIsIm1lc3NhZ2UucmVhZCJdLCJyb2xlcyI6WyJNQU5BR0VSIiwiQURNSU4iLCJPV05FUiIsIlRSQVZFTEVSIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTAwMCIsImV4cCI6MTcwMjg2MjUwNiwidG9rZW5fdHlwZSI6ImFjY2VzcyB0b2tlbiIsImlhdCI6MTcwMjc3NjEwNn0.R8ni4_aC5Syz6sTySnodxMHbFiv-65fKcJefscWx4cz_zfSNrCDgGihkUD9t3JEITsDyF3dbOBn9MA3rSK0eiuyvOBO29jVURFB71jqsGt7SQX88fQUhXDGRlQL-mddUbLDAW4WgfVof_Uvy7Ak0EN6Js8sONjFbba5SxsGbJgjn8MlUOGr8CfXnUqKoJqC_f7hK0VRLzCxRFLZOvA4eYed82hpUHAHz_DtfvKZCNrtfrIl4u4u_QANX54tsYYzZMVGbhB994qx0fJrCOzBs6CWklSChTuAXclnvG7aH4a7YkiqlXmWQow0UsovWreEJBA09vrIjZbyX4ENv9dB6NA",
+											"type": "string"
+										},
+										{
+											"key": "redirect_uri",
+											"value": "https://oidcdebugger.com/debug",
+											"type": "string"
+										},
+										{
+											"key": "client_authentication",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "user",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "user",
+											"type": "string"
+										},
+										{
+											"key": "tokenName",
+											"value": "Nowhere ",
+											"type": "string"
+										},
+										{
+											"key": "state",
+											"value": "",
+											"type": "string"
+										},
+										{
+											"key": "accessTokenUrl",
+											"value": "http://localhost:9000/oauth2/token",
+											"type": "string"
+										},
+										{
+											"key": "authUrl",
+											"value": "http://localhost:9000/oauth2/authorize",
+											"type": "string"
+										},
+										{
+											"key": "useBrowser",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
 								},
-								{
-									"key": "code",
-									"value": "",
-									"type": "text"
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "grant_type",
+											"value": "authorization_code",
+											"type": "text"
+										},
+										{
+											"key": "code",
+											"value": "VKm3LQ56Qyc_EHBqbUoD1Dzku0r0aQVXgoeGvc6Xr3lTFnSTCSPbl-LIbUQNPSNdCanj99w_GDrqnie81YJmJpKKzOokUfFdGRjfXCjdgWw_y8xpRmD3wjsmZ-cZ4Axp",
+											"type": "text"
+										},
+										{
+											"key": "client_id",
+											"value": "nowhere-client",
+											"type": "text"
+										},
+										{
+											"key": "client_secre",
+											"value": "nowhere-secret",
+											"type": "text"
+										},
+										{
+											"key": "redirect_uri",
+											"value": "https://oidcdebugger.com/debug",
+											"type": "text"
+										}
+									]
 								},
-								{
-									"key": "client_id",
-									"value": "nowhere-client",
-									"type": "text"
-								},
-								{
-									"key": "client_secre",
-									"value": "nowhere-secret",
-									"type": "text"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "https://oidcdebugger.com/debug",
-									"type": "text"
+								"url": {
+									"raw": "http://localhost:9000/connect/register?client_id=your-client",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"connect",
+										"register"
+									],
+									"query": [
+										{
+											"key": "grant_type",
+											"value": "authorization_code",
+											"disabled": true
+										},
+										{
+											"key": "code_verifier",
+											"value": "mZv3H2NfNvFanDrHS1ogGQOmeZ3qFTKa1zZ9VQGettd",
+											"disabled": true
+										},
+										{
+											"key": "code",
+											"value": "rXUnYfQ-3cqaewRTaqPZxivnuERDstsNqTL4kAuS2Xa3byeCZLP0OiGUO7fNmmv4FgyVPNoK1FX6PtXTotU3zZ4MNkivXWKUPlMjgP1nQ6Shuja8yOCB0yIZRsZDCDtU",
+											"disabled": true
+										},
+										{
+											"key": "redirect_uri",
+											"value": "https%3A%2F%oidcdebugger.com%2Fdebug",
+											"disabled": true
+										},
+										{
+											"key": "code",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "client_id",
+											"value": "your-client"
+										}
+									]
 								}
-							]
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://localhost:9000/connect/register?client_id=your-client",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "9000",
-							"path": [
-								"connect",
-								"register"
-							],
-							"query": [
-								{
-									"key": "grant_type",
-									"value": "authorization_code",
-									"disabled": true
+						{
+							"name": "Create Registered Client",
+							"request": {
+								"auth": {
+									"type": "oauth2",
+									"oauth2": [
+										{
+											"key": "scope",
+											"value": "client.create",
+											"type": "string"
+										},
+										{
+											"key": "grant_type",
+											"value": "client_credentials",
+											"type": "string"
+										},
+										{
+											"key": "tokenType",
+											"value": "Bearer",
+											"type": "string"
+										},
+										{
+											"key": "accessToken",
+											"value": "eyJraWQiOiIyNzc1ZjI2YS02YmMwLTQ5ZGUtODMzMS03ZWJjZmUwMTJiYWEiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiYXVkIjoibm93aGVyZS1jbGllbnQiLCJuYmYiOjE3MDI3NzYxMDYsInNjb3BlIjpbIm9wZW5pZCIsIm1lc3NhZ2UucmVhZCJdLCJyb2xlcyI6WyJNQU5BR0VSIiwiQURNSU4iLCJPV05FUiIsIlRSQVZFTEVSIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTAwMCIsImV4cCI6MTcwMjg2MjUwNiwidG9rZW5fdHlwZSI6ImFjY2VzcyB0b2tlbiIsImlhdCI6MTcwMjc3NjEwNn0.R8ni4_aC5Syz6sTySnodxMHbFiv-65fKcJefscWx4cz_zfSNrCDgGihkUD9t3JEITsDyF3dbOBn9MA3rSK0eiuyvOBO29jVURFB71jqsGt7SQX88fQUhXDGRlQL-mddUbLDAW4WgfVof_Uvy7Ak0EN6Js8sONjFbba5SxsGbJgjn8MlUOGr8CfXnUqKoJqC_f7hK0VRLzCxRFLZOvA4eYed82hpUHAHz_DtfvKZCNrtfrIl4u4u_QANX54tsYYzZMVGbhB994qx0fJrCOzBs6CWklSChTuAXclnvG7aH4a7YkiqlXmWQow0UsovWreEJBA09vrIjZbyX4ENv9dB6NA",
+											"type": "string"
+										},
+										{
+											"key": "redirect_uri",
+											"value": "https://oidcdebugger.com/debug",
+											"type": "string"
+										},
+										{
+											"key": "client_authentication",
+											"value": "header",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "user",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "user",
+											"type": "string"
+										},
+										{
+											"key": "tokenName",
+											"value": "Nowhere ",
+											"type": "string"
+										},
+										{
+											"key": "state",
+											"value": "",
+											"type": "string"
+										},
+										{
+											"key": "clientSecret",
+											"value": "nowhere-secret",
+											"type": "string"
+										},
+										{
+											"key": "clientId",
+											"value": "nowhere-client",
+											"type": "string"
+										},
+										{
+											"key": "accessTokenUrl",
+											"value": "http://localhost:9000/oauth2/token",
+											"type": "string"
+										},
+										{
+											"key": "authUrl",
+											"value": "http://localhost:9000/oauth2/authorize",
+											"type": "string"
+										},
+										{
+											"key": "useBrowser",
+											"value": false,
+											"type": "boolean"
+										},
+										{
+											"key": "addTokenTo",
+											"value": "header",
+											"type": "string"
+										}
+									]
 								},
-								{
-									"key": "code_verifier",
-									"value": "mZv3H2NfNvFanDrHS1ogGQOmeZ3qFTKa1zZ9VQGettd",
-									"disabled": true
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"client_name\": \"registrar-client\",\r\n   \"grant_types\": [\"client_credentials\"],\r\n   \"scope\":\"client.create,client.read\",\r\n   \"redirect_uris\":\r\n     [\"https://client.example.org/callback\",\r\n      \"https://client.example.org/callback2\"],\r\n   \"logo_uri\": \"https://client.example.org/logo.png\",\r\n   \"contacts\": [\"admin@nowherelearn.com\", \"dev@nowherelearn.com\"],\r\n   \"application_type\": \"web\",\r\n   \"environment\": \"dev\",\r\n   \"token_endpoint_auth_method\": \"client_secret_basic\",\r\n   \"post_logout_redirect_uris\":[ \"https://client.example.org/logout\", \"https://client.example.org/logout2\"]\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
 								},
-								{
-									"key": "code",
-									"value": "",
-									"disabled": true
-								},
-								{
-									"key": "redirect_uri",
-									"value": "https%3A%2F%oidcdebugger.com%2Fdebug",
-									"disabled": true
-								},
-								{
-									"key": "code",
-									"value": "",
-									"disabled": true
-								},
-								{
-									"key": "client_id",
-									"value": "your-client"
+								"url": {
+									"raw": "http://localhost:9000/connect/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"connect",
+										"register"
+									],
+									"query": [
+										{
+											"key": "grant_type",
+											"value": "authorization_code",
+											"disabled": true
+										},
+										{
+											"key": "code_verifier",
+											"value": "mZv3H2NfNvFanDrHS1ogGQOmeZ3qFTKa1zZ9VQGettd",
+											"disabled": true
+										},
+										{
+											"key": "code",
+											"value": "rXUnYfQ-3cqaewRTaqPZxivnuERDstsNqTL4kAuS2Xa3byeCZLP0OiGUO7fNmmv4FgyVPNoK1FX6PtXTotU3zZ4MNkivXWKUPlMjgP1nQ6Shuja8yOCB0yIZRsZDCDtU",
+											"disabled": true
+										},
+										{
+											"key": "redirect_uri",
+											"value": "https%3A%2F%oidcdebugger.com%2Fdebug",
+											"disabled": true
+										},
+										{
+											"key": "code",
+											"value": "",
+											"disabled": true
+										}
+									]
 								}
-							]
+							},
+							"response": []
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Registered Client",
-					"request": {
-						"auth": {
-							"type": "oauth2",
-							"oauth2": [
-								{
-									"key": "scope",
-									"value": "client.create",
-									"type": "string"
-								},
-								{
-									"key": "grant_type",
-									"value": "client_credentials",
-									"type": "string"
-								},
-								{
-									"key": "tokenType",
-									"value": "Bearer",
-									"type": "string"
-								},
-								{
-									"key": "accessToken",
-									"value": "",
-									"type": "string"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "https://oidcdebugger.com/debug",
-									"type": "string"
-								},
-								{
-									"key": "client_authentication",
-									"value": "header",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "user",
-									"type": "string"
-								},
-								{
-									"key": "username",
-									"value": "user",
-									"type": "string"
-								},
-								{
-									"key": "tokenName",
-									"value": "Nowhere ",
-									"type": "string"
-								},
-								{
-									"key": "state",
-									"value": "",
-									"type": "string"
-								},
-								{
-									"key": "clientSecret",
-									"value": "nowhere-secret",
-									"type": "string"
-								},
-								{
-									"key": "clientId",
-									"value": "nowhere-client",
-									"type": "string"
-								},
-								{
-									"key": "accessTokenUrl",
-									"value": "http://localhost:9000/oauth2/token",
-									"type": "string"
-								},
-								{
-									"key": "authUrl",
-									"value": "http://localhost:9000/oauth2/authorize",
-									"type": "string"
-								},
-								{
-									"key": "useBrowser",
-									"value": false,
-									"type": "boolean"
-								},
-								{
-									"key": "addTokenTo",
-									"value": "header",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n   \"client_name\": \"registrar-client\",\r\n   \"grant_types\": [\"client_credentials\"],\r\n   \"scope\":\"client.create,client.read\",\r\n   \"redirect_uris\":\r\n     [\"https://client.example.org/callback\",\r\n      \"https://client.example.org/callback2\"],\r\n   \"logo_uri\": \"https://client.example.org/logo.png\",\r\n   \"contacts\": [\"admin@nowherelearn.com\", \"dev@nowherelearn.com\"],\r\n   \"application_type\": \"web\",\r\n   \"token_endpoint_auth_method\": \"client_secret_basic\",\r\n   \"post_logout_redirect_uris\":[ \"https://client.example.org/logout\", \"https://client.example.org/logout2\"]\r\n  }",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:9000/connect/register?client_id=nowhere-client",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "9000",
-							"path": [
-								"connect",
-								"register"
-							],
-							"query": [
-								{
-									"key": "grant_type",
-									"value": "authorization_code",
-									"disabled": true
-								},
-								{
-									"key": "code_verifier",
-									"value": "mZv3H2NfNvFanDrHS1ogGQOmeZ3qFTKa1zZ9VQGettd",
-									"disabled": true
-								},
-								{
-									"key": "code",
-									"value": "",
-									"disabled": true
-								},
-								{
-									"key": "redirect_uri",
-									"value": "https%3A%2F%oidcdebugger.com%2Fdebug",
-									"disabled": true
-								},
-								{
-									"key": "code",
-									"value": "",
-									"disabled": true
-								},
-								{
-									"key": "client_id",
-									"value": "nowhere-client"
-								}
-							]
-						}
-					},
-					"response": []
+					]
 				},
 				{
 					"name": "Revoke Token",
@@ -1076,13 +1661,13 @@
 							"type": "basic",
 							"basic": [
 								{
-									"key": "password",
-									"value": "nowhere-secret",
+									"key": "username",
+									"value": "nowhere-client",
 									"type": "string"
 								},
 								{
-									"key": "username",
-									"value": "skYX8ZIXfT_KU10oZrR3IMrGypbwrQUqLnU7Kf3_ev8",
+									"key": "password",
+									"value": "nowhere-secret",
 									"type": "string"
 								}
 							]
@@ -1091,7 +1676,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "",
+								"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiYXVkIjoic2tZWDhaSVhmVF9LVTEwb1pyUjNJTXJHeXBid3JRVXFMblU3S2YzX2V2OCIsIm5iZiI6MTcwNTExMTIyNywic2NvcGUiOlsib3BlbmlkIiwiY2xpZW50LmNyZWF0ZSIsIm1lc3NhZ2UucmVhZCIsImNsaWVudC5yZWFkIiwibWVzc2FnZS53cml0ZSJdLCJyb2xlcyI6WyJBRE1JTiIsIlVTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo5MDAwIiwiZXhwIjoxNzA1MTk3NjI3LCJ0b2tlbl90eXBlIjoiYWNjZXNzIHRva2VuIiwiaWF0IjoxNzA1MTExMjI3LCJqdGkiOiJhNzM0M2ZjNC1kZGZhLTRhZTctYTNlOS05MzhlNDJlMzQ0ZjMifQ.ffnYyG8fltz0TofO5zMOtreNCMHb7nXjya5AuB2cJ80KQZ_AYKLTUhQuhBozgCaB-Vm6Oz02LTDYz7kKbpUefPQhTjtOKHmXG2xFtpNUt-OEjimyRybjjtgaaLi7ng3l_SxHxizKoibuNDe44tnPwkbNt321oCBZEogl3YJESuwamIzfw0tZ8_Az2VmpuZM0dxYz42O7Pk0VSUV0Bt5EmAahoJbmbEKqNDLrMSNqA0o3DUplMYIgJhOWeQSKcIujGohbOX7FEI8zQnOQ8pGyreLjs5jXquyLu1Byl_ibSUrP90YS0JSSxJGFn0DErqTIjOk4FoucVQPSRl4L4NnJdg",
 								"type": "text",
 								"disabled": true
 							}
@@ -1101,7 +1686,7 @@
 							"urlencoded": [
 								{
 									"key": "token",
-									"value": "",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiYXVkIjoibm93aGVyZS1jbGllbnQiLCJuYmYiOjE3MDgyOTk3MDgsInNjb3BlIjpbIm1lc3NhZ2UucmVhZCIsIm1lc3NhZ2Uud3JpdGUiXSwicm9sZXMiOlsiUk9MRV9VU0VSIiwiUk9MRV9BRE1JTiJdLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjkwMDAiLCJleHAiOjE3MDgzODYxMDgsInRva2VuX3R5cGUiOiJhY2Nlc3MgdG9rZW4iLCJpYXQiOjE3MDgyOTk3MDgsImp0aSI6IjIzZmE5OTZjLWE3M2UtNDY4NS1hYjY5LTAyODU4NzZmOGI3MCJ9.YL1K64WF7hL0Yt40AAe933-m67TwCUKkOETkYToH8JUwaRq0t73oIrsq_yH3TOR2XKU6Z1mtjdhouUnktOaLkpySBc7CDGHPYKmJEOD4kSPbqFu5cCHQ8znvQ04PZtz6aahb7S8DwWO7HT2KFRtEtq2lzdguF9ncCySOS1uPRt_uftRBRylaRWuuKPpybg4lEfTvtw0TDQBHInQZCROvPnlejch1P_R8DIIRRHUq-4JflyJlWg2ydOExxj-0b_V290PtVDYJXl_NV1QJlby7dwc4k073wPv8RY2D4klO4a7K4gBQjTOzPk_tzQevOE6ZG9gNMdPcqydApKGdWsQUfQ",
 									"type": "text"
 								}
 							]
@@ -1119,26 +1704,6 @@
 							],
 							"query": [
 								{
-									"key": "grant_type",
-									"value": "authorization_code",
-									"disabled": true
-								},
-								{
-									"key": "code_verifier",
-									"value": "mZv3H2NfNvFanDrHS1ogGQOmeZ3qFTKa1zZ9VQGettd",
-									"disabled": true
-								},
-								{
-									"key": "code",
-									"value": "",
-									"disabled": true
-								},
-								{
-									"key": "redirect_uri",
-									"value": "https%3A%2F%oidcdebugger.com%2Fdebug",
-									"disabled": true
-								},
-								{
 									"key": "code",
 									"value": "",
 									"disabled": true
@@ -1155,86 +1720,11 @@
 					},
 					"request": {
 						"auth": {
-							"type": "oauth2",
-							"oauth2": [
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "tokenType",
-									"value": "Bearer",
-									"type": "string"
-								},
-								{
-									"key": "accessToken",
-									"value": "",
-									"type": "string"
-								},
-								{
-									"key": "grant_type",
-									"value": "authorization_code_with_pkce",
-									"type": "string"
-								},
-								{
-									"key": "scope",
-									"value": "openid",
-									"type": "string"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "https://oauthdebugger.com/debug",
-									"type": "string"
-								},
-								{
-									"key": "tokenName",
-									"value": "Nowhere",
-									"type": "string"
-								},
-								{
-									"key": "clientId",
-									"value": "nowhere-client",
-									"type": "string"
-								},
-								{
-									"key": "client_authentication",
-									"value": "header",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "user",
-									"type": "string"
-								},
-								{
-									"key": "username",
-									"value": "user",
-									"type": "string"
-								},
-								{
-									"key": "state",
-									"value": "",
-									"type": "string"
-								},
-								{
-									"key": "clientSecret",
-									"value": "nowhere-secret",
-									"type": "string"
-								},
-								{
-									"key": "accessTokenUrl",
-									"value": "http://localhost:9000/oauth2/token",
-									"type": "string"
-								},
-								{
-									"key": "authUrl",
-									"value": "http://localhost:9000/oauth2/authorize",
-									"type": "string"
-								},
-								{
-									"key": "useBrowser",
-									"value": false,
-									"type": "boolean"
-								},
-								{
-									"key": "addTokenTo",
-									"value": "header",
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJyb2RyaWdvLmJhdS5mb25AZ21haWwuY29tIiwiYXVkIjoibm93aGVyZS1jbGllbnQiLCJuYmYiOjE3MDgwMzc1NzAsInNjb3BlIjpbIm1lc3NhZ2UucmVhZCIsIm1lc3NhZ2Uud3JpdGUiXSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTAwMCIsImV4cCI6MTcwODEyMzk3MCwidG9rZW5fdHlwZSI6ImFjY2VzcyB0b2tlbiIsImlhdCI6MTcwODAzNzU3MCwianRpIjoiZTU0NDRmNDktOTA2My00YWM0LWI0MmQtZWQwMTk2NTI1NDcwIn0.CsdQpIlqQBJSXagLK5KN72fsIz72phRhnZ53g59_ohY_HPIOMgWe46NMfZP12my6GoIeX19q0F0D9CkC1RN9DPTwn70Q896a0LC5JNEsd0U_kRMp3tll-flzewI8qz3PwPe56cFJWm9H4utZ2gEBA_mJG9-i0AEI5PSpXBOf3UqnjbS0TLNDz3vetwLo8h8NyXoG0s4gtDseeBaFZ0kyXGk62BPuV4tB-4OWQkuN7NYINcyKlj1S444oSPrfxPpPhC_Y5g7SgzNIrSA5ECVMOxqWu9x8wt3MD9EEusGFrGdWEBz3B-Onmxb6heusE5m6PUDyN246lawW3GfAQPwEjQ",
 									"type": "string"
 								}
 							]
@@ -1273,7 +1763,219 @@
 								},
 								{
 									"key": "code",
+									"value": "rXUnYfQ-3cqaewRTaqPZxivnuERDstsNqTL4kAuS2Xa3byeCZLP0OiGUO7fNmmv4FgyVPNoK1FX6PtXTotU3zZ4MNkivXWKUPlMjgP1nQ6Shuja8yOCB0yIZRsZDCDtU",
+									"disabled": true
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https%3A%2F%oidcdebugger.com%2Fdebug",
+									"disabled": true
+								},
+								{
+									"key": "code",
 									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Token Introspection",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "nowhere-client",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "nowhere-secret",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJyb2RyaWdvLmJhdS5mb25AZ21haWwuY29tIiwiYXVkIjoibm93aGVyZS1jbGllbnQiLCJuYmYiOjE3MDgwMzYxMzcsInNjb3BlIjpbIm1lc3NhZ2UucmVhZCIsIm1lc3NhZ2Uud3JpdGUiXSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTAwMCIsImV4cCI6MTcwODEyMjUzNywidG9rZW5fdHlwZSI6ImFjY2VzcyB0b2tlbiIsImlhdCI6MTcwODAzNjEzNywianRpIjoiMTlhMjAxNGUtYWIyNi00MzA0LWIxYzYtYmZlOGM2NDg1NzQ4In0.vm22L8O_EVxrxw29uZw8V_IWXIQGvOiOV1mfwS1oSNPIBFVnSsP2ts31Qx4MDn2K8BuwNyTvu7v4KcQLghreTA0IgqFFEjdmnPBzLcRTo_9niAIuct2LY9DSpvjC7NhidEE6GQstusK8V2qsf5EOg_lxFr8qGoSi9xHuTCVea1zdlnxNWKFk5kRfSn24_BRlD03OjrNt9m8my-B05E7GxCl0bo2_rqjV1jt5BKl4K08BCfmG2zj3iUQO6cLwTcMfcGJAn2TuDOLNklvfVqXg-Snc7MdIyq-oC4LaGS2GyRb-Y2WjONEGQ0S_WrnxIT8l-9ukfXd2Dd-3cX4oWDB6tA",
+									"type": "text"
+								},
+								{
+									"key": "token_type_hint",
+									"value": "access_token",
+									"description": "help the server to identify the token",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9000/oauth2/introspect",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"oauth2",
+								"introspect"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Using Nginx",
+			"item": [
+				{
+					"name": "Authorization Request using Nginx",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost/auth-server/oauth2/token",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "http://localhost/auth-server/oauth2/authorize",
+									"type": "string"
+								},
+								{
+									"key": "scope",
+									"value": "openid profile message.write message.read",
+									"type": "string"
+								},
+								{
+									"key": "tokenRequestParams",
+									"value": [
+										{
+											"key": "token",
+											"value": "id_token",
+											"enabled": true,
+											"send_as": "request_header"
+										}
+									],
+									"type": "any"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://oauthdebugger.com/debug",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code_with_pkce",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "Nowhere",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "accessToken",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwiYXVkIjoibm93aGVyZS1jbGllbnQiLCJuYmYiOjE3MDU0NjE1NjEsInNjb3BlIjpbIm9wZW5pZCIsIm1lc3NhZ2UucmVhZCIsIm1lc3NhZ2Uud3JpdGUiXSwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTAwMCIsImV4cCI6MTcwNTU0Nzk2MSwidG9rZW5fdHlwZSI6ImFjY2VzcyB0b2tlbiIsImlhdCI6MTcwNTQ2MTU2MSwianRpIjoiMTllZGQ3MjAtZGVhMS00NzU5LThjMzEtYzMxZjMzZjQ0ODY3In0.W466_OBSznRrBXRlMuu_p-jfaTf2rOuxYd8fa6PX3Kz4MDSIjZmnbmgXW4g8NSqXL1budYU6BDvcFvMhpRbZefr4gwU9xZaHq6Iop8oetHcvvphw2_iQ8VXQ-l17lY6RX8hkJRnk-aNacg5qxhR2cUQi67W5_W7q8Paedcs2vrJNvcrQsLYVd3B1tEq-BfuEcUEGbppDBqsYi1_JeZ6_kPtzmS7IptSI6VbIZZynP1PIZ_CWKOxNIxMiDrlUZRLfnIQsrK43FPoboctjrJjxIcKACmKTqKRS0bwJdr09QJ_By2g1JKJT-Jgwn_XEc73Q7lkXV-X4bRm4Vg2xDsagmw",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "nowhere-client",
+									"type": "string"
+								},
+								{
+									"key": "client_authentication",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "state",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "nowhere-secret",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"admian@user.com\",\r\n  \"password\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/auth-server/users/whoami",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"auth-server",
+								"users",
+								"whoami"
+							],
+							"query": [
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"disabled": true
+								},
+								{
+									"key": "code_verifier",
+									"value": "mZv3H2NfNvFanDrHS1ogGQOmeZ3qFTKa1zZ9VQGettd",
+									"disabled": true
+								},
+								{
+									"key": "code",
+									"value": "rXUnYfQ-3cqaewRTaqPZxivnuERDstsNqTL4kAuS2Xa3byeCZLP0OiGUO7fNmmv4FgyVPNoK1FX6PtXTotU3zZ4MNkivXWKUPlMjgP1nQ6Shuja8yOCB0yIZRsZDCDtU",
 									"disabled": true
 								},
 								{

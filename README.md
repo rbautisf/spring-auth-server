@@ -67,8 +67,12 @@ After executing the commands, two files should be generated: `private-pkcs8.pem`
 ## Additional Notes
 #### Nginx Configuration
 The Nginx configuration file is located in the `scripts` folder. The configuration file is used to handle reverse proxy calls to the auth server.
+
 #### Postman collection
 The postman collection included in the root folder.
+
+The collection contains a folder to execute the Authorization code flow ony through requests. 
+
 Consider to update the host and port if using docker-compose.
 
 #### User Login For Testing
