@@ -54,6 +54,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    implementation "org.springframework.boot:spring-boot-starter-data-redis"
+    implementation 'org.springframework.session:spring-session-data-redis'
+
     runtimeOnly 'org.postgresql:postgresql'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -64,6 +68,9 @@ dependencies {
     intTestImplementation 'org.springframework.security:spring-security-test'
     intTestImplementation 'com.h2database:h2'
     intTestImplementation 'net.sourceforge.htmlunit:htmlunit'
+    intTestImplementation 'org.springframework.boot:spring-boot-starter-test'
+    intTestImplementation "org.springframework.boot:spring-boot-starter-data-redis"
+    intTestImplementation 'org.springframework.session:spring-session-data-redis'
     intTestImplementation project.getDependencies().testFixtures(project)
 
 
