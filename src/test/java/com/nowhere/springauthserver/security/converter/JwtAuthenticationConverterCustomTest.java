@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 
+import static com.nowhere.springauthserver.security.SecurityConstants.DEFAULT_AUTHORITY_PREFIX;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -28,7 +29,7 @@ public class JwtAuthenticationConverterCustomTest {
 
     @Test
     void convertGivenNoScopesShouldReturnTokenWithExtractedRoles() {
-        List<String> roles = List.of(Role.RoleType.ADMIN.name(), Role.RoleType.USER.name());
+        List<String> roles = List.of(DEFAULT_AUTHORITY_PREFIX+Role.RoleType.ADMIN.name(), DEFAULT_AUTHORITY_PREFIX+Role.RoleType.USER.name());
         when(mockJwt.hasClaim(SecurityConstants.ROLES_CLAIM)).thenReturn(true);
         when(mockJwt.getClaim(SecurityConstants.ROLES_CLAIM)).thenReturn(roles);
         when(mockJwt.getClaimAsString(any())).thenReturn("subject");
@@ -47,7 +48,7 @@ public class JwtAuthenticationConverterCustomTest {
 
     @Test
     void convertGivenExistingScopesShouldAddRolesToAuthorities() {
-        List<String> roles = List.of("USER");
+        List<String> roles = List.of("ROLE_USER");
 
         when(mockJwt.hasClaim(SecurityConstants.ROLES_CLAIM)).thenReturn(true);
         when(mockJwt.getClaim(SecurityConstants.ROLES_CLAIM)).thenReturn(roles);

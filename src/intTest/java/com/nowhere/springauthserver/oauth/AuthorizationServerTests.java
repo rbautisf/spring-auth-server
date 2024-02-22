@@ -45,7 +45,7 @@ public class AuthorizationServerTests extends BaseIntegrationTest {
     private final String BASIC_AUTH = "Basic " + Base64.getEncoder().encodeToString("nowhere-client:nowhere-secret".getBytes());
     private final String DEFAULT_USERNAME = "user@user.com";
     private final String DEFAULT_PASSWORD = "user";
-    private final String ROOT_PATH = "/";
+    private final String ROOT_PATH = "/auth-server";
     private final String LOGOUT_PATH = "/logout";
 
     @Autowired
@@ -67,16 +67,16 @@ public class AuthorizationServerTests extends BaseIntegrationTest {
 
     @Test
     void whenLoginSuccessfulThenDisplayBadRequestError() throws IOException {
-        HtmlPage page = this.webClient.getPage(ROOT_PATH);
+        HtmlPage page = this.webClient.getPage(LOGIN_PATH);
         assertLoginPage(page);
         this.webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
         WebResponse signInResponse = signIn(page, DEFAULT_USERNAME, DEFAULT_PASSWORD).getWebResponse();
-        assertThat(signInResponse.getStatusCode()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED.value());    // Error page
+        assertThat(signInResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND.value());    // Error page
     }
 
     @Test
     void whenLoginFailsThenDisplayBadCredentials() throws IOException {
-        HtmlPage page = this.webClient.getPage(ROOT_PATH);
+        HtmlPage page = this.webClient.getPage(LOGIN_PATH);
 
         HtmlPage loginErrorPage = signIn(page, DEFAULT_USERNAME, "wrong-password");
 
@@ -97,7 +97,7 @@ public class AuthorizationServerTests extends BaseIntegrationTest {
     void whenLoggingInAndRequestingTokenThenRedirectsToClientApplication() throws Exception {
         this.webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
         this.webClient.getOptions().setRedirectEnabled(false);
-        signIn(this.webClient.getPage(LOGIN_PATH), DEFAULT_USERNAME, DEFAULT_PASSWORD);
+        var login = signIn(this.webClient.getPage(LOGIN_PATH), DEFAULT_USERNAME, DEFAULT_PASSWORD);
         String verifier = generateCodeVerifier();
         String challenge = generateCodeChallenge(verifier);
         // allow redirects to go to the custom consent endpoint and then to the custom consent page
@@ -114,7 +114,7 @@ public class AuthorizationServerTests extends BaseIntegrationTest {
         // Log in
         this.webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
         this.webClient.getOptions().setRedirectEnabled(false);
-        signIn(this.webClient.getPage(LOGIN_PATH), DEFAULT_USERNAME, DEFAULT_PASSWORD);
+        var login = signIn(this.webClient.getPage(LOGIN_PATH), DEFAULT_USERNAME, DEFAULT_PASSWORD);
         String verifier = generateCodeVerifier();
         String challenge = generateCodeChallenge(verifier);
         this.webClient.getOptions().setRedirectEnabled(true);

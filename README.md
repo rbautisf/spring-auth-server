@@ -40,6 +40,10 @@ DB_USERNAME=
 DB_PASSWORD=
 PRIVATE_KEY=
 PUBLIC_KEY=
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
 ```
 ## Key Generation
 #### Creating Private Key
@@ -61,8 +65,11 @@ openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in private.pem -out priv
 After executing the commands, two files should be generated: `private-pkcs8.pem` and `public.pem`. Please place them in the resources folder.
 
 ## Additional Notes
+#### Nginx Configuration
+The Nginx configuration file is located in the `scripts` folder. The configuration file is used to handle reverse proxy calls to the auth server.
 #### Postman collection
 The postman collection included in the root folder.
+Consider to update the host and port if using docker-compose.
 
 #### User Login For Testing
 - **Username:** `user@user.com`
