@@ -9,7 +9,7 @@ spring:
     redis:
       port: ${REDIS_PORT:6379}
       host: ${REDIS_HOST:localhost}
-      password: ${REDIS_PASSWORD:}
+      password: ${REDIS_PW:nowhere}
       select-database: 0
   session:
     store-type: redis
