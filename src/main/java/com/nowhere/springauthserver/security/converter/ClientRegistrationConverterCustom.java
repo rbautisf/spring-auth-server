@@ -1,6 +1,5 @@
 package com.nowhere.springauthserver.security.converter;
 
-import com.nowhere.springauthserver.persistence.entity.AuthUser;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,17 +15,14 @@ import org.springframework.util.CollectionUtils;
 /**
  * ClientRegistrationConverterCustom is a custom converter for RegisteredClient to OidcClientRegistration.
  * It extends the RegisteredClientOidcClientRegistrationConverter and adds custom client metadata to the claims.
- *
- *
  */
-public class ClientRegistrationConverterCustom implements Converter<RegisteredClient, OidcClientRegistration>{
+public class ClientRegistrationConverterCustom implements Converter<RegisteredClient, OidcClientRegistration> {
 
     private final List<String> customClientMetadata;
     private final RegisteredClientOidcClientRegistrationConverter delegate;
 
-    ClientRegistrationConverterCustom(List<String> customClientMetadata) {
-        this.customClientMetadata = customClientMetadata;
-        this.delegate = new RegisteredClientOidcClientRegistrationConverter();
+    public ClientRegistrationConverterCustom(List<String> customClientMetadata) {
+        this(customClientMetadata, new RegisteredClientOidcClientRegistrationConverter());
     }
 
     ClientRegistrationConverterCustom(List<String> customClientMetadata, RegisteredClientOidcClientRegistrationConverter delegate) {
@@ -42,7 +38,6 @@ public class ClientRegistrationConverterCustom implements Converter<RegisteredCl
         if (!CollectionUtils.isEmpty(this.customClientMetadata)) {
             // Create a new client settings object with the custom client metadata
             ClientSettings clientSettings = registeredClient.getClientSettings();
-
 
             claims.putAll(this.customClientMetadata.stream()
                     .filter(metadata -> clientSettings.getSetting(metadata) != null)

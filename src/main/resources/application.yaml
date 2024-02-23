@@ -1,8 +1,28 @@
+server:
+  port: 9000
+  servlet:
+    context-path: /auth-server
+  forward-headers-strategy: native
+
 spring:
+  data:
+    redis:
+      port: ${REDIS_PORT:6379}
+      host: ${REDIS_HOST:localhost}
+      password: ${REDIS_PW:nowhere}
+      select-database: 0
+  session:
+    store-type: redis
   security:
     oauth2:
       client:
         registration:
+          google-idp:
+            provider: google
+            client-id: ${GOOGLE_CLIENT_ID:google-client-id}
+            client-secret: ${GOOGLE_CLIENT_SECRET:google-client-secret}
+            scope: openid, https://www.googleapis.com/auth/userinfo.profile, https://www.googleapis.com/auth/userinfo.email
+            client-name: Sign in with Google
           github-idp:
             provider: github
             client-id: ${GITHUB_CLIENT_ID:github-client-id}
@@ -12,6 +32,8 @@ spring:
               - read:user
             client-name: Sign in with GitHub
         provider:
+          google:
+            user-name-attribute: email
           github:
             authorization-uri: https://github.com/login/oauth/authorize
             token-uri: https://github.com/login/oauth/access_token
@@ -38,10 +60,6 @@ rsa-key:
   private-key: ${PRIVATE_KEY:classpath:private-pkcs8.pem}
   public-key: ${PUBLIC_KEY:classpath:public.pem}
 
-server:
-  forward-headers-strategy: native
-  port: 9000
-
 springdoc:
   api-docs:
     path: /api-docs
@@ -55,8 +73,14 @@ springdoc:
 logging:
   level:
     root: INFO
-    org.springframework.web: INFO
-    org.springframework.security: INFO
-    org.springframework.security.oauth2: INFO
-    org.springframework.security.oauth2.client: INFO
+    io:
+      lettuce: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+    org.springframework.security.oauth2.client: DEBUG
     org.springframework.boot.autoconfigure: INFO
+
+##
+
+

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsent;
@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * Using @Controller instead of @RestController to return the view name
@@ -26,9 +27,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthorizationConsentController {
     private final RegisteredClientRepository registeredClientRepository;
     private final OAuth2AuthorizationConsentService authorizationConsentService;
+    private final String contextPath;
 
     public AuthorizationConsentController(RegisteredClientRepository registeredClientRepository,
-                                          OAuth2AuthorizationConsentService authorizationConsentService) {
+                                          OAuth2AuthorizationConsentService authorizationConsentService,
+                                          @Value("${server.servlet.context-path}")
+                                          String contextPath) {
+        this.contextPath = contextPath;
         this.registeredClientRepository = registeredClientRepository;
         this.authorizationConsentService = authorizationConsentService;
     }
@@ -53,7 +58,7 @@ public class AuthorizationConsentController {
         model.addAttribute("scopes", withDescription(scopeMap.get("scopesToApprove")));
         model.addAttribute("previouslyApprovedScopes", withDescription(scopeMap.get("previouslyApprovedScopes")));
         model.addAttribute("principalName", principal.getName());
-        model.addAttribute("requestURI", "/oauth2/authorize");
+        model.addAttribute("requestURI", UriComponentsBuilder.fromPath(contextPath+"/oauth2/authorize").build().toString());
         model.addAttribute("userCode", userCode);
         return "consent";
     }
@@ -63,7 +68,7 @@ public class AuthorizationConsentController {
         Set<String> previouslyApprovedScopes = new HashSet<>();
 
         Set<String> authorizedScopes =
-                currentAuthConsent != null? currentAuthConsent.getScopes(): Collections.emptySet();
+                currentAuthConsent != null ? currentAuthConsent.getScopes() : Collections.emptySet();
 
         for (String requestedScope : StringUtils.delimitedListToStringArray(scopes, " ")) {
             // Skip openid scope as it is already approved by the user during the login process
@@ -94,6 +99,7 @@ public class AuthorizationConsentController {
     public static class ScopeWithDescription {
         private static final String DEFAULT_DESCRIPTION = "UNKNOWN SCOPE - We cannot provide information about this permission, use caution when granting this.";
         private static final Map<String, String> scopeDescriptions = new HashMap<>();
+
         static {
             scopeDescriptions.put(
                     OidcScopes.PROFILE,

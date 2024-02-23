@@ -3,6 +3,7 @@ package com.nowhere.springauthserver.service;
 import com.nowhere.springauthserver.persistence.entity.AuthUser;
 import com.nowhere.springauthserver.persistence.entity.Role;
 import com.nowhere.springauthserver.persistence.repository.AuthUserRepository;
+import com.nowhere.springauthserver.security.SecurityConstants;
 import jakarta.transaction.Transactional;
 import java.util.Optional;
 import java.util.Set;
@@ -57,7 +58,6 @@ public class AuthUserServiceImpl implements AuthUserService, UserDetailsService 
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    @Transactional
     @Override
     public void createUserIfNotExists(String username) {
         if (authUserRepository.findByUsername(username).isEmpty()) {
@@ -76,7 +76,7 @@ public class AuthUserServiceImpl implements AuthUserService, UserDetailsService 
                 user.isAccountNonExpired(),
                 user.isCredentialsNonExpired(),
                 user.isAccountNonLocked(),
-                user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getType().name())).collect(Collectors.toList())
+                user.getRoles().stream().map(role -> new SimpleGrantedAuthority(SecurityConstants.DEFAULT_AUTHORITY_PREFIX+role.getType().name())).collect(Collectors.toList())
         );
     }
 }

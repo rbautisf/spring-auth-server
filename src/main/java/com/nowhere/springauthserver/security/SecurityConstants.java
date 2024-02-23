@@ -1,8 +1,9 @@
 package com.nowhere.springauthserver.security;
 
 public final class SecurityConstants {
+    public static final String REGISTER_USER_PATH = "/register";
+    public static final String SIGNUP_PATH = "/signup";
     public static final String LOGIN_PATH = "/login";
-    public static final String SIGN_UP_PATH = "/signup";
     public static final String ACTUATOR_PATH = "/actuator/**";
     public static final String ASSETS_PATH = "/assets/**";
     public static final String ANY_PATH = "/**";
@@ -18,5 +19,6 @@ public final class SecurityConstants {
     public static final int BCRYPT_STRENGTH = 10;
 
     private SecurityConstants() {
+        throw new UnsupportedOperationException("This class cannot be instantiated");
     }
 }

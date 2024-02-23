@@ -25,7 +25,7 @@ public class JwtAuthenticationConverterCustom implements Converter<Jwt, Abstract
         this.jwtGrantedAuthoritiesConverter = jwtGrantedAuthoritiesConverter;
     }
     public JwtAuthenticationConverterCustom() {
-        this.jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        this(new JwtGrantedAuthoritiesConverter());
     }
 
     @Override
@@ -47,7 +47,7 @@ public class JwtAuthenticationConverterCustom implements Converter<Jwt, Abstract
             Object authorities = jwt.getClaim(SecurityConstants.ROLES_CLAIM);
             if (authorities instanceof Collection) {
                 return ((Collection<String>) authorities).stream()
-                        .map(role -> (new SimpleGrantedAuthority(SecurityConstants.DEFAULT_AUTHORITY_PREFIX + role)))
+                        .map(role -> (new SimpleGrantedAuthority(role)))
                         .collect(Collectors.toList());
             }
         }

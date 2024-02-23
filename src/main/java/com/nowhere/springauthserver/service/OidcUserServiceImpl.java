@@ -3,32 +3,28 @@ package com.nowhere.springauthserver.service;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-/**
- * Custom implementation of {@link DefaultOAuth2UserService} to persist user details from
- * OAuth2 provider.}.
- */
 @Service
-public class OAuth2UserServiceImpl extends DefaultOAuth2UserService {
+public class OidcUserServiceImpl extends OidcUserService {
     private final AuthUserService authUserService;
     private final Logger log = LoggerFactory.getLogger(OAuth2UserServiceImpl.class);
 
-    public OAuth2UserServiceImpl(AuthUserService authUserService) {
+    public OidcUserServiceImpl(AuthUserService authUserService) {
         this.authUserService = authUserService;
     }
-
     @Override
-    public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
-        // delegate to the default implementation
-        OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
-        persistIfNotExist(oAuth2UserRequest, oAuth2User);
-        return oAuth2User;
+    public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
+        OidcUser oidcUser = super.loadUser(userRequest);
+        persistIfNotExist(userRequest, oidcUser);
+        return oidcUser;
     }
 
     private void persistIfNotExist(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {

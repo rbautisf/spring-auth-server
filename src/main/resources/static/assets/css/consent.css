@@ -1,4 +1,5 @@
-html{
+html,
+body {
     height: 100%;
 }
 
@@ -14,24 +15,11 @@ body {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-    width: 500px;
+    width: 700px;
 }
 .header img {
-    max-width: 400px;
+    max-width: 600px;
     height: auto;
 }
-.form-signin {
-    max-width: 400px;
-    padding: 15px;
-    background-color: whitesmoke;
-}
 
-.form-signin .form-floating:focus-within {
-    z-index: 2;
-}
-
-
-.form-signin input[type="confirm_password"] {
-    margin-bottom: 10px;
-}
 

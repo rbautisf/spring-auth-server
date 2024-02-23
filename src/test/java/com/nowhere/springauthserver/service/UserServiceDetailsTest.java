@@ -4,6 +4,7 @@ import com.nowhere.springauthserver.persistence.AuthUserFixture;
 import com.nowhere.springauthserver.persistence.RoleFixture;
 import com.nowhere.springauthserver.persistence.entity.Role;
 import com.nowhere.springauthserver.persistence.repository.AuthUserRepository;
+import com.nowhere.springauthserver.security.SecurityConstants;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -17,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.nowhere.springauthserver.security.SecurityConstants.DEFAULT_AUTHORITY_PREFIX;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -55,7 +57,7 @@ public class UserServiceDetailsTest {
         assertEquals(authUserE.isAccountNonExpired(), result.isAccountNonExpired(), "AccountNonExpired should match the predefined accountNonExpired");
         assertEquals(authUserE.isAccountNonLocked(), result.isAccountNonLocked(), "AccountNonLocked should match the predefined accountNonLocked");
         assertEquals(authUserE.isCredentialsNonExpired(), result.isCredentialsNonExpired(), "CredentialsNonExpired should match the predefined credentialsNonExpired");
-        authUserE.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getType().name())).forEach(
+        authUserE.getRoles().stream().map(role -> new SimpleGrantedAuthority(DEFAULT_AUTHORITY_PREFIX+role.getType().name())).forEach(
                 authority -> assertTrue(result.getAuthorities().contains(authority), "Authorities should match the predefined authorities")
         );
     }
