@@ -110,4 +110,6 @@ Following are the environment variables used in this configuration:
 - `REDIS_HOST` - This is the host name of the Redis Cache service.
 - `REDIS_PORT` - This is the port number of the Redis Cache service.
 - `REDIS_PW` - This is the password for the Redis Cache service.
+
+
 These values are stored in environment variables to ensure sensitive information is not available in your application code and to allow for easy updating of these values.
