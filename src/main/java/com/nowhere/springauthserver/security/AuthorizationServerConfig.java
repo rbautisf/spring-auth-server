@@ -5,6 +5,8 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import com.nowhere.springauthserver.security.converter.ClientRegistrationConverterCustom;
+import com.nowhere.springauthserver.security.converter.RegisteredClientConverterCustom;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,8 @@ import org.springframework.security.config.annotation.web.configurers.ExceptionH
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.oidc.converter.OidcClientRegistrationRegisteredClientConverter;
+import org.springframework.security.oauth2.server.authorization.oidc.converter.RegisteredClientOidcClientRegistrationConverter;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
@@ -66,14 +70,22 @@ public class AuthorizationServerConfig {
      * @param configurer the OAuth2AuthorizationServerConfigurer to apply the OIDC configuration to
      */
     private void applyOidcConfiguration(OAuth2AuthorizationServerConfigurer configurer) {
+        var oidcClientRegistrationRegisteredClientConverter = new OidcClientRegistrationRegisteredClientConverter();
+        var oidcClientMetadataConfigurer = getOidcClientMetadataConfigurer(oidcClientRegistrationRegisteredClientConverter);
         configurer.oidc(oidc -> {
             // By design OIDC only supports client registration https://openid.net/specs/openid-connect-registration-1_0.html
             oidc.clientRegistrationEndpoint(clientRegistrationEndpoint -> {
-                clientRegistrationEndpoint.authenticationProviders(
-                        new OidcClientMetadataConfigurer(registeredClientMetadataCustomClaims)
-                );
+                clientRegistrationEndpoint.authenticationProviders(oidcClientMetadataConfigurer);
             });
         });
+    }
+
+    private OidcClientMetadataConfigurer getOidcClientMetadataConfigurer(OidcClientRegistrationRegisteredClientConverter oidcClientRegistrationRegisteredClientConverter) {
+        var registeredClientOidcClientRegistrationConverter = new RegisteredClientOidcClientRegistrationConverter();
+        var registeredClientConverterCustom = new RegisteredClientConverterCustom(registeredClientMetadataCustomClaims, oidcClientRegistrationRegisteredClientConverter);
+        var clientRegistrationConverterCustom = new ClientRegistrationConverterCustom(registeredClientMetadataCustomClaims, registeredClientOidcClientRegistrationConverter);
+        var oidcClientMetadataConfigurer = new OidcClientMetadataConfigurer(registeredClientConverterCustom, clientRegistrationConverterCustom);
+        return oidcClientMetadataConfigurer;
     }
 
     /**

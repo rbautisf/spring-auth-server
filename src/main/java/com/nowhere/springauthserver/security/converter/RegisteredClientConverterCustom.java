@@ -14,16 +14,11 @@ import org.springframework.util.CollectionUtils;
 /**
  * RegisteredClientConverterCustom is a custom converter for OidcClientRegistration to RegisteredClient.
  * It extends the OidcClientRegistrationRegisteredClientConverter and adds custom client metadata to the client settings.
- *
  */
 public class RegisteredClientConverterCustom implements Converter<OidcClientRegistration, RegisteredClient> {
 
     private final List<String> customClientMetadata;
     private final OidcClientRegistrationRegisteredClientConverter delegate;
-
-    public RegisteredClientConverterCustom(List<String> customClientMetadata) {
-        this(customClientMetadata, new OidcClientRegistrationRegisteredClientConverter());
-    }
 
     public RegisteredClientConverterCustom(List<String> customClientMetadata, OidcClientRegistrationRegisteredClientConverter delegate) {
         this.customClientMetadata = customClientMetadata;

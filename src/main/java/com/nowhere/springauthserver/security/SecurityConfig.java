@@ -1,6 +1,8 @@
 package com.nowhere.springauthserver.security;
 
 import com.nowhere.springauthserver.security.converter.JwtAuthenticationConverterCustom;
+import com.nowhere.springauthserver.security.federated.IdentityAuthenticationSuccessHandler;
+import com.nowhere.springauthserver.service.AuthUserService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +19,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import static com.nowhere.springauthserver.security.SecurityConstants.ACTUATOR_PATH;
 import static com.nowhere.springauthserver.security.SecurityConstants.ANY_PATH;
@@ -46,10 +50,13 @@ public class SecurityConfig {
      */
     @Bean
     @Order(2)
-    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http, IdentityAuthenticationSuccessHandler oauth2Handler) throws Exception {
         http.authorizeHttpRequests(authorizeHttpRequestsCustomizer)
                 .formLogin(formLogin -> formLogin.loginPage(LOGIN_PATH))
-                .oauth2Login(oauth2Login -> oauth2Login.loginPage(LOGIN_PATH))
+                .oauth2Login(oauth2Login -> {
+                    oauth2Login.loginPage(LOGIN_PATH);
+                    oauth2Login.successHandler(oauth2Handler);
+                })
                 .cors(Customizer.withDefaults())// required  CorsConfigurationSource bean
                 .oauth2ResourceServer(oauth2ResourceServerCustomizer);
         return http.build();
@@ -57,13 +64,14 @@ public class SecurityConfig {
 
     /**
      * The variable oauth2ResourceServerCustomizer is an instance of Customizer interface for configuring an OAuth2ResourceServerConfigurer for HttpSecurity.
-     *
+     * <p>
      * It is used to customize the OAuth2 resource server configuration by configuring the JwtAuthenticationConverter and its conversion process for Jwt tokens.
      * It sets the jwtAuthenticationConverter to an instance of JwtAuthenticationConverterCustom which extends JwtAuthenticationConverter and adds custom roles to the authorities
-     *.
+     * .
      */
     private final Customizer<OAuth2ResourceServerConfigurer<HttpSecurity>> oauth2ResourceServerCustomizer = oauth2ResourceServer -> {
-        Converter<Jwt, AbstractAuthenticationToken> jwtConverter = new JwtAuthenticationConverterCustom();
+        var jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        Converter<Jwt, AbstractAuthenticationToken> jwtConverter = new JwtAuthenticationConverterCustom(jwtGrantedAuthoritiesConverter);
         oauth2ResourceServer.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter));
     };
 
@@ -73,15 +81,21 @@ public class SecurityConfig {
      */
     private final Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> authorizeHttpRequestsCustomizer = (authorizeRequests) -> {
         authorizeRequests.requestMatchers(
-                REGISTER_USER_PATH,
-                SIGNUP_PATH,
-                LOGIN_PATH,
-                swaggerPath + ANY_PATH,
-                apiDocsPath + ANY_PATH,
-                ASSETS_PATH,
-                ACTUATOR_PATH)
+                        REGISTER_USER_PATH,
+                        SIGNUP_PATH,
+                        LOGIN_PATH,
+                        swaggerPath + ANY_PATH,
+                        apiDocsPath + ANY_PATH,
+                        ASSETS_PATH,
+                        ACTUATOR_PATH)
                 .permitAll().anyRequest().authenticated();
     };
+
+    @Bean
+    public IdentityAuthenticationSuccessHandler oauth2Handler(AuthUserService authUserService) {
+        var savedRequestAwareAuthenticationSuccessHandler = new SavedRequestAwareAuthenticationSuccessHandler();
+        return new IdentityAuthenticationSuccessHandler(savedRequestAwareAuthenticationSuccessHandler, authUserService);
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

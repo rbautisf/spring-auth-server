@@ -14,12 +14,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class RegisteredClientConverterCustomTest {
-    private final OidcClientRegistrationRegisteredClientConverter delegate = mock(OidcClientRegistrationRegisteredClientConverter.class);
+    final OidcClientRegistrationRegisteredClientConverter delegate = mock(OidcClientRegistrationRegisteredClientConverter.class);
 
     @Test
     void testConvertWithValidCustomClientMetadata() {
         List<String> metadata = List.of("customMetadata");
-        var converter = new RegisteredClientConverterCustom(metadata);
+        var converter = new RegisteredClientConverterCustom(metadata, new OidcClientRegistrationRegisteredClientConverter());
 
         var clientRegistration = RegisteredClientFixture.builderOidcClientRegistration()
                 .claim("customMetadata", "test-value").build();
