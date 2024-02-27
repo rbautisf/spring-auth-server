@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port:  ${SERVER_PORT:9000}
   servlet:
     context-path: /auth-server
   forward-headers-strategy: native
@@ -74,11 +74,11 @@ logging:
   level:
     root: INFO
     io:
-      lettuce: DEBUG
-    org.springframework.web: DEBUG
-    org.springframework.security: DEBUG
-    org.springframework.security.oauth2: DEBUG
-    org.springframework.security.oauth2.client: DEBUG
+      lettuce: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+    org.springframework.security.oauth2.client: INFO
     org.springframework.boot.autoconfigure: INFO
 
 ##

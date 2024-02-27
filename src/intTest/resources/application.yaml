@@ -5,11 +5,6 @@ server:
   forward-headers-strategy: native
 
 spring:
-  data:
-    redis:
-      port: ${REDIS_PORT:6379}
-      host: ${REDIS_HOST:localhost}
-      password: ${REDIS_PW:nowhere}
   security:
     oauth2:
       client:
@@ -61,6 +56,8 @@ springdoc:
 logging:
   level:
     root: INFO
-    org.springframework.web: DEBUG
+    io:
+      lettuce: INFO
+    org.springframework.web: INFO
     org.springframework.security: INFO
-    org.springframework.security.oauth2: DEBUG
+    org.springframework.security.oauth2: INFO

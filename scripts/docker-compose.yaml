@@ -21,9 +21,8 @@ services:
   redis:
     container_name: redis
     image: redis:latest
-    command: redis-server --requirepass ${REDIS_PW}
     ports:
-      - "6379:6379"
+      - "6380:6379"
     restart: always
     volumes:
       - redis-data:/data

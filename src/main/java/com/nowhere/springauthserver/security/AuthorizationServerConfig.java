@@ -37,7 +37,7 @@ import static com.nowhere.springauthserver.security.SecurityConstants.LOGIN_PATH
 @Configuration(proxyBeanMethods = false)
 public class AuthorizationServerConfig {
 
-    private final List<String> registeredClientMetadataCustomClaims = List.of("logo_uri", "contacts", "application_type", "environment");
+    private final List<String> clientMetadataCustomClaims = List.of("logo_uri", "contacts", "application_type", "environment");
 
     /**
      * The Authorization Server Security Filter Chain is responsible for processing
@@ -70,22 +70,27 @@ public class AuthorizationServerConfig {
      * @param configurer the OAuth2AuthorizationServerConfigurer to apply the OIDC configuration to
      */
     private void applyOidcConfiguration(OAuth2AuthorizationServerConfigurer configurer) {
-        var oidcClientRegistrationRegisteredClientConverter = new OidcClientRegistrationRegisteredClientConverter();
-        var oidcClientMetadataConfigurer = getOidcClientMetadataConfigurer(oidcClientRegistrationRegisteredClientConverter);
-        configurer.oidc(oidc -> {
-            // By design OIDC only supports client registration https://openid.net/specs/openid-connect-registration-1_0.html
-            oidc.clientRegistrationEndpoint(clientRegistrationEndpoint -> {
-                clientRegistrationEndpoint.authenticationProviders(oidcClientMetadataConfigurer);
-            });
-        });
+        var oidcClientConfigurer = oidcClientMetadataConfigurer();
+        configurer
+                .oidc(oidc -> {
+                    // activate endpoint to get oidc id token
+                    // By design OIDC only supports client registration https://openid.net/specs/openid-connect-registration-1_0.html
+                    oidc.clientRegistrationEndpoint(clientRegistrationEndpoint -> {
+                        clientRegistrationEndpoint.authenticationProviders(oidcClientConfigurer);
+                    });
+                });
     }
 
-    private OidcClientMetadataConfigurer getOidcClientMetadataConfigurer(OidcClientRegistrationRegisteredClientConverter oidcClientRegistrationRegisteredClientConverter) {
-        var registeredClientOidcClientRegistrationConverter = new RegisteredClientOidcClientRegistrationConverter();
-        var registeredClientConverterCustom = new RegisteredClientConverterCustom(registeredClientMetadataCustomClaims, oidcClientRegistrationRegisteredClientConverter);
-        var clientRegistrationConverterCustom = new ClientRegistrationConverterCustom(registeredClientMetadataCustomClaims, registeredClientOidcClientRegistrationConverter);
-        var oidcClientMetadataConfigurer = new OidcClientMetadataConfigurer(registeredClientConverterCustom, clientRegistrationConverterCustom);
-        return oidcClientMetadataConfigurer;
+    private OidcClientMetadataConfigurer oidcClientMetadataConfigurer() {
+        var delegateRegisteredClientConverter = new OidcClientRegistrationRegisteredClientConverter();
+        var delegateClientRegistrationConverter = new RegisteredClientOidcClientRegistrationConverter();
+
+        var registeredClientConverter =
+                new RegisteredClientConverterCustom(clientMetadataCustomClaims, delegateRegisteredClientConverter);
+        var clientRegistrationConverter =
+                new ClientRegistrationConverterCustom(clientMetadataCustomClaims, delegateClientRegistrationConverter);
+
+        return new OidcClientMetadataConfigurer(registeredClientConverter, clientRegistrationConverter);
     }
 
     /**
