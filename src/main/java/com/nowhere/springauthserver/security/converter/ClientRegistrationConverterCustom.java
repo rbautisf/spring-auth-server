@@ -21,11 +21,7 @@ public class ClientRegistrationConverterCustom implements Converter<RegisteredCl
     private final List<String> customClientMetadata;
     private final RegisteredClientOidcClientRegistrationConverter delegate;
 
-    public ClientRegistrationConverterCustom(List<String> customClientMetadata) {
-        this(customClientMetadata, new RegisteredClientOidcClientRegistrationConverter());
-    }
-
-    ClientRegistrationConverterCustom(List<String> customClientMetadata, RegisteredClientOidcClientRegistrationConverter delegate) {
+    public ClientRegistrationConverterCustom(List<String> customClientMetadata, RegisteredClientOidcClientRegistrationConverter delegate) {
         this.customClientMetadata = customClientMetadata;
         this.delegate = delegate;
     }

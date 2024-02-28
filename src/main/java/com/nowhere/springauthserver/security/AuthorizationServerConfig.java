@@ -5,6 +5,8 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import com.nowhere.springauthserver.security.converter.ClientRegistrationConverterCustom;
+import com.nowhere.springauthserver.security.converter.RegisteredClientConverterCustom;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,8 @@ import org.springframework.security.config.annotation.web.configurers.ExceptionH
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.oidc.converter.OidcClientRegistrationRegisteredClientConverter;
+import org.springframework.security.oauth2.server.authorization.oidc.converter.RegisteredClientOidcClientRegistrationConverter;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
@@ -33,7 +37,7 @@ import static com.nowhere.springauthserver.security.SecurityConstants.LOGIN_PATH
 @Configuration(proxyBeanMethods = false)
 public class AuthorizationServerConfig {
 
-    private final List<String> registeredClientMetadataCustomClaims = List.of("logo_uri", "contacts", "application_type", "environment");
+    private final List<String> clientMetadataCustomClaims = List.of("logo_uri", "contacts", "application_type", "environment");
 
     /**
      * The Authorization Server Security Filter Chain is responsible for processing
@@ -66,14 +70,27 @@ public class AuthorizationServerConfig {
      * @param configurer the OAuth2AuthorizationServerConfigurer to apply the OIDC configuration to
      */
     private void applyOidcConfiguration(OAuth2AuthorizationServerConfigurer configurer) {
-        configurer.oidc(oidc -> {
-            // By design OIDC only supports client registration https://openid.net/specs/openid-connect-registration-1_0.html
-            oidc.clientRegistrationEndpoint(clientRegistrationEndpoint -> {
-                clientRegistrationEndpoint.authenticationProviders(
-                        new OidcClientMetadataConfigurer(registeredClientMetadataCustomClaims)
-                );
-            });
-        });
+        var oidcClientConfigurer = oidcClientMetadataConfigurer();
+        configurer
+                .oidc(oidc -> {
+                    // activate endpoint to get oidc id token
+                    // By design OIDC only supports client registration https://openid.net/specs/openid-connect-registration-1_0.html
+                    oidc.clientRegistrationEndpoint(clientRegistrationEndpoint -> {
+                        clientRegistrationEndpoint.authenticationProviders(oidcClientConfigurer);
+                    });
+                });
+    }
+
+    private OidcClientMetadataConfigurer oidcClientMetadataConfigurer() {
+        var delegateRegisteredClientConverter = new OidcClientRegistrationRegisteredClientConverter();
+        var delegateClientRegistrationConverter = new RegisteredClientOidcClientRegistrationConverter();
+
+        var registeredClientConverter =
+                new RegisteredClientConverterCustom(clientMetadataCustomClaims, delegateRegisteredClientConverter);
+        var clientRegistrationConverter =
+                new ClientRegistrationConverterCustom(clientMetadataCustomClaims, delegateClientRegistrationConverter);
+
+        return new OidcClientMetadataConfigurer(registeredClientConverter, clientRegistrationConverter);
     }
 
     /**

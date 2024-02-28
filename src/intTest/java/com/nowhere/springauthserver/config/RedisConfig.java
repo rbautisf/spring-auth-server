@@ -2,17 +2,12 @@ package com.nowhere.springauthserver.config;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import java.io.IOException;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import redis.embedded.RedisServer;
 
-@Configuration
-@EnableRedisHttpSession
+@TestConfiguration
 public class RedisConfig {
 
     private RedisServer redisServer;

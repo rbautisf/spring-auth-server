@@ -104,7 +104,24 @@ INSERT INTO public.role VALUES ('9d3026f6-a03e-11ee-a0b3-e76d78012385', 'USER');
 INSERT INTO public.user_roles VALUES ('7dd5390c-f30b-4d44-9e40-2c09703da158', '0c7313d3-58ed-4039-bffa-7282c965db3f');
 INSERT INTO public.user_roles VALUES ('9d3026f6-a03e-11ee-a0b3-e76d78012385', '0c7313d3-58ed-4039-bffa-7282c965db3f');
 
-INSERT INTO public.oauth2_registered_client VALUES ('0deba273-eca6-4793-91f9-f24ffffe634d', 'nowhere-client', '2023-08-13 16:26:33.788646+01', '{bcrypt}$2a$12$FpUwRzVr.eYFYGg5k1/YAO5G.DJMeRyiy4Yb22lD2rcWg1cS5D/3y', NULL, 'nowhere-client', 'client_secret_basic', 'refresh_token,client_credentials,authorization_code', 'https://oidcdebugger.com/debug,https://oauthdebugger.com/debug,https://oidcdebugger.com/debug,https://oauthdebugger.com/debug,http://localhost/client-service/login/oauth2/code/nowhere-client-oidc,http://localhost/client-service/authorized', 'http://127.0.0.1:9000/', 'openid,profile,message.read,message.write,client.create,client.read', '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":true,"settings.client.require-authorization-consent":true}', '{"@class":"java.util.Collections$UnmodifiableMap","settings.token.reuse-refresh-tokens":true,"settings.token.id-token-signature-algorithm":["org.springframework.security.oauth2.jose.jws.SignatureAlgorithm","RS256"],"settings.token.access-token-time-to-live":["java.time.Duration",86400.000000000],"settings.token.access-token-format":{"@class":"org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat","value":"self-contained"},"settings.token.refresh-token-time-to-live":["java.time.Duration",2592000.000000000],"settings.token.authorization-code-time-to-live":["java.time.Duration",86400.000000000],"settings.token.device-code-time-to-live":["java.time.Duration",86400.000000000]}');
+INSERT
+INTO
+    public.oauth2_registered_client
+VALUES ('0deba273-eca6-4793-91f9-f24ffffe634d',
+        'nowhere-client',
+        '2023-08-13 16:26:33.788646+01',
+        '{bcrypt}$2a$12$FpUwRzVr.eYFYGg5k1/YAO5G.DJMeRyiy4Yb22lD2rcWg1cS5D/3y',
+        NULL,
+        'nowhere-client',
+        'client_secret_basic',
+        'refresh_token,client_credentials,authorization_code',
+        'http://localhost:9000/auth-server/login/oauth2/code/google-idp,http://localhost/auth-server/login/oauth2/code/google-idp,' ||
+        'http://localhost:9000/auth-server/login/oauth2/code/github-idp,http://localhost/auth-server/login/oauth2/code/github-idp,' ||
+        'https://oidcdebugger.com/debug,https://oauthdebugger.com/debug',
+        'http://localhost:9000/auth-server/logout,http://localhost/auth-server/logout',
+        'openid,profile,message.read,message.write,client.create,client.read',
+        '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":true,"settings.client.require-authorization-consent":true}',
+        '{"@class":"java.util.Collections$UnmodifiableMap","settings.token.reuse-refresh-tokens":true,"settings.token.id-token-signature-algorithm":["org.springframework.security.oauth2.jose.jws.SignatureAlgorithm","RS256"],"settings.token.access-token-time-to-live":["java.time.Duration",86400.000000000],"settings.token.access-token-format":{"@class":"org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat","value":"self-contained"},"settings.token.refresh-token-time-to-live":["java.time.Duration",2592000.000000000],"settings.token.authorization-code-time-to-live":["java.time.Duration",86400.000000000],"settings.token.device-code-time-to-live":["java.time.Duration",86400.000000000]}');
 
 ALTER TABLE ONLY public.auth_user
     ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);

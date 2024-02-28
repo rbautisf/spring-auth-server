@@ -12,20 +12,16 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 
 /**
  * JwtAuthenticationConverterCustom is a custom converter for Jwt to AbstractAuthenticationToken.
  * It extends the JwtAuthenticationConverter and adds custom roles to the authorities.
- *
  */
 public class JwtAuthenticationConverterCustom implements Converter<Jwt, AbstractAuthenticationToken> {
     private final Converter<Jwt, Collection<GrantedAuthority>> jwtGrantedAuthoritiesConverter;
+
     public JwtAuthenticationConverterCustom(Converter<Jwt, Collection<GrantedAuthority>> jwtGrantedAuthoritiesConverter) {
         this.jwtGrantedAuthoritiesConverter = jwtGrantedAuthoritiesConverter;
-    }
-    public JwtAuthenticationConverterCustom() {
-        this(new JwtGrantedAuthoritiesConverter());
     }
 
     @Override

@@ -22,11 +22,6 @@ public class OidcClientMetadataConfigurer implements Consumer<List<Authenticatio
         this.clientRegistrationConverter = clientRegistrationConverter;
     }
 
-    public OidcClientMetadataConfigurer(List<String> customClientMetadata) {
-        this(new RegisteredClientConverterCustom(customClientMetadata),
-                new ClientRegistrationConverterCustom(customClientMetadata));
-    }
-
     private final RegisteredClientConverterCustom registeredClientConverter;
     private final ClientRegistrationConverterCustom clientRegistrationConverter;
 
