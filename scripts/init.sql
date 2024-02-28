@@ -115,12 +115,10 @@ VALUES ('0deba273-eca6-4793-91f9-f24ffffe634d',
         'nowhere-client',
         'client_secret_basic',
         'refresh_token,client_credentials,authorization_code',
-        'http://localhost/auth-server/login/oauth2/code/google-idp,' ||
-        'http://localhost:9000/auth-server/login/oauth2/code/github-idp,' ||
-        'https://oidcdebugger.com/debug,https://oauthdebugger.com/debug,' ||
-        'http://localhost/client-service/login/oauth2/code/nowhere-client-oidc,' ||
-        'http://localhost/client-service/authorized',
-        'http://127.0.0.1:9000/',
+        'http://localhost:9000/auth-server/login/oauth2/code/google-idp,http://localhost/auth-server/login/oauth2/code/google-idp,' ||
+        'http://localhost:9000/auth-server/login/oauth2/code/github-idp,http://localhost/auth-server/login/oauth2/code/github-idp,' ||
+        'https://oidcdebugger.com/debug,https://oauthdebugger.com/debug',
+        'http://localhost:9000/auth-server/logout,http://localhost/auth-server/logout',
         'openid,profile,message.read,message.write,client.create,client.read',
         '{"@class":"java.util.Collections$UnmodifiableMap","settings.client.require-proof-key":true,"settings.client.require-authorization-consent":true}',
         '{"@class":"java.util.Collections$UnmodifiableMap","settings.token.reuse-refresh-tokens":true,"settings.token.id-token-signature-algorithm":["org.springframework.security.oauth2.jose.jws.SignatureAlgorithm","RS256"],"settings.token.access-token-time-to-live":["java.time.Duration",86400.000000000],"settings.token.access-token-format":{"@class":"org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat","value":"self-contained"},"settings.token.refresh-token-time-to-live":["java.time.Duration",2592000.000000000],"settings.token.authorization-code-time-to-live":["java.time.Duration",86400.000000000],"settings.token.device-code-time-to-live":["java.time.Duration",86400.000000000]}');
