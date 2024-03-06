@@ -8,13 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2TokenIntrospectionClaimNames;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.core.oidc.IdTokenClaimNames;
 import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.oauth2.server.authorization.authentication.OAuth2ClientAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.stereotype.Component;
@@ -56,6 +59,20 @@ public class OAuthTokenCustomizerCustom implements OAuth2TokenCustomizer<JwtEnco
 
     private void processAccessToken(JwtEncodingContext context){
         Authentication principal = context.getPrincipal();
+        switch (principal){
+            case OAuth2ClientAuthenticationToken clientPrincipal -> processClientAccessToken(context, clientPrincipal);
+            case UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken -> processUserAccessToken(context, usernamePasswordAuthenticationToken);
+            case OAuth2AuthenticationToken authentication -> processUserAccessToken(context, authentication);
+            default -> {}
+        }
+    }
+
+    private void processClientAccessToken(JwtEncodingContext context, OAuth2ClientAuthenticationToken clientPrincipal){
+        context.getClaims().claim(OAuth2TokenIntrospectionClaimNames.TOKEN_TYPE, SecurityConstants.CLIENT_CREDENTIALS_VALUE);
+        context.getClaims().claim(OAuth2TokenIntrospectionClaimNames.CLIENT_ID, clientPrincipal.getName());
+    }
+
+    private void processUserAccessToken(JwtEncodingContext context, Authentication principal){
         AuthUser authUser = authUserService.getByUsername(principal.getName());
         context.getClaims().claims((claims) -> {
             claims.put(OAuth2TokenIntrospectionClaimNames.TOKEN_TYPE, ACCESS_TOKEN_VALUE);
