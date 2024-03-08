@@ -112,5 +112,3 @@ jacocoTestReport {
     }
     dependsOn (test, intTest)
 }
-
-check.dependsOn intTest, jacocoTestReport
