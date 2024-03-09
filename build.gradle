@@ -75,7 +75,7 @@ dependencies {
     intTestImplementation 'it.ozimov:embedded-redis:0.7.3' exclude(group: 'org.slf4j', module: 'slf4j-simple')
 
     // add jakarta.persistence.EnumType to testFixtures
-    testFixturesImplementation 'jakarta.persistence:jakarta.persistence-api:3.0.0'
+    testFixturesImplementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
     testFixturesImplementation 'org.springframework.security:spring-security-test'
     testFixturesImplementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
 
