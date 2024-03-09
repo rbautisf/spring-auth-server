@@ -5,6 +5,7 @@ plugins {
     id 'java-library' //includes 'java'
     id 'java-test-fixtures'
     id 'jacoco'
+    id 'maven-publish'
 }
 
 group = 'com.nowhere'
@@ -111,4 +112,23 @@ jacocoTestReport {
         }))
     }
     dependsOn (test, intTest)
+}
+
+// https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-gradle-registry#example-using-gradle-groovy-for-a-single-package-in-a-repository
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/rbautisf/spring-auth-server")
+            credentials {
+                username = System.getenv("GIT_USERNAME")
+                password = System.getenv("GIT_TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
 }
