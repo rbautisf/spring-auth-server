@@ -109,7 +109,6 @@ Following are the environment variables used in this configuration:
 - `GOOGLE_CLIENT_SECRET` - This is the client secret provided by Google for OAuth 2.0 Applications. This is used when exchanging the auth code for access tokens.
 - `REDIS_HOST` - This is the host name of the Redis Cache service.
 - `REDIS_PORT` - This is the port number of the Redis Cache service.
-- `REDIS_PW` - This is the password for the Redis Cache service.
 
 
 These values are stored in environment variables to ensure sensitive information is not available in your application code and to allow for easy updating of these values.

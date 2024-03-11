@@ -29,7 +29,7 @@ services:
   #  Uncomment once you have the local image built
   auth-server:
     container_name: authorization-server
-    image: authorization-server:latest
+    image: ghcr.io/rbautisf/spring-auth-server:latest
     environment:
       - DATASOURCE_URL=jdbc:postgresql://postgres:5432/oauth_nowhere
       - DB_USERNAME=${POSTGRES_USER}
@@ -42,7 +42,6 @@ services:
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PORT=${REDIS_PORT}
-      - REDIS_PW=${REDIS_PW}
     ports:
       - "9000:9000"
     restart: always

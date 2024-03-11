@@ -5,13 +5,14 @@
 # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 
-name: Java CI with Gradle
+name: Authorization Server CI/CD
 
 env:
   GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
   GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+
 on:
   push:
     branches: [ "main" ]
@@ -75,7 +76,7 @@ jobs:
           path: build/reports/tests/intTest/
 
   publish-artifact:
-    needs: [ build, integration-test]
+#    needs: [ build, integration-test]
 #    if: github.ref == 'refs/heads/ci-cd-practices/publish'
 #    if: github.event.pull_request.head.ref == 'ci-cd-practices/publish'
     runs-on: ubuntu-latest
@@ -89,9 +90,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-#          cache: gradle
-          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-          settings-path: ${{ github.workspace }} # location for the settings.xml file
+          cache: gradle
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
 
@@ -100,9 +99,6 @@ jobs:
 
       # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
       # the publishing section of your build.gradle
-      - name: Values check
-        run: |
-          echo "Registry: ${{ env.GIT_USERNAME }}"
       - name: Publish to GitHub Packages
         run: ./gradlew publish
 
@@ -113,12 +109,12 @@ jobs:
       contents: read
       packages: write
     steps:
-    - name: check values
-      run: |
-        echo "User: ${{ github.actor }}"
-        echo "Image Name (env): ${{ env.IMAGE_NAME }}"
     - name: Checkout repository
       uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
     - name: Log in to the Container registry
       uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
       with:
@@ -126,30 +122,17 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ env.GIT_TOKEN  }}
 
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-#        cache: gradle
-        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-        settings-path: ${{ github.workspace }} # location for the settings.xml file
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
-
     - name: Extract metadata (tags, labels) for Docker
       id: meta
       uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-    - name: Build with Gradle
-      run: ./gradlew build
-
     - name: Build and push Docker image
       uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
       with:
         context: .
+        push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
 
@@ -166,8 +149,6 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-          settings-path: ${{ github.workspace }} # location for the settings.xml file
       # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.
       # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
       - name: Generate and submit dependency graph
