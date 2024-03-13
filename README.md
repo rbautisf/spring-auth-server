@@ -20,6 +20,8 @@ Execute the docker-compose file to start the database.
 ```shell
 scripts/docker-compose up
 ```
+Please note that the init.sql file is used to create the database schema and the initial data, if you are using your own database, please make sure to have the schema and data created.  
+
 Optional: Build the docker image and use the image from the docker-compose file to start the application.
 ```shell
 docker build -t auth-nowhere .
@@ -46,7 +48,6 @@ GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 REDIS_HOST=
 REDIS_PORT=
-REDIS_PW=
 ```
 ## Key Generation
 #### Creating Private Key
