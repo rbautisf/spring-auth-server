@@ -29,7 +29,7 @@ services:
   #  Uncomment once you have the local image built
   auth-server:
     container_name: authorization-server
-    image: ghcr.io/rbautisf/spring-auth-server:latest
+    image: ghcr.io/rbautisf/spring-auth-server:main
     environment:
       - DATASOURCE_URL=jdbc:postgresql://postgres:5432/oauth_nowhere
       - DB_USERNAME=${POSTGRES_USER}

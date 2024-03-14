@@ -1,8 +1,6 @@
 # syntax=docker/dockerfile:experimental
 FROM amazoncorretto:21-alpine-jdk AS build
 
-LABEL org.opencontainers.image.source https://github.com/rbautisf/spring-auth-server
-
 WORKDIR /workspace/app
 COPY . /workspace/app
 
