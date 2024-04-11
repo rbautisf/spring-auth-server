@@ -42,7 +42,8 @@ spring:
       ddl-auto: none
     show-sql: true
     database-platform: org.hibernate.dialect.H2Dialect
-
+  flyway:
+    enabled: false
 rsa-key:
   public-key: ${PUBLIC_KEY:}
   private-key: ${PRIVATE_KEY:}
