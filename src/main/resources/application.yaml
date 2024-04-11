@@ -47,6 +47,11 @@ spring:
     url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5433/oauth_nowhere}
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:nowhere}
+  flyway:
+    locations: classpath:db/migration/{vendor}
+    baseline-on-migrate: true
+    enabled: true
+
   jpa:
     show-sql: true
     properties.hibernate:
