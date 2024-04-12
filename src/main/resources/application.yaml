@@ -48,7 +48,7 @@ spring:
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:nowhere}
   flyway:
-    locations: classpath:db/migration/{vendor}
+    locations: classpath:db/migration
     baseline-on-migrate: true
     enabled: true
 
