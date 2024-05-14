@@ -16,7 +16,6 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - postgres-data:/var/lib/postgresql/data
   redis:
     container_name: redis
@@ -26,7 +25,6 @@ services:
     restart: always
     volumes:
       - redis-data:/data
-  #  Uncomment once you have the local image built
   auth-server:
     container_name: authorization-server
     image: ghcr.io/rbautisf/spring-auth-server:main
@@ -56,17 +54,6 @@ services:
     restart: always
     depends_on:
       - auth-server
-#  pgadmin:
-#    container_name: pgadmin
-#    image: dpage/pgadmin4:latest
-#    environment:
-#      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
-#      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PW}
-#    ports:
-#      - "5050:80"
-#    restart: always
-#    volumes:
-#      - pgadmin-data:/var/lib/pgadmin
 volumes:
   postgres-data:
   pgadmin-data:
