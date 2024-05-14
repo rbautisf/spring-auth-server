@@ -47,6 +47,7 @@ public class OAuthTokenCustomizerCustom implements OAuth2TokenCustomizer<JwtEnco
         context.getClaims().claim(OAuth2TokenIntrospectionClaimNames.TOKEN_TYPE, SecurityConstants.ID_TOKEN_VALUE);
 
         Map<String, Object> thirdPartyClaims = extractClaims(context.getPrincipal());
+        AuthUser authUser = authUserService.getByUsername(context.getPrincipal().getName());
         context.getClaims().claims(existingClaims -> {
             // Remove conflicting claims set by this authorization server
             existingClaims.keySet().forEach(thirdPartyClaims::remove);
@@ -54,6 +55,7 @@ public class OAuthTokenCustomizerCustom implements OAuth2TokenCustomizer<JwtEnco
             ID_TOKEN_CLAIMS.forEach(thirdPartyClaims::remove);
             // Add all other claims directly to id_token
             existingClaims.putAll(thirdPartyClaims);
+            existingClaims.put(IdTokenClaimNames.SUB, authUser.getId().toString());
         });
     }
 
@@ -76,6 +78,7 @@ public class OAuthTokenCustomizerCustom implements OAuth2TokenCustomizer<JwtEnco
         AuthUser authUser = authUserService.getByUsername(principal.getName());
         context.getClaims().claims((claims) -> {
             claims.put(OAuth2TokenIntrospectionClaimNames.TOKEN_TYPE, ACCESS_TOKEN_VALUE);
+            claims.put(IdTokenClaimNames.SUB, authUser.getId().toString());
             Set<String> roles = authUser.getRoles().stream()
                     .map(role -> SecurityConstants.DEFAULT_AUTHORITY_PREFIX + role.getType().name())
                     .collect(Collectors.toSet());

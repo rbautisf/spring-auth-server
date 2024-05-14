@@ -4,6 +4,38 @@
 
 This `docker-compose.yaml` file defines the services that make up your application, and their configurations, to facilitate shared environments and simplify the setting up process.
 
+Create file .env in the scripts directory of the project and add the following environment variables:
+
+```bash
+# Description: Environment variables for the project
+# Postgres Config
+POSTGRES_USER=postgres
+POSTGRES_PW=nowhere
+POSTGRES_DB=oauth_nowhere
+
+# PGAdmin Config
+PGADMIN_EMAIL=postgres@nowhere.com
+PGADMIN_PW=nowhere
+
+# Authorization Server Config
+SERVER_PORT=9000
+DATASOURCE_URL=jdbc:postgresql://localhost:5433/oauth_nowhere
+DB_USERNAME=postgres
+DB_PASSWORD=nowhere
+
+PRIVATE_KEY= #REQUIRED
+PUBLIC_KEY= #REQUIRED
+# Github OAuth Config
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+# Google OAuth Config
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+#Redis Config point to redis service as host
+REDIS_HOST=redis
+REDIS_PORT=6379
+```
 ### Services
 
 There are several services defined in this file:
