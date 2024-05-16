@@ -17,6 +17,8 @@ env:
   GIT_USERNAME: ${{ github.actor }}
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  PACKAGES_NAME: ${{ vars.PACKAGES_NAME }}
+  PACKAGES_URL: ${{ vars.PACKAGES_URL }}
 
 jobs:
   build:
@@ -76,8 +78,8 @@ jobs:
           path: build/reports/tests/intTest/
 
   publish-artifact:
-    if: github.ref == 'refs/heads/main'
-    needs: [ build, integration-test ]
+#    if: github.ref == 'refs/heads/main'
+#    needs: [ build, integration-test ]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -97,8 +99,8 @@ jobs:
         run: ./gradlew build publish
 
   build-and-push-image:
-    if: github.ref == 'refs/heads/main'
-    needs: [ publish-artifact ]
+#    if: github.ref == 'refs/heads/main'
+#    needs: [ publish-artifact ]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -114,8 +116,6 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ env.GIT_USERNAME }}
           password: ${{ env.GIT_TOKEN }}
-          name: ${{ env.PACKAGES_NAME }}
-          url: ${{ env.PACKAGES_URL }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -130,6 +130,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          name: ${{ env.PACKAGES_NAME }}
+          url: ${{ env.PACKAGES_URL }}
 
   dependency-submission:
     if: github.ref == 'refs/heads/main'
