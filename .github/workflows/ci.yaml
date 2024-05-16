@@ -114,8 +114,6 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ env.GIT_USERNAME }}
           password: ${{ env.GIT_TOKEN }}
-          name: ${{ env.PACKAGES_NAME }}
-          url: ${{ env.PACKAGES_URL }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
