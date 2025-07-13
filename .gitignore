@@ -40,3 +40,4 @@ out/
 /test.env
 /scripts/.env
 /scripts/.env
+/local.env
