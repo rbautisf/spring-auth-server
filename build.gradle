@@ -6,6 +6,7 @@ plugins {
     id 'java-test-fixtures'
     id 'jacoco'
     id 'maven-publish'
+    id 'com.google.cloud.tools.jib' version '3.4.0'
 }
 
 group = 'com.nowhere'
@@ -132,5 +133,39 @@ publishing {
         gpr(MavenPublication) {
             from(components.java)
         }
+    }
+}
+
+// Jib configuration for containerization
+jib {
+    from {
+        image = 'amazoncorretto:21-alpine-jdk'
+        platforms {
+            platform {
+                architecture = 'amd64'
+                os = 'linux'
+            }
+            platform {
+                architecture = 'arm64'
+                os = 'linux'
+            }
+        }
+    }
+    to {
+        image = 'ghcr.io/rbautisf/spring-auth-server'
+        // Only set auth if credentials are available
+        if (System.getenv('GIT_USERNAME') && System.getenv('GIT_TOKEN')) {
+            auth {
+                username = System.getenv('GIT_USERNAME')
+                password = System.getenv('GIT_TOKEN')
+            }
+        }
+    }
+    container {
+        ports = ['9000']
+        mainClass = 'com.nowhere.springauthserver.SpringAuthServerApplication'
+        user = 'nobody'
+        volumes = ['/tmp']
+        creationTime = 'USE_CURRENT_TIMESTAMP'
     }
 }
