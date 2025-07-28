@@ -9,9 +9,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlButton;
 import com.gargoylesoftware.htmlunit.html.HtmlCheckBoxInput;
 import com.gargoylesoftware.htmlunit.html.HtmlInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.google.common.io.Files;
 import com.nowhere.springauthserver.config.BaseIntegrationTest;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,18 +21,13 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest;
-import org.springframework.data.redis.connection.RedisServer;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.web.util.UriComponentsBuilder;
-import redis.embedded.RedisServerBuilder;
+import javax.sql.DataSource;
 
 import static com.nowhere.springauthserver.security.SecurityConstants.LOGIN_PATH;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,17 +42,15 @@ public class BaseOauthFlowTest extends BaseIntegrationTest {
     protected final String DEFAULT_USERNAME = "user@user.com";
     protected final String DEFAULT_PASSWORD = "user";
 
-    private static final int REDIS_PORT = 6379;
-    private RedisServer embeddedRedis;
-
     @Autowired
     protected WebClient webClient;
+    
     @Autowired
-    protected EmbeddedDatabase db;
+    protected DataSource dataSource;
 
     @BeforeEach
     protected void setUp() {
-        JdbcTemplate template = new JdbcTemplate(db);
+        JdbcTemplate template = new JdbcTemplate(dataSource);
         // Delete the content from the tables related to authorization
         // to avoid the use of DirtyContext to reset the context for each test.
         template.execute("DELETE FROM oauth2_authorization");
@@ -67,10 +58,6 @@ public class BaseOauthFlowTest extends BaseIntegrationTest {
         this.webClient.getOptions().setThrowExceptionOnFailingStatusCode(true);
         this.webClient.getOptions().setRedirectEnabled(true);
         this.webClient.getCookieManager().clearCookies();
-
-        embeddedRedis = new RedisServer("localhost",REDIS_PORT);
-
-
     }
 
     protected WebRequest buildTokenRequest(String access_code, String verifier) throws MalformedURLException {
