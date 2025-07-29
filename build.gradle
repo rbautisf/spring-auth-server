@@ -44,6 +44,9 @@ idea {
 // intTest config ends here
 
 dependencies {
+    // TestContainers BOM for consistent versioning
+    intTestImplementation platform('org.testcontainers:testcontainers-bom:1.19.5')
+    
     implementation ('org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'){
         //remove warn  issue Provides transitive vulnerable dependency maven:org.springframework:spring-core:6.1.2
         exclude group: 'org.springframework', module: 'spring-core'
@@ -70,13 +73,17 @@ dependencies {
 
     intTestImplementation 'org.springframework.boot:spring-boot-starter-test'
     intTestImplementation 'org.springframework.security:spring-security-test'
-    intTestImplementation 'com.h2database:h2'
     intTestImplementation 'net.sourceforge.htmlunit:htmlunit'
-    intTestImplementation 'org.springframework.boot:spring-boot-starter-test'
     intTestImplementation "org.springframework.boot:spring-boot-starter-data-redis"
     intTestImplementation 'org.springframework.session:spring-session-data-redis'
     intTestImplementation project.getDependencies().testFixtures(project)
-    intTestImplementation 'it.ozimov:embedded-redis:0.7.3' exclude(group: 'org.slf4j', module: 'slf4j-simple')
+    
+    // TestContainers dependencies
+    intTestImplementation 'org.testcontainers:junit-jupiter'
+    intTestImplementation 'org.testcontainers:postgresql'
+    intTestImplementation 'org.testcontainers:testcontainers'
+    intTestImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    intTestImplementation 'org.postgresql:postgresql'
 
     // add jakarta.persistence.EnumType to testFixtures
     testFixturesImplementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'

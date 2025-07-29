@@ -16,6 +16,26 @@ Before running the application, make sure to build it. Execute the command below
 ./gradlew build
 ```
 
+## Testing
+
+This project uses TestContainers for integration testing, providing real PostgreSQL and Redis instances during tests.
+
+### Running Tests
+```shell
+# Run unit tests only
+./gradlew test
+
+# Run integration tests only
+./gradlew intTest
+
+# Run all tests
+./gradlew test intTest
+```
+
+**Note**: Integration tests require Docker to be running as they use TestContainers to spin up PostgreSQL and Redis containers.
+
+For more details about the TestContainers implementation, see [TESTCONTAINERS.md](TESTCONTAINERS.md).
+
 Execute the docker-compose file to start the database.
 ```shell
 scripts/docker-compose up
